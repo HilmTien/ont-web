@@ -86,7 +86,7 @@ async function tryRefreshToken(token: JWT): Promise<JWT | null> {
       expiresAt: Math.floor(Date.now() / 1000 + newToken.expires_in),
       refreshToken: newToken.refresh_token,
     };
-  } catch (error) {
+  } catch {
     await signOut({ redirect: false });
     return null;
   }
