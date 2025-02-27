@@ -20,9 +20,8 @@ export const metadata: Metadata = {
       : "https://ont.osunorge.no",
   ),
   title: "osu! Norge Turnering",
-  description:
-    "osu! Norge Turnering is a Norwegian tournament series in the rhythm game osu!",
-  keywords: ["osu", "ont", "tournament", "norway"],
+  description: "A Norwegian tournament series in the rhythm game osu!",
+  keywords: ["osu", "norge", "turnering", "ont", "norway", "tournament"],
   openGraph: {
     type: "website",
     siteName: "o!NT",
