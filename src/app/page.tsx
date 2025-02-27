@@ -12,7 +12,7 @@ export default async function Home() {
       </h1>
       <p className="text-center text-gray-500 italic">Kom tilbake senere!</p>
       <Image
-        src={"/logo.png"}
+        src={"/logos/ont/logo.png"}
         width={1000}
         height={1000}
         alt="o!NT Logo"
