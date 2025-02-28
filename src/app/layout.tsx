@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     siteName: "o!NT",
     images: { url: "/logos/ont/logo@80.png", height: 80, width: 80 },
   },
+  twitter: {
+    card: "summary",
+  },
 };
 
 export default function RootLayout({
