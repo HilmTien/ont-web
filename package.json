@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen_db_types": "pnpx supabase gen types typescript --project-id \"tdtnnvtppifmtlpsemgb\" --schema public > src/generated/database.types.ts"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^12.0.0",
