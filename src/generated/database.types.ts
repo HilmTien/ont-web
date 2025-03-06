@@ -12,66 +12,66 @@ export type Database = {
       beatmaps: {
         Row: {
           ar: number | null
-          artist: string | null
-          bpm: number | null
+          artist: string
+          bpm: number
           cs: number | null
-          difficulty_name: string | null
-          drain_time: number | null
+          difficulty_name: string
+          drain_time: number
           hp: number | null
           id: number
-          mapper: string | null
-          name: string | null
+          mapper: string
+          name: string
           od: number | null
           osu_id: number | null
-          star_rating: number | null
+          star_rating: number
         }
         Insert: {
           ar?: number | null
-          artist?: string | null
-          bpm?: number | null
+          artist: string
+          bpm: number
           cs?: number | null
-          difficulty_name?: string | null
-          drain_time?: number | null
+          difficulty_name: string
+          drain_time: number
           hp?: number | null
-          id: number
-          mapper?: string | null
-          name?: string | null
+          id?: number
+          mapper: string
+          name: string
           od?: number | null
           osu_id?: number | null
-          star_rating?: number | null
+          star_rating: number
         }
         Update: {
           ar?: number | null
-          artist?: string | null
-          bpm?: number | null
+          artist?: string
+          bpm?: number
           cs?: number | null
-          difficulty_name?: string | null
-          drain_time?: number | null
+          difficulty_name?: string
+          drain_time?: number
           hp?: number | null
           id?: number
-          mapper?: string | null
-          name?: string | null
+          mapper?: string
+          name?: string
           od?: number | null
           osu_id?: number | null
-          star_rating?: number | null
+          star_rating?: number
         }
         Relationships: []
       }
       commentators: {
         Row: {
           id: number
-          tournament_id: number | null
-          user_id: number | null
+          tournament_id: number
+          user_id: number
         }
         Insert: {
-          id: number
-          tournament_id?: number | null
-          user_id?: number | null
+          id?: number
+          tournament_id: number
+          user_id: number
         }
         Update: {
           id?: number
-          tournament_id?: number | null
-          user_id?: number | null
+          tournament_id?: number
+          user_id?: number
         }
         Relationships: [
           {
@@ -92,22 +92,22 @@ export type Database = {
       }
       mappool_maps: {
         Row: {
-          beatmap_id: number | null
+          beatmap_id: number
           id: number
-          map_index: string | null
-          mappool_id: number | null
+          map_index: string
+          mappool_id: number
         }
         Insert: {
-          beatmap_id?: number | null
-          id: number
-          map_index?: string | null
-          mappool_id?: number | null
+          beatmap_id: number
+          id?: number
+          map_index: string
+          mappool_id: number
         }
         Update: {
-          beatmap_id?: number | null
+          beatmap_id?: number
           id?: number
-          map_index?: string | null
-          mappool_id?: number | null
+          map_index?: string
+          mappool_id?: number
         }
         Relationships: [
           {
@@ -129,21 +129,21 @@ export type Database = {
       mappools: {
         Row: {
           id: number
-          stage_index: number | null
-          stage_name: string | null
-          tournament_id: number | null
+          stage_index: number
+          stage_name: string
+          tournament_id: number
         }
         Insert: {
-          id: number
-          stage_index?: number | null
-          stage_name?: string | null
-          tournament_id?: number | null
+          id?: number
+          stage_index: number
+          stage_name: string
+          tournament_id: number
         }
         Update: {
           id?: number
-          stage_index?: number | null
-          stage_name?: string | null
-          tournament_id?: number | null
+          stage_index?: number
+          stage_name?: string
+          tournament_id?: number
         }
         Relationships: [
           {
@@ -160,43 +160,46 @@ export type Database = {
           commentator1_id: number | null
           commentator2_id: number | null
           id: number
-          match_time: string | null
+          match_time: string
           mp_id: number | null
           referee_id: number | null
           streamer_id: number | null
-          team1_id: number | null
+          team1_id: number
           team1_score: number | null
-          team2_id: number | null
+          team2_id: number
           team2_score: number | null
-          tournament_id: number | null
+          tournament_id: number
+          tournament_match_id: number
         }
         Insert: {
           commentator1_id?: number | null
           commentator2_id?: number | null
-          id: number
-          match_time?: string | null
+          id?: number
+          match_time: string
           mp_id?: number | null
           referee_id?: number | null
           streamer_id?: number | null
-          team1_id?: number | null
+          team1_id: number
           team1_score?: number | null
-          team2_id?: number | null
+          team2_id: number
           team2_score?: number | null
-          tournament_id?: number | null
+          tournament_id: number
+          tournament_match_id: number
         }
         Update: {
           commentator1_id?: number | null
           commentator2_id?: number | null
           id?: number
-          match_time?: string | null
+          match_time?: string
           mp_id?: number | null
           referee_id?: number | null
           streamer_id?: number | null
-          team1_id?: number | null
+          team1_id?: number
           team1_score?: number | null
-          team2_id?: number | null
+          team2_id?: number
           team2_score?: number | null
-          tournament_id?: number | null
+          tournament_id?: number
+          tournament_match_id?: number
         }
         Relationships: [
           {
@@ -253,18 +256,18 @@ export type Database = {
       referees: {
         Row: {
           id: number
-          tournament_id: number | null
-          user_id: number | null
+          tournament_id: number
+          user_id: number
         }
         Insert: {
-          id: number
-          tournament_id?: number | null
-          user_id?: number | null
+          id?: number
+          tournament_id: number
+          user_id: number
         }
         Update: {
           id?: number
-          tournament_id?: number | null
-          user_id?: number | null
+          tournament_id?: number
+          user_id?: number
         }
         Relationships: [
           {
@@ -286,21 +289,21 @@ export type Database = {
       registrations: {
         Row: {
           id: number
-          registered_at: string | null
-          tournament_id: number | null
-          user_id: number | null
+          registered_at: string
+          tournament_id: number
+          user_id: number
         }
         Insert: {
-          id: number
-          registered_at?: string | null
-          tournament_id?: number | null
-          user_id?: number | null
+          id?: number
+          registered_at: string
+          tournament_id: number
+          user_id: number
         }
         Update: {
           id?: number
-          registered_at?: string | null
-          tournament_id?: number | null
-          user_id?: number | null
+          registered_at?: string
+          tournament_id?: number
+          user_id?: number
         }
         Relationships: [
           {
@@ -321,31 +324,46 @@ export type Database = {
       }
       scores: {
         Row: {
-          end_time: string | null
+          "100s": number | null
+          "50s": number | null
+          accuracy: number
+          end_time: string
           id: number
-          mappool_map_id: number | null
-          mods: number | null
-          score: number | null
-          team_player_id: number | null
-          tournament_id: number | null
+          mappool_map_id: number
+          misses: number | null
+          mode: number
+          mods: number
+          score: number
+          team_player_id: number
+          tournament_id: number
         }
         Insert: {
-          end_time?: string | null
-          id: number
-          mappool_map_id?: number | null
-          mods?: number | null
-          score?: number | null
-          team_player_id?: number | null
-          tournament_id?: number | null
+          "100s"?: number | null
+          "50s"?: number | null
+          accuracy: number
+          end_time: string
+          id?: number
+          mappool_map_id: number
+          misses?: number | null
+          mode: number
+          mods: number
+          score: number
+          team_player_id: number
+          tournament_id: number
         }
         Update: {
-          end_time?: string | null
+          "100s"?: number | null
+          "50s"?: number | null
+          accuracy?: number
+          end_time?: string
           id?: number
-          mappool_map_id?: number | null
-          mods?: number | null
-          score?: number | null
-          team_player_id?: number | null
-          tournament_id?: number | null
+          mappool_map_id?: number
+          misses?: number | null
+          mode?: number
+          mods?: number
+          score?: number
+          team_player_id?: number
+          tournament_id?: number
         }
         Relationships: [
           {
@@ -374,18 +392,18 @@ export type Database = {
       streamers: {
         Row: {
           id: number
-          tournament_id: number | null
-          user_id: number | null
+          tournament_id: number
+          user_id: number
         }
         Insert: {
-          id: number
-          tournament_id?: number | null
-          user_id?: number | null
+          id?: number
+          tournament_id: number
+          user_id: number
         }
         Update: {
           id?: number
-          tournament_id?: number | null
-          user_id?: number | null
+          tournament_id?: number
+          user_id?: number
         }
         Relationships: [
           {
@@ -407,18 +425,18 @@ export type Database = {
       team_players: {
         Row: {
           id: number
-          team_id: number | null
-          user_id: number | null
+          team_id: number
+          user_id: number
         }
         Insert: {
-          id: number
-          team_id?: number | null
-          user_id?: number | null
+          id?: number
+          team_id: number
+          user_id: number
         }
         Update: {
           id?: number
-          team_id?: number | null
-          user_id?: number | null
+          team_id?: number
+          user_id?: number
         }
         Relationships: [
           {
@@ -440,18 +458,18 @@ export type Database = {
       teams: {
         Row: {
           id: number
-          name: string | null
-          tournament_id: number | null
+          name: string
+          tournament_id: number
         }
         Insert: {
-          id: number
-          name?: string | null
-          tournament_id?: number | null
+          id?: number
+          name: string
+          tournament_id: number
         }
         Update: {
           id?: number
-          name?: string | null
-          tournament_id?: number | null
+          name?: string
+          tournament_id?: number
         }
         Relationships: [
           {
@@ -465,21 +483,21 @@ export type Database = {
       }
       tournaments: {
         Row: {
-          acronym: string | null
+          acronym: string
           id: number
-          name: string | null
+          name: string
           team_size: number | null
         }
         Insert: {
-          acronym?: string | null
-          id: number
-          name?: string | null
+          acronym: string
+          id?: number
+          name: string
           team_size?: number | null
         }
         Update: {
-          acronym?: string | null
+          acronym?: string
           id?: number
-          name?: string | null
+          name?: string
           team_size?: number | null
         }
         Relationships: []
@@ -487,18 +505,18 @@ export type Database = {
       users: {
         Row: {
           id: number
-          osu_id: number | null
-          username: string | null
+          osu_id: number
+          username: string
         }
         Insert: {
-          id: number
-          osu_id?: number | null
-          username?: string | null
+          id?: number
+          osu_id: number
+          username: string
         }
         Update: {
           id?: number
-          osu_id?: number | null
-          username?: string | null
+          osu_id?: number
+          username?: string
         }
         Relationships: []
       }
@@ -614,3 +632,4 @@ export type CompositeTypes<
   : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
     ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
+
