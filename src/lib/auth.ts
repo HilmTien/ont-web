@@ -13,6 +13,7 @@ declare module "next-auth" {
   }
 }
 
+import { onUserLogin } from "@/actions/user";
 import { JWT } from "next-auth/jwt";
 declare module "next-auth/jwt" {
   interface JWT {
@@ -28,6 +29,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     jwt: async ({ account, token }) => {
       // first time login
       if (account) {
+        if (!token.name) {
+          console.log("Something unexpected happened...");
+          return {
+            ...token,
+            accessToken: account.access_token,
+            expiresAt: account.expires_at!,
+            refreshToken: account.refresh_token!,
+          };
+        }
+
+        await onUserLogin(token.name, parseInt(account.providerAccountId));
+
         return {
           ...token,
           accessToken: account.access_token,
