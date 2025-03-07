@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_ID: tdtnnvtppifmtlpsemgb
 
     steps:
       - name: Checkout repository
@@ -22,8 +24,5 @@ jobs:
         with:
           version: latest
 
-      - name: Set database URL based on branch
-        run: echo "SUPABASE_DB_URL=$SUPABASE_DB_URL" >> $GITHUB_ENV
-
-      - name: Apply Supabase migrations
-        run: supabase db push --db-url $SUPABASE_DB_URL
+      - run: supabase link --project-ref $SUPABASE_PROJECT_ID
+      - run: supabase migration up --linked
