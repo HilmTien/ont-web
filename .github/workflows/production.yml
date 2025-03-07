@@ -1,4 +1,4 @@
-name: Deploy Supabase Migrations
+name: Deploy Migrations to Production
 
 on:
   push:
@@ -9,18 +9,31 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     env:
       SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
-      SUPABASE_PROJECT_ID: tdtnnvtppifmtlpsemgb
+      SUPABASE_DB_PASSWORD: ${{ secrets.PRODUCTION_DB_PASSWORD }}
+      SUPABASE_PROJECT_ID: ${{ secrets.PRODUCTION_PROJECT_ID }}
 
     steps:
       - uses: actions/checkout@v4
+      # - uses: supabase/setup-cli@v1
+      #   with:
+      #     version: latest
 
-      - uses: supabase/setup-cli@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          version: latest
+          node-version: 20
 
-      - run: supabase link --project-ref $SUPABASE_PROJECT_ID
-      - run: supabase db push
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: true
+
+      - name: Authenticate Supabase
+        run: pnpx supabase login --token ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Link supabase
+        run: pnpx supabase link --project-ref ${{ secrets.PRODUCTION_PROJECT_ID }} -p ${{ secrets.PRODUCTION_DB_PASSWORD }} --debug --create-ticket
+
+      - run: pnpx supabase db push -p ${{ secrets.PRODUCTION_DB_PASSWORD }}
