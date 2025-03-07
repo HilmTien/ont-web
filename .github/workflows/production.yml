@@ -16,24 +16,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      # - uses: supabase/setup-cli@v1
-      #   with:
-      #     version: latest
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: supabase/setup-cli@v1
         with:
-          node-version: 20
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-          run_install: true
-
-      - name: Authenticate Supabase
-        run: pnpx supabase login --token ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          version: latest
 
       - name: Link supabase
-        run: pnpx supabase link --project-ref ${{ secrets.PRODUCTION_PROJECT_ID }} -p ${{ secrets.PRODUCTION_DB_PASSWORD }} --debug --create-ticket
+        run: SUPABASE_DB_PASSWORD=$PRODUCTION_DB_PASSWORD supabase link --project-ref ${{ secrets.PRODUCTION_PROJECT_ID }} -p ${{ secrets.PRODUCTION_DB_PASSWORD }} --debug --create-ticket
 
       - run: pnpx supabase db push -p ${{ secrets.PRODUCTION_DB_PASSWORD }}
