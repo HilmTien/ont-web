@@ -22,6 +22,6 @@ jobs:
           version: latest
 
       - name: Link supabase
-        run: SUPABASE_DB_PASSWORD=$PRODUCTION_DB_PASSWORD supabase link --project-ref ${{ secrets.PRODUCTION_PROJECT_ID }} -p ${{ secrets.PRODUCTION_DB_PASSWORD }} --debug --create-ticket
+        run: SUPABASE_DB_PASSWORD=$PRODUCTION_DB_PASSWORD supabase link --project-ref ${{ secrets.PRODUCTION_PROJECT_ID }} -p ${{ secrets.PRODUCTION_DB_PASSWORD }} --debug
 
-      - run: pnpx supabase db push -p ${{ secrets.PRODUCTION_DB_PASSWORD }}
+      - run: SUPABASE_DB_PASSWORD=$PRODUCTION_DB_PASSWORD supabase db push -p ${{ secrets.PRODUCTION_DB_PASSWORD }} --debug
