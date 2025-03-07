@@ -11,16 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-      SUPABASE_DB_PASSWORD: ${{ secrets.PRODUCTION_DB_PASSWORD }}
-      SUPABASE_PROJECT_ID: tdtnnvtppifmtlpsemgb
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: supabase/setup-cli@v1
+      - name: Install Supabase CLI
+        uses: supabase/setup-cli@v1
         with:
           version: latest
 
-      - run: supabase link --project-ref $SUPABASE_PROJECT_ID
-      - run: supabase db push
+      - name: Set database URL based on branch
+        run: echo "SUPABASE_DB_URL=$SUPABASE_DB_URL" >> $GITHUB_ENV
+
+      - name: Apply Supabase migrations
+        run: supabase db push --db-url $SUPABASE_DB_URL
