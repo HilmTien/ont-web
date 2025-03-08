@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "gen_remote_db_types": "pnpx supabase gen types typescript --project-id \"tdtnnvtppifmtlpsemgb\" --schema public > src/generated/database.types.ts",
-    "gen_local_db_types": "pnpx supabase gen types typescript --local --schema public > src/generated/database.types.ts"
+    "gen_local_db_types": "pnpx supabase gen types typescript --local --schema public > src/generated/database.types.ts",
+    "gen_zod_schemas": "pnpx supazod -i src/generated/database.types.ts -o src/generated/zod-schemas.ts -t src/generated/zod-schemas.d.ts"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^12.0.0",
