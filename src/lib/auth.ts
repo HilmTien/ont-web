@@ -100,7 +100,8 @@ async function tryRefreshToken(token: JWT): Promise<JWT | null> {
       refreshToken: newToken.refresh_token,
     };
   } catch {
-    await signOut({ redirect: false });
+    // no clue if this is needed
+    // await logout();
     return null;
   }
 }
