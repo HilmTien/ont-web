@@ -12,6 +12,7 @@
     "gen_zod_schemas": "pnpx supazod -i src/generated/database.types.ts -o src/generated/zod-schemas.ts -t src/generated/zod-schema-types.d.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^4.1.3",
     "@icons-pack/react-simple-icons": "^12.0.0",
     "@supabase/supabase-js": "^2.48.1",
     "next": "15.1.6",
