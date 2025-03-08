@@ -9,6 +9,39 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admins: {
+        Row: {
+          id: number
+          tournament_id: number
+          user_id: number
+        }
+        Insert: {
+          id?: number
+          tournament_id: number
+          user_id: number
+        }
+        Update: {
+          id?: number
+          tournament_id?: number
+          user_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admins_tournament_id_fkey"
+            columns: ["tournament_id"]
+            isOneToOne: false
+            referencedRelation: "tournaments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "admins_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       beatmaps: {
         Row: {
           ar: number | null
