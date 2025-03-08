@@ -1,0 +1,1 @@
+lter table "public"."beatmaps" add column "mapset_host" text not null;
