@@ -24,7 +24,11 @@ declare module "next-auth/jwt" {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [Osu],
+  providers: [
+    Osu({
+      authorization: "https://osu.ppy.sh/oauth/authorize?scope=identify+public",
+    }),
+  ],
   callbacks: {
     jwt: async ({ account, token }) => {
       // first time login
