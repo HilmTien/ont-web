@@ -47,12 +47,15 @@ export type Database = {
           ar: number | null
           artist: string
           bpm: number
+          cover: string | null
           cs: number | null
           difficulty_name: string
           drain_time: number
           hp: number | null
           id: number
+          last_updated: string
           mapper: string
+          mapset_host: string
           name: string
           od: number | null
           osu_id: number | null
@@ -62,12 +65,15 @@ export type Database = {
           ar?: number | null
           artist: string
           bpm: number
+          cover?: string | null
           cs?: number | null
           difficulty_name: string
           drain_time: number
           hp?: number | null
           id?: number
+          last_updated: string
           mapper: string
+          mapset_host: string
           name: string
           od?: number | null
           osu_id?: number | null
@@ -77,12 +83,15 @@ export type Database = {
           ar?: number | null
           artist?: string
           bpm?: number
+          cover?: string | null
           cs?: number | null
           difficulty_name?: string
           drain_time?: number
           hp?: number | null
           id?: number
+          last_updated?: string
           mapper?: string
+          mapset_host?: string
           name?: string
           od?: number | null
           osu_id?: number | null
