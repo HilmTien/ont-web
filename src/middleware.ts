@@ -11,19 +11,30 @@ export default auth(async (req) => {
     return;
   }
 
-  const supabase = await createServerClient();
+  const tournament_regex = req.nextUrl.pathname.match(
+    /^\/admin\/tournaments\/(\d+)(\/.*)?$/,
+  );
 
-  const { data: userWithAdmin } = await supabase
-    .from("users")
-    .select("id, admins(id)")
-    .eq("osu_id", req.auth.osuId)
-    .single();
+  if (tournament_regex) {
+    const tournament_id = parseInt(tournament_regex[1]);
 
-  if (!userWithAdmin || userWithAdmin.admins.length === 0) {
-    return NextResponse.redirect(new URL("/", req.url));
+    const supabase = await createServerClient();
+
+    const { data: userWithAdmin } = await supabase
+      .from("users")
+      .select("id, admins(tournament_id)")
+      .eq("osu_id", req.auth.osuId)
+      .single();
+
+    if (
+      userWithAdmin &&
+      userWithAdmin.admins.some((t) => t.tournament_id == tournament_id)
+    ) {
+      return;
+    }
   }
 
-  return;
+  return NextResponse.redirect(new URL("/", req.url));
 });
 
 export const config = {
