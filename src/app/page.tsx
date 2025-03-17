@@ -37,6 +37,7 @@ export default async function Home() {
           </button>
         </form>
       ) : (
+        <>
         <form
           action={async () => {
             "use server";
@@ -50,6 +51,26 @@ export default async function Home() {
             Logg inn
           </button>
         </form>
+          {process.env.NODE_ENV == "development" && (
+            <form
+              action={async (data) => {
+                "use server";
+                await signIn("credentials", { name: data.get("user") });
+              }}
+              className="fixed right-24 bottom-4 hover:cursor-pointer"
+            >
+              <select name="user">
+                <option value="MockHost">Host</option>
+                <option value="MockReferee">Referee</option>
+                <option value="MockCommentator">Commentator</option>
+                <option value="MockStreamer">Streamer</option>
+                <option value="MockPlayer1">Player 1</option>
+                <option value="MockPlayer2">Player 2</option>
+              </select>
+              <button type="submit">(DEV) Mock Login</button>
+            </form>
+          )}
+        </>
       )}
     </div>
   );
