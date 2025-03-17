@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
+import { getURL } from "./utils";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NODE_ENV === "development"
-      ? `http://localhost:${process.env.PORT || 3000}`
-      : "https://ont.osunorge.no",
-  ),
+  metadataBase: getURL("/"),
   title: "osu! Norge Turnering",
   description: "A Norwegian tournament series in the rhythm game osu!",
   keywords: [
