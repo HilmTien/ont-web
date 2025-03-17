@@ -17,6 +17,7 @@ export default async function Home() {
         height={1000}
         alt="o!NT Logo"
         className="my-10 size-48 md:my-20 md:size-96"
+        priority={true}
       />
       <a target="_blank" href="https://discord.gg/syb7Mt6dnu">
         <SiDiscord className="size-10 md:size-20" />
