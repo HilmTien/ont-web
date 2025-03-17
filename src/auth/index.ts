@@ -16,6 +16,7 @@ declare module "next-auth" {
 
 import { onUserLogin } from "@/actions/user";
 import { JWT } from "next-auth/jwt";
+import { MockOsu } from "./mock-auth";
 declare module "next-auth/jwt" {
   interface JWT {
     accessToken: string;
@@ -28,33 +29,7 @@ declare module "next-auth/jwt" {
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Osu,
-    // ...(process.env.NODE_ENV === "development"
-    //   ? [
-    //       CredentialsProvider({
-    //         name: "Mock users",
-    //         credentials: {
-    //           name: { label: "Name", type: "text" },
-    //         },
-    //         async authorize(credentials) {
-    //           const mockUsers = [
-    //             {
-    //               id: "1",
-    //               name: "MockHost",
-    //               image: getURL("/profile-pics/avatar-guest.png").href,
-    //             },
-    //           ];
-
-    //           const user = mockUsers.find((u) => u.name === credentials?.name);
-
-    //           if (!user) {
-    //             throw new Error("Invalid credentials");
-    //           }
-
-    //           return user;
-    //         },
-    //       }),
-    //     ]
-    //   : []),
+    ...(process.env.NODE_ENV === "development" ? [MockOsu] : []),
   ],
   callbacks: {
     jwt: async ({ account, token }) => {
