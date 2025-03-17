@@ -3,7 +3,7 @@ import Osu from "next-auth/providers/osu";
 
 declare module "next-auth" {
   interface Session {
-    userId: number;
+    osuId: number;
     user: User;
     expires: string;
     accessToken: string;
@@ -21,7 +21,7 @@ declare module "next-auth/jwt" {
     accessToken: string;
     expiresAt: number;
     refreshToken: string;
-    userId: number;
+    osuId: number;
   }
 }
 
@@ -31,7 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     jwt: async ({ account, token }) => {
       // first time login
       if (account) {
-        const userId = parseInt(account.providerAccountId);
+        const osuId = parseInt(account.providerAccountId);
 
         if (!token.name) {
           console.log("Something unexpected happened...");
@@ -40,18 +40,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             accessToken: account.access_token,
             expiresAt: account.expires_at!,
             refreshToken: account.refresh_token!,
-            userId: userId,
+            osuId: osuId,
           };
         }
 
-        await onUserLogin(token.name, userId);
+        await onUserLogin(token.name, osuId);
 
         return {
           ...token,
           accessToken: account.access_token,
           expiresAt: account.expires_at!,
           refreshToken: account.refresh_token!,
-          userId: userId,
+          osuId: osuId,
         };
       }
 
@@ -67,7 +67,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return {
         ...params.session,
         accessToken: params.token.accessToken,
-        userId: params.token.userId,
+        osuId: params.token.osuId,
       };
     },
   },

@@ -7,7 +7,7 @@ export default auth(async (req) => {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  if (req.auth.userId == parseInt(process.env.SITE_OWNER_OSU_ID!)) {
+  if (req.auth.osuId == parseInt(process.env.SITE_OWNER_OSU_ID!)) {
     return;
   }
 
@@ -16,7 +16,7 @@ export default auth(async (req) => {
   const { data: userWithAdmin } = await supabase
     .from("users")
     .select("id, admins(id)")
-    .eq("osu_id", req.auth.userId)
+    .eq("osu_id", req.auth.osuId)
     .single();
 
   if (!userWithAdmin || userWithAdmin.admins.length === 0) {
