@@ -38,19 +38,19 @@ export default async function Home() {
         </form>
       ) : (
         <>
-        <form
-          action={async () => {
-            "use server";
-            await signIn("osu");
-          }}
-        >
-          <button
-            type="submit"
-            className="fixed right-4 bottom-4 hover:cursor-pointer"
+          <form
+            action={async () => {
+              "use server";
+              await signIn("osu");
+            }}
           >
-            Logg inn
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="fixed right-4 bottom-4 hover:cursor-pointer"
+            >
+              Logg inn
+            </button>
+          </form>
           {process.env.NODE_ENV == "development" && (
             <form
               action={async (data) => {
