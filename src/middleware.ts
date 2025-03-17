@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 import { createServerClient } from "./lib/server";
 

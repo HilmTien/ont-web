@@ -1,4 +1,4 @@
-import { auth, signIn, signOut } from "@/lib/auth";
+import { auth, signIn, signOut } from "@/auth";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import Image from "next/image";
 
