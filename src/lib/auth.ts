@@ -1,9 +1,10 @@
-import NextAuth, { type DefaultSession } from "next-auth";
+import NextAuth, { type User } from "next-auth";
 import Osu from "next-auth/providers/osu";
 
 declare module "next-auth" {
   interface Session {
-    user: DefaultSession["user"];
+    userId: number;
+    user: User;
     expires: string;
     accessToken: string;
   }
@@ -20,6 +21,7 @@ declare module "next-auth/jwt" {
     accessToken: string;
     expiresAt: number;
     refreshToken: string;
+    userId: number;
   }
 }
 
@@ -29,6 +31,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     jwt: async ({ account, token }) => {
       // first time login
       if (account) {
+        const userId = parseInt(account.providerAccountId);
+
         if (!token.name) {
           console.log("Something unexpected happened...");
           return {
@@ -36,16 +40,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             accessToken: account.access_token,
             expiresAt: account.expires_at!,
             refreshToken: account.refresh_token!,
+            userId: userId,
           };
         }
 
-        await onUserLogin(token.name, parseInt(account.providerAccountId));
+        await onUserLogin(token.name, userId);
 
         return {
           ...token,
           accessToken: account.access_token,
           expiresAt: account.expires_at!,
           refreshToken: account.refresh_token!,
+          userId: userId,
         };
       }
 
@@ -58,8 +64,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
     session: (params) => {
-      params.session.accessToken = params.token.accessToken;
-      return params.session;
+      return {
+        ...params.session,
+        accessToken: params.token.accessToken,
+        userId: params.token.userId,
+      };
     },
   },
 });
@@ -100,8 +109,6 @@ async function tryRefreshToken(token: JWT): Promise<JWT | null> {
       refreshToken: newToken.refresh_token,
     };
   } catch {
-    // no clue if this is needed
-    // await logout();
     return null;
   }
 }
