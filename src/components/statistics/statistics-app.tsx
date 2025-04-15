@@ -1,0 +1,23 @@
+import { createServerClient } from "@/lib/server";
+
+export async function StatisticsApp() {
+  const supabase = await createServerClient();
+
+  const { data: stages } = await supabase
+    .from("tournament_stages")
+    .select("stage_name")
+    .eq("tournament_id", 1)
+    .order("stage_index");
+
+  if (!stages) {
+    return <>no stages</>;
+  }
+
+  const stageButtons = stages.map((stage, i) => (
+    <a key={i} href={`/statistics/${i}`}>
+      {stage.stage_name}
+    </a>
+  ));
+
+  return <div className="flex flex-col">{stageButtons}</div>;
+}
