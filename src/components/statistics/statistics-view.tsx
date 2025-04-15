@@ -7,6 +7,19 @@ interface StatisticsViewProps {
   teamStats: Statistics;
   playerStats: Statistics;
   teamSize: number | null;
+  mapIndexes: MapEntry;
+}
+
+interface MapEntry {
+  [mapIndex: string]: MapDataEntry;
+}
+
+interface MapDataEntry {
+  id: number;
+  name: string;
+  artist: string;
+  difficulty_name: string;
+  cover: string;
 }
 
 interface InstanceEntry {
@@ -23,11 +36,13 @@ export function StatisticsView({
   teamStats,
   playerStats,
   teamSize,
+  mapIndexes,
 }: StatisticsViewProps) {
   const [view, setView] = React.useState<"Lag" | "Spiller">("Lag");
   const [map, setMap] = React.useState("Overall");
   const [tableHead, setTableHead] = React.useState<string[]>([]);
   const [tableBody, setTableBody] = React.useState<InstanceEntry[]>([]);
+  const [mapData, setMapData] = React.useState<string[]>([]);
   const [sortColumn, setSortColumn] = React.useState<string | null>(null);
   const [sort, setSort] = React.useState(true);
 
@@ -123,6 +138,21 @@ export function StatisticsView({
     return Object.values(instances);
   };
 
+  const makeMapInfo = (mapIndex: string): Array<string> => {
+    const mapInfo = mapIndexes[mapIndex];
+
+    if (!mapInfo) {
+      return [];
+    }
+
+    return [
+      mapInfo.artist,
+      mapInfo.name,
+      mapInfo.difficulty_name,
+      mapInfo.cover,
+    ];
+  };
+
   React.useEffect(() => {
     const newHeaders = getHeaders();
     setTableHead(newHeaders);
@@ -134,6 +164,8 @@ export function StatisticsView({
 
     const data = makeInstances();
     setTableBody(sortTableData(data, defaultColumn, true));
+
+    setMapData(makeMapInfo(map));
   }, [view, map]);
 
   React.useEffect(() => {
@@ -206,6 +238,11 @@ export function StatisticsView({
       </div>
 
       <div className="mb-5 flex gap-2">{mapButtons}</div>
+
+      <div className={map === "Overall" ? "hidden" : "mb-5 flex flex-col"}>
+        <p>{`${mapData[0]} - ${mapData[1]} [${mapData[2]}]`} </p>
+        <img src={mapData[3]} className="w-96"></img>
+      </div>
 
       <table>
         <thead>
