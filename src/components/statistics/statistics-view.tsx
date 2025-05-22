@@ -1,6 +1,7 @@
 "use client";
 
-import { Statistics } from "@/actions/statistics";
+import { MapEntry, Statistics } from "@/lib/interfaces/statistics";
+import Image from "next/image";
 import React from "react";
 
 interface StatisticsViewProps {
@@ -8,18 +9,6 @@ interface StatisticsViewProps {
   playerStats: Statistics;
   teamSize: number | null;
   mapIndexes: MapEntry;
-}
-
-interface MapEntry {
-  [mapIndex: string]: MapDataEntry;
-}
-
-interface MapDataEntry {
-  id: number;
-  name: string;
-  artist: string;
-  difficulty_name: string;
-  cover: string;
 }
 
 interface InstanceEntry {
@@ -32,6 +21,68 @@ interface InstanceEntry {
   "Average Score": number;
 }
 
+function getHeaders(map: string, view: string): string[] {
+  const headers = [
+    "Rang",
+    view,
+    "Map Placement",
+    "Z-score",
+    "Percent Max",
+    "Percent Difference",
+    "Score",
+  ];
+
+  if (map === "Overall") {
+    return [
+      "Rang",
+      view,
+      "Sum of Placements",
+      "Z-sum",
+      "Percent Max",
+      "Percent Difference",
+      "Score",
+      "Average Score",
+    ];
+  }
+
+  return view === "Lag" ? [...headers, "Average Score"] : headers;
+}
+
+function getColumnKeyMap(view: string): Record<string, keyof InstanceEntry> {
+  return {
+    "Z-sum": "Z-score",
+    "Z-score": "Z-score",
+    "Sum of Placements": "Placements",
+    "Map Placement": "Placements",
+    "Percent Max": "Percent Max",
+    "Percent Difference": "Percent Difference",
+    Score: "Score",
+    "Average Score": "Average Score",
+    [view]: "name",
+  };
+}
+
+function sortTableData(
+  data: InstanceEntry[],
+  column: string | null,
+  ascending: boolean,
+  view: string,
+): InstanceEntry[] {
+  if (!column) return data;
+
+  const keyMap = getColumnKeyMap(view);
+  const dataKey = keyMap[column];
+
+  if (!dataKey || dataKey === "name") return data;
+
+  return [...data].sort((a, b) => {
+    const aVal = a[dataKey];
+    const bVal = b[dataKey];
+
+    return ascending ? aVal - bVal : bVal - aVal;
+  });
+}
+
 export function StatisticsView({
   teamStats,
   playerStats,
@@ -42,52 +93,23 @@ export function StatisticsView({
   const [map, setMap] = React.useState("Overall");
   const [tableHead, setTableHead] = React.useState<string[]>([]);
   const [tableBody, setTableBody] = React.useState<InstanceEntry[]>([]);
-  const [mapData, setMapData] = React.useState<string[]>([]);
+  const [mapData, setMapData] = React.useState<string[]>([
+    "",
+    "",
+    "",
+    "/beatmaps/default-bg.png",
+  ]);
   const [sortColumn, setSortColumn] = React.useState<string | null>(null);
   const [sort, setSort] = React.useState(true);
 
-  const getColumnKeyMap = (
-    view: "Lag" | "Spiller",
-  ): Record<string, keyof InstanceEntry> => ({
-    "Z-sum": "Z-score",
-    "Z-score": "Z-score",
-    "Sum of Placements": "Placements",
-    "Map Placement": "Placements",
-    "Percent Max": "Percent Max",
-    "Percent Difference": "Percent Difference",
-    Score: "Score",
-    "Average Score": "Average Score",
-    [view]: "name",
-  });
+  React.useEffect(() => {
+    setTableHead(getHeaders(map, view));
 
-  const getHeaders = (): string[] => {
-    const headers = [
-      "Rang",
-      view,
-      "Map Placement",
-      "Z-score",
-      "Percent Max",
-      "Percent Difference",
-      "Score",
-    ];
+    const defaultColumn =
+      map === "Overall" ? "Sum of Placements" : "Map Placement";
+    setSortColumn(defaultColumn);
+    setSort(true);
 
-    if (map === "Overall") {
-      return [
-        "Rang",
-        view,
-        "Sum of Placements",
-        "Z-sum",
-        "Percent Max",
-        "Percent Difference",
-        "Score",
-        "Average Score",
-      ];
-    }
-
-    return view === "Lag" ? [...headers, "Average Score"] : headers;
-  };
-
-  const makeInstances = (): InstanceEntry[] => {
     const stats = view === "Lag" ? teamStats : playerStats;
     const instances: Record<string, InstanceEntry> = {};
     const maps =
@@ -134,63 +156,32 @@ export function StatisticsView({
             ? entry.Score / teamSize
             : entry.Score;
     }
+    const data = Object.values(instances);
 
-    return Object.values(instances);
-  };
+    setTableBody(sortTableData(data, defaultColumn, true, view));
 
-  const makeMapInfo = (mapIndex: string): Array<string> => {
-    const mapInfo = mapIndexes[mapIndex];
+    const mapInfo = mapIndexes[map];
 
     if (!mapInfo) {
-      return [];
+      setMapData(["", "", "", "/beatmaps/default-bg.png"]);
+      return;
     }
 
-    return [
+    if (!mapInfo.cover || mapInfo.cover.endsWith("cover.jpg?0")) {
+      mapInfo.cover = "/beatmaps/default-bg.png";
+    }
+
+    setMapData([
       mapInfo.artist,
       mapInfo.name,
       mapInfo.difficulty_name,
       mapInfo.cover,
-    ];
-  };
+    ]);
+  }, [view, map, mapIndexes, playerStats, teamSize, teamStats]);
 
   React.useEffect(() => {
-    const newHeaders = getHeaders();
-    setTableHead(newHeaders);
-
-    const defaultColumn =
-      map === "Overall" ? "Sum of Placements" : "Map Placement";
-    setSortColumn(defaultColumn);
-    setSort(true);
-
-    const data = makeInstances();
-    setTableBody(sortTableData(data, defaultColumn, true));
-
-    setMapData(makeMapInfo(map));
-  }, [view, map]);
-
-  React.useEffect(() => {
-    setTableBody((prev) => sortTableData([...prev], sortColumn, sort));
-  }, [sortColumn, sort]);
-
-  const sortTableData = (
-    data: InstanceEntry[],
-    column: string | null,
-    ascending: boolean,
-  ): InstanceEntry[] => {
-    if (!column) return data;
-
-    const keyMap = getColumnKeyMap(view);
-    const dataKey = keyMap[column];
-
-    if (!dataKey || dataKey === "name") return data;
-
-    return [...data].sort((a, b) => {
-      const aVal = a[dataKey];
-      const bVal = b[dataKey];
-
-      return ascending ? aVal - bVal : bVal - aVal;
-    });
-  };
+    setTableBody((prev) => sortTableData([...prev], sortColumn, sort, view));
+  }, [sortColumn, sort, view]);
 
   const headerClick = (column: string) => {
     if (column === "Rang" || column === "Lag" || column === "Spiller") return;
@@ -241,7 +232,14 @@ export function StatisticsView({
 
       <div className={map === "Overall" ? "hidden" : "mb-5 flex flex-col"}>
         <p>{`${mapData[0]} - ${mapData[1]} [${mapData[2]}]`} </p>
-        <img src={mapData[3]} className="w-96"></img>
+        <Image
+          src={mapData[3]}
+          alt="Beatmap Image"
+          width="0"
+          height="0"
+          sizes="100vw"
+          className="w-96"
+        ></Image>
       </div>
 
       <table>

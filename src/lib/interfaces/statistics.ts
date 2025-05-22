@@ -1,3 +1,9 @@
+import { Database } from "@/generated/database.types";
+
+export interface MapEntry {
+  [mapIndex: string]: Database["public"]["Tables"]["beatmaps"]["Row"];
+}
+
 export interface Statistics {
   [mapIndex: string]: StatisticsEntry[];
 }

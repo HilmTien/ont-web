@@ -1,19 +1,12 @@
-import { createPlayerStats, createTeamStats } from "@/actions/statistics";
 import { StatisticsApp } from "@/components/statistics/statistics-app";
 import { StatisticsView } from "@/components/statistics/statistics-view";
+import { Database } from "@/generated/database.types";
+import {
+  createPlayerStats,
+  createTeamStats,
+  MapEntry,
+} from "@/lib/interfaces/statistics";
 import { createServerClient } from "@/lib/server";
-
-interface MapIndexEntry {
-  [mapIndex: string]: MapDataEntry;
-}
-
-interface MapDataEntry {
-  id: number;
-  name: string;
-  artist: string;
-  difficulty_name: string;
-  cover: string;
-}
 
 export default async function Page({
   params,
@@ -87,8 +80,13 @@ export default async function Page({
     return <>Error fetching beatmaps</>;
   }
   const beatmaps = beatmapsRes.data;
-  const beatmapLookup = new Map(beatmaps.map((b: any) => [b.id, b]));
-  const mapIndexes: MapIndexEntry = {};
+  const beatmapLookup = new Map(
+    beatmaps.map((b: Database["public"]["Tables"]["beatmaps"]["Row"]) => [
+      b.id,
+      b,
+    ]),
+  );
+  const mapIndexes: MapEntry = {};
   for (const map of mappoolMaps) {
     const beatmap = beatmapLookup.get(map.beatmap_id);
     if (beatmap) {

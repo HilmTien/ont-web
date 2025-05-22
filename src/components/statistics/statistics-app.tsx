@@ -10,7 +10,7 @@ export async function StatisticsApp() {
     .order("stage_index");
 
   if (!stages) {
-    return <>no stages</>;
+    return <>Error no stages</>;
   }
 
   const stageButtons = stages.map((stage, i) => (
