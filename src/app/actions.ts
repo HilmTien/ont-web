@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/lib/auth";
+import { auth } from "@/auth";
 import { ServerActionResponse } from "@/lib/error";
 
 export async function getOsuAPIToken(): Promise<ServerActionResponse<string>> {
