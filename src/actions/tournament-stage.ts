@@ -1,15 +1,15 @@
 "use server";
 
 import {
-  PublicTournamentStagesInsertSchema,
-  PublicTournamentStagesRowSchema,
+  PublicTournamentStagesInsert,
+  PublicTournamentStagesRow,
 } from "@/generated/zod-schema-types";
 import { ServerActionResponse } from "@/lib/error";
 import { createServerClient } from "@/lib/server";
 import { revalidatePath } from "next/cache";
 
 export async function createTournamentStage(
-  data: PublicTournamentStagesInsertSchema,
+  data: PublicTournamentStagesInsert,
 ): Promise<ServerActionResponse> {
   const supabase = await createServerClient();
 
@@ -31,7 +31,7 @@ export async function createTournamentStage(
 }
 
 export async function deleteTournamentStage(
-  stage: PublicTournamentStagesRowSchema,
+  stage: PublicTournamentStagesRow,
 ): Promise<ServerActionResponse> {
   const supabase = await createServerClient();
 
