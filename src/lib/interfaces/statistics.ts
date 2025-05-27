@@ -1,7 +1,7 @@
-import { Database } from "@/generated/database.types";
+import { Tables } from "@/generated/database.types";
 
 export interface MapEntry {
-  [mapIndex: string]: Database["public"]["Tables"]["beatmaps"]["Row"];
+  [mapIndex: string]: Tables<"beatmaps">;
 }
 
 export interface Statistics {

@@ -1,6 +1,6 @@
 import { StatisticsApp } from "@/components/statistics/statistics-app";
 import { StatisticsView } from "@/components/statistics/statistics-view";
-import { Database } from "@/generated/database.types";
+import { Tables } from "@/generated/database.types";
 import {
   createPlayerStats,
   createTeamStats,
@@ -20,54 +20,51 @@ export default async function Page({
   }
 
   const supabase = await createServerClient();
-  const [teamSizeRes, stageIdRes] = await Promise.all([
-    supabase.from("tournaments").select("team_size").eq("id", 1).single(),
-    supabase
-      .from("tournament_stages")
-      .select("id")
-      .eq("stage_index", stage_index)
-      .single(),
-  ]);
 
-  if (!teamSizeRes.data || !stageIdRes.data) {
-    return <>Error fetching tournament or stage data</>;
+  const { data: teamSize } = await supabase
+    .from("tournaments")
+    .select("team_size")
+    .eq("id", 1)
+    .single();
+
+  const { data: stageId } = await supabase
+    .from("tournament_stages")
+    .select("id")
+    .eq("stage_index", stage_index)
+    .single();
+
+  const { data: teams } = await supabase
+    .from("teams")
+    .select()
+    .eq("tournament_id", 1);
+
+  const { data: teamPlrs } = await supabase.from("team_players").select();
+
+  if (!teamSize || !stageId || !teams || !teamPlrs) {
+    return <>Error fetching data</>;
   }
-  const teamSize = teamSizeRes.data;
-  const stageId = stageIdRes.data;
 
-  const [teamsRes, teamPlrsRes] = await Promise.all([
-    supabase.from("teams").select().eq("tournament_id", 1),
-    supabase.from("team_players").select(),
-  ]);
-
-  if (!teamsRes.data || !teamPlrsRes.data) {
-    return <>Error fetching teams or team players</>;
-  }
-  const teams = teamsRes.data;
-  const teamPlrs = teamPlrsRes.data;
   const teamsArray = teams.map((team) => team.id);
   const filteredTeamPlrs = teamPlrs.filter((plr) =>
     teamsArray.includes(plr.team_id),
   );
 
-  const [usersRes, mappoolMapsRes, allScoresRes] = await Promise.all([
-    supabase.from("users").select("id, username"),
-    supabase
-      .from("mappool_maps")
-      .select("id, beatmap_id, map_index")
-      .eq("stage_id", stageId.id),
-    supabase
-      .from("scores")
-      .select("id, team_player_id, mappool_map_id, score")
-      .eq("tournament_id", 1),
-  ]);
+  const { data: users } = await supabase.from("users").select("id, username");
 
-  if (!usersRes.data || !mappoolMapsRes.data || !allScoresRes.data) {
-    return <>Error fetching users, mappool maps, or scores</>;
+  const { data: mappoolMaps } = await supabase
+    .from("mappool_maps")
+    .select("id, beatmap_id, map_index")
+    .eq("stage_id", stageId.id);
+
+  const { data: allScores } = await supabase
+    .from("scores")
+    .select("id, team_player_id, mappool_map_id, score")
+    .eq("tournament_id", 1);
+
+  if (!users || !mappoolMaps || !allScores) {
+    return <>Error fetching data</>;
   }
-  const users = usersRes.data;
-  const mappoolMaps = mappoolMapsRes.data;
-  const allScores = allScoresRes.data;
+
   const teamPlrsId = filteredTeamPlrs.map((plr) => plr.user_id);
   const filteredUsers = users.filter((user) => teamPlrsId.includes(user.id));
   const mappoolMapsId = mappoolMaps.map((map) => map.id);
@@ -75,16 +72,13 @@ export default async function Page({
     mappoolMapsId.includes(score.mappool_map_id),
   );
 
-  const beatmapsRes = await supabase.from("beatmaps").select();
-  if (!beatmapsRes.data) {
-    return <>Error fetching beatmaps</>;
+  const { data: beatmaps } = await supabase.from("beatmaps").select();
+  if (!beatmaps) {
+    return <>Error fetching data</>;
   }
-  const beatmaps = beatmapsRes.data;
+
   const beatmapLookup = new Map(
-    beatmaps.map((b: Database["public"]["Tables"]["beatmaps"]["Row"]) => [
-      b.id,
-      b,
-    ]),
+    beatmaps.map((b: Tables<"beatmaps">) => [b.id, b]),
   );
   const mapIndexes: MapEntry = {};
   for (const map of mappoolMaps) {
