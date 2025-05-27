@@ -15,14 +15,17 @@ export function MappoolsView({ beatmaps }: { beatmaps: MapEntry }) {
     const mapCard = (
       <div key={map}>
         <h1>{map}</h1>
-        <Image
-          src={beatmap.cover}
-          alt="Beatmap Image"
-          width={0}
-          height={0}
-          sizes="100vw"
-          className="w-96"
-        ></Image>
+        <a href={`https://osu.ppy.sh/b/${beatmap.osu_id}`} target="_blank">
+          <Image
+            src={beatmap.cover}
+            alt="Beatmap Image"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-96"
+          ></Image>
+        </a>
+
         <h2>
           {beatmap.artist} - {beatmap.name} [{beatmap.difficulty_name}]
         </h2>
