@@ -89,7 +89,9 @@ export function StatisticsView({
   teamSize,
   mapIndexes,
 }: StatisticsViewProps) {
-  const [view, setView] = React.useState<"Lag" | "Spiller">("Lag");
+  const [view, setView] = React.useState<"Lag" | "Spiller">(
+    teamSize === 1 ? "Spiller" : "Lag",
+  );
   const [map, setMap] = React.useState("Overall");
   const [tableHead, setTableHead] = React.useState<string[]>([]);
   const [tableBody, setTableBody] = React.useState<InstanceEntry[]>([]);
@@ -216,7 +218,7 @@ export function StatisticsView({
 
   return (
     <div>
-      <div className="mb-5 flex gap-5">
+      <div className={teamSize === 1 ? "hidden" : "mb-5 flex gap-5"}>
         <button className="cursor-pointer" onMouseDown={() => setView("Lag")}>
           Lagvisning
         </button>
