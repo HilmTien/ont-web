@@ -1,6 +1,7 @@
 import { MappoolsApp } from "@/components/mappools/mappools-app";
 import { MappoolsView } from "@/components/mappools/mappools-view";
 import { Tables } from "@/generated/database.types";
+import { ModsEntry } from "@/lib/interfaces/mappools";
 import { MapEntry } from "@/lib/interfaces/statistics";
 import { createServerClient } from "@/lib/server";
 
@@ -30,7 +31,7 @@ export default async function Page({
   if (stageId.is_public) {
     const { data: mappoolMaps } = await supabase
       .from("mappool_maps")
-      .select("id, beatmap_id, map_index")
+      .select()
       .eq("stage_id", stageId.id);
 
     if (!mappoolMaps) {
@@ -46,17 +47,19 @@ export default async function Page({
       beatmaps.map((b: Tables<"beatmaps">) => [b.id, b]),
     );
     const mapIndexes: MapEntry = {};
+    const mapMods: ModsEntry = {};
     for (const map of mappoolMaps) {
       const beatmap = beatmapLookup.get(map.beatmap_id);
       if (beatmap) {
         mapIndexes[map.map_index] = beatmap;
+        mapMods[map.map_index] = map.mods;
       }
     }
 
     return (
       <div className="m-2 flex gap-36">
         <MappoolsApp />
-        <MappoolsView beatmaps={mapIndexes} />
+        <MappoolsView beatmaps={mapIndexes} mapMods={mapMods} />
       </div>
     );
   } else {
