@@ -14,8 +14,8 @@ export default async function Page({
   params: Promise<{ stageIndex: string }>;
 }) {
   const { stageIndex: stageIndexStr } = await params;
-  const stage_index = parseInt(stageIndexStr, 10);
-  if (Number.isNaN(stage_index)) {
+  const stageIndex = parseInt(stageIndexStr, 10);
+  if (Number.isNaN(stageIndex)) {
     return <>Invalid url</>;
   }
 
@@ -30,7 +30,7 @@ export default async function Page({
   const { data: stageId } = await supabase
     .from("tournament_stages")
     .select("id")
-    .eq("stage_index", stage_index)
+    .eq("stage_index", stageIndex)
     .single();
 
   const { data: teams } = await supabase
