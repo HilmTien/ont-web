@@ -1,12 +1,9 @@
 import { StatisticsApp } from "@/components/statistics/statistics-app";
 import { StatisticsView } from "@/components/statistics/statistics-view";
 import { Tables } from "@/generated/database.types";
-import {
-  createPlayerStats,
-  createTeamStats,
-  MapEntry,
-} from "@/lib/interfaces/statistics";
 import { createServerClient } from "@/lib/server";
+import { MapEntry } from "@/lib/statistics/interfaces";
+import { createPlayerStats, createTeamStats } from "@/lib/statistics/utils";
 
 export default async function Page({
   params,

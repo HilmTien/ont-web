@@ -1,6 +1,6 @@
 "use client";
 
-import { MapEntry, Statistics } from "@/lib/interfaces/statistics";
+import { MapEntry, Statistics } from "@/lib/statistics/interfaces";
 import Image from "next/image";
 import React from "react";
 

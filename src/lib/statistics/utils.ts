@@ -1,50 +1,12 @@
-import { Tables } from "@/generated/database.types";
-
-export interface MapEntry {
-  [mapIndex: string]: Tables<"beatmaps">;
-}
-
-export interface Statistics {
-  [mapIndex: string]: StatisticsEntry[];
-}
-
-interface StatisticsEntry {
-  name: string;
-  score: number;
-  mapPlacement: number;
-  percentMax: number;
-  percentDifference: number;
-  zScore: number;
-}
-
-interface TeamsEntry {
-  id: number;
-  name: string;
-  tournament_id: number;
-}
-
-interface ScoreEntry {
-  id: number;
-  team_player_id: number;
-  mappool_map_id: number;
-  score: number;
-}
-
-interface TeamPlrsEntry {
-  id: number;
-  team_id: number;
-  user_id: number;
-}
-
-interface MappoolMapEntry {
-  id: number;
-  map_index: string;
-}
-
-interface UsersEntry {
-  id: number;
-  username: string;
-}
+import {
+  MappoolMapEntry,
+  ScoreEntry,
+  Statistics,
+  StatisticsEntry,
+  TeamPlrsEntry,
+  TeamsEntry,
+  UsersEntry,
+} from "./interfaces";
 
 function applyStatistics(entries: StatisticsEntry[]): void {
   const scores = entries.map((entry) => entry.score);
