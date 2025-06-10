@@ -11,9 +11,9 @@ import { createServerClient } from "@/lib/server";
 export default async function Page({
   params,
 }: {
-  params: Promise<{ stage_index: string }>;
+  params: Promise<{ stageIndex: string }>;
 }) {
-  const { stage_index: stageIndexStr } = await params;
+  const { stageIndex: stageIndexStr } = await params;
   const stage_index = parseInt(stageIndexStr, 10);
   if (Number.isNaN(stage_index)) {
     return <>Invalid url</>;
