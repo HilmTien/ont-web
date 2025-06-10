@@ -1,4 +1,5 @@
 import { createServerClient } from "@/lib/server";
+import Link from "next/link";
 
 export async function StatisticsApp() {
   const supabase = await createServerClient();
@@ -14,9 +15,9 @@ export async function StatisticsApp() {
   }
 
   const stageButtons = stages.map((stage, i) => (
-    <a key={i} href={`/statistics/${i}`}>
+    <Link key={i} href={`/statistics/${i}`}>
       {stage.stage_name}
-    </a>
+    </Link>
   ));
 
   return <div className="flex flex-col">{stageButtons}</div>;
