@@ -5,13 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { formSchema } from "./schema";
 
-export function BeatmapApp() {
+export function BeatmapForm() {
   const form = useForm<formSchema>({
     resolver: zodResolver(formSchema),
   });
 
   return (
-    <form onSubmit={form.handleSubmit(addBeatmap)}>
+    <form onSubmit={form.handleSubmit((data) => addBeatmap(data.id))}>
       <input
         {...form.register("id", {
           setValueAs: (v) => (v === "" ? null : parseInt(v)),
