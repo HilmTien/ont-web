@@ -38,16 +38,14 @@ export async function findBeatmap(id: number) {
   return beatmap;
 }
 
-export async function addBeatmap(data: {
-  id: number;
-}): Promise<ServerActionResponse> {
+export async function addBeatmap(id: number): Promise<ServerActionResponse> {
   const supabase = await createServerClient();
-  const submittedBeatmap = await findBeatmap(data.id);
+  const submittedBeatmap = await findBeatmap(id);
 
   const { data: beatmap } = await supabase
     .from("beatmaps")
     .select()
-    .eq("osu_id", data.id)
+    .eq("osu_id", id)
     .single();
 
   if (!beatmap) {
@@ -65,7 +63,7 @@ export async function addBeatmap(data: {
       ar: submittedBeatmap.ar,
       od: submittedBeatmap.accuracy,
       hp: submittedBeatmap.drain,
-      osu_id: data.id,
+      osu_id: id,
       cover: submittedBeatmap.beatmapset.covers.cover,
     });
   } else if (submittedBeatmap.last_updated > beatmap.last_updated) {
@@ -83,7 +81,7 @@ export async function addBeatmap(data: {
       ar: submittedBeatmap.ar,
       od: submittedBeatmap.accuracy,
       hp: submittedBeatmap.drain,
-      osu_id: data.id,
+      osu_id: id,
       cover: submittedBeatmap.beatmapset.covers.cover,
     });
   } else {
