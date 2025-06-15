@@ -6,7 +6,9 @@ values
   ('MockCommentator', 3),
   ('MockStreamer', 4),
   ('MockPlayer1', 5),
-  ('MockPlayer2', 6);
+  ('MockPlayer2', 6),
+  ('MockPlayer3', 7),
+  ('MockPlayer4', 8);
 
 insert into "public"."tournaments"
   (name, acronym, team_size)
@@ -47,6 +49,14 @@ values
   (
     (select id from "public"."tournaments" where acronym = 'MOT'),
     (select id from "public"."users" where username = 'MockPlayer2')
+  ),
+    (
+    (select id from "public"."tournaments" where acronym = 'MOT'),
+    (select id from "public"."users" where username = 'MockPlayer3')
+  ),
+    (
+    (select id from "public"."tournaments" where acronym = 'MOT'),
+    (select id from "public"."users" where username = 'MockPlayer4')
   );
 
 insert into "public"."streamers"
@@ -71,8 +81,16 @@ values
     (select id from "public"."users" where username = 'MockPlayer1')
   ),
   (
-    (select id from "public"."teams" where name = 'Team 2'),
+    (select id from "public"."teams" where name = 'Team 1'),
     (select id from "public"."users" where username = 'MockPlayer2')
+  ),
+    (
+    (select id from "public"."teams" where name = 'Team 2'),
+    (select id from "public"."users" where username = 'MockPlayer3')
+  ),
+    (
+    (select id from "public"."teams" where name = 'Team 2'),
+    (select id from "public"."users" where username = 'MockPlayer4')
   );
 
 insert into "public"."tournament_stages"
