@@ -28,7 +28,14 @@ declare module "next-auth/jwt" {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
-    Osu,
+    Osu({
+      authorization: {
+        url: "https://osu.ppy.sh/oauth/authorize",
+        params: {
+          scope: "identify public",
+        },
+      }
+    }),
     ...(process.env.NODE_ENV === "development" ? [MockOsu] : []),
   ],
   callbacks: {
