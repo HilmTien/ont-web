@@ -15,7 +15,7 @@ export async function StatisticsApp() {
   }
 
   const stageButtons = stages.map((stage, i) => (
-    <Link key={i} href={`/statistics/${i}`}>
+    <Link key={i} href={`/statistics/${i + 1}`}>
       {stage.stage_name}
     </Link>
   ));

@@ -8,9 +8,9 @@ import { createPlayerStats, createTeamStats } from "@/lib/statistics/utils";
 export default async function Page({
   params,
 }: {
-  params: Promise<{ stageIndex: string }>;
+  params: Promise<{ stage_index: string }>;
 }) {
-  const { stageIndex: stageIndexStr } = await params;
+  const { stage_index: stageIndexStr } = await params;
   const stageIndex = parseInt(stageIndexStr, 10);
   if (Number.isNaN(stageIndex)) {
     return <>Invalid url</>;
