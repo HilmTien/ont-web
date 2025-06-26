@@ -1,14 +1,7 @@
-import {
-  MappoolMapEntry,
-  ScoreEntry,
-  Statistics,
-  StatisticsEntry,
-  TeamPlrsEntry,
-  TeamsEntry,
-  UsersEntry,
-} from "./interfaces";
+import { Statistics, StatisticsEntry } from "./interfaces";
+import { TournamentQueryData } from "./query";
 
-function applyStatistics(entries: StatisticsEntry[]): void {
+function applyStatistics(entries: StatisticsEntry[]) {
   const scores = entries.map((entry) => entry.score);
   const maxScore = Math.max(...scores);
   const minScore = Math.min(...scores);
@@ -39,62 +32,25 @@ function applyStatistics(entries: StatisticsEntry[]): void {
   });
 }
 
-export async function createTeamStats(
-  scores: ScoreEntry[],
-  mappoolMaps: MappoolMapEntry[],
-  teams: TeamsEntry[],
-  teamPlrs: TeamPlrsEntry[],
-): Promise<Statistics> {
-  const stats: Statistics = {};
-
-  mappoolMaps.forEach((map) => {
-    const modScores = scores.filter((score) => score.mappool_map_id === map.id);
-
-    const mod = teams.map((team) => {
-      const teamPlayerIds = teamPlrs
-        .filter((tp) => tp.team_id === team.id)
-        .map((tp) => tp.id);
-
-      const totalScore = modScores
-        .filter((s) => teamPlayerIds.includes(s.team_player_id))
-        .reduce((sum, s) => sum + s.score, 0);
-
-      return {
-        name: team.name,
-        score: totalScore,
-        mapPlacement: 0,
-        percentMax: 0,
-        percentDifference: 1,
-        zScore: 0,
-      } as StatisticsEntry;
-    });
-
-    applyStatistics(mod);
-
-    stats[map.map_index] = mod;
-  });
-
-  return stats;
-}
-
 export async function createPlayerStats(
-  scores: ScoreEntry[],
-  mappoolMaps: MappoolMapEntry[],
-  teamPlrs: TeamPlrsEntry[],
-  users: UsersEntry[],
+  tournament: TournamentQueryData,
 ): Promise<Statistics> {
   const stats: Statistics = {};
 
-  mappoolMaps.forEach((map) => {
-    const modScores = scores.filter((score) => score.mappool_map_id === map.id);
+  const mappoolMaps = tournament.tournament_stages[0].mappool_maps.sort(
+    (a, b) =>
+      a.map_index.localeCompare(b.map_index, undefined, {
+        numeric: true,
+        sensitivity: "base",
+      }),
+  );
 
-    const mod = users.map((user, index) => {
-      const scoreEntry = modScores.find(
-        (s) => s.team_player_id === teamPlrs[index].id,
-      );
+  mappoolMaps.forEach((map) => {
+    const playerScore = map.scores.map((plrScore) => {
+      const username = plrScore.team_players.users.username;
       return {
-        name: user.username,
-        score: scoreEntry ? scoreEntry.score : 0,
+        name: username,
+        score: plrScore.score,
         mapPlacement: 0,
         percentMax: 0,
         percentDifference: 1,
@@ -102,9 +58,8 @@ export async function createPlayerStats(
       } as StatisticsEntry;
     });
 
-    applyStatistics(mod);
-
-    stats[map.map_index] = mod;
+    applyStatistics(playerScore);
+    stats[map.map_index] = playerScore;
   });
 
   return stats;
