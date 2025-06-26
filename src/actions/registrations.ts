@@ -3,7 +3,7 @@ import { PublicRegistrationsInsertSchema } from "@/generated/zod-schema-types";
 import { createServerClient } from "@/lib/server";
 import { auth } from "@/auth";
 import { ServerActionResponse } from "@/lib/error";
-import { Database, Tables } from "@/generated/database.types";
+import { Tables } from "@/generated/database.types";
 
 export async function createRegistration(
   data: Omit<PublicRegistrationsInsertSchema, "registered_at" | "user_id">,
