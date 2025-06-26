@@ -24,12 +24,12 @@ export default async function Page({
   }
 
   return (
-    <div >
+    <div>
       <p>Tournament Name: {tournament.name}</p>
       <p>Tournament ID: {tournament.id}</p>
       <p>Acronym: {tournament.acronym}</p>
       <p>Team Size: {tournament.team_size}</p>
-    
+
       <RegisterButton tournamentId={id} />
     </div>
   );

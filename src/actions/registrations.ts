@@ -4,17 +4,15 @@ import { createServerClient } from "@/lib/server";
 import { auth } from "@/auth";
 
 export async function createRegistration(
-  data: Omit<PublicRegistrationsInsertSchema, "registered_at" | "user_id">
+  data: Omit<PublicRegistrationsInsertSchema, "registered_at" | "user_id">,
 ) {
   const supabase = await createServerClient();
 
   const session = await auth();
-  
+
   if (!session || !session.osuId) {
     throw new Error("Log in first");
   }
-
-
 
   const { data: user } = await supabase
     .from("users")
@@ -37,13 +35,12 @@ export async function createRegistration(
     throw new Error("Already registered");
   }
 
-
   const { data: newRegistration } = await supabase
     .from("registrations")
     .insert({
       user_id: user.id,
       tournament_id: data.tournament_id,
-      registered_at: new Date().toISOString()
+      registered_at: new Date().toISOString(),
     })
     .select()
     .single();

@@ -10,5 +10,5 @@ export function RegisterButton({ tournamentId }: { tournamentId: number }) {
     }
   };
 
-  return (<button onClick={handleClick}>Register</button>);
+  return <button onClick={handleClick}>Register</button>;
 }
