@@ -2,16 +2,18 @@
 import { PublicRegistrationsInsertSchema } from "@/generated/zod-schema-types";
 import { createServerClient } from "@/lib/server";
 import { auth } from "@/auth";
+import { ServerActionResponse } from "@/lib/error";
+import { Database, Tables } from "@/generated/database.types";
 
 export async function createRegistration(
   data: Omit<PublicRegistrationsInsertSchema, "registered_at" | "user_id">,
-) {
+): Promise<ServerActionResponse<Tables<"registrations">>> {
   const supabase = await createServerClient();
 
   const session = await auth();
 
   if (!session || !session.osuId) {
-    throw new Error("Log in first");
+    return { error: "Login" };
   }
 
   const { data: user } = await supabase
@@ -21,7 +23,7 @@ export async function createRegistration(
     .single();
 
   if (!user) {
-    throw new Error("User not found in database");
+    return { error: "User not found in database" };
   }
 
   const { data: existingRegistration } = await supabase
@@ -32,7 +34,7 @@ export async function createRegistration(
     .single();
 
   if (existingRegistration) {
-    throw new Error("Already registered");
+    return { error: "Already registered" };
   }
 
   const { data: newRegistration } = await supabase
@@ -44,6 +46,10 @@ export async function createRegistration(
     })
     .select()
     .single();
+
+  if (!newRegistration) {
+    return { error: "Registration failed" };
+  }
 
   return newRegistration;
 }
