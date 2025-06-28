@@ -2,7 +2,7 @@ import { StatisticsApp } from "@/components/statistics/statistics-app";
 import { StatisticsView } from "@/components/statistics/statistics-view";
 import { createServerClient } from "@/lib/server";
 import { getStatistics } from "@/lib/statistics/query";
-import { createPlayerStats } from "@/lib/statistics/utils";
+import { makeStatistics } from "@/lib/statistics/utils";
 
 export default async function Page({
   params,
@@ -26,12 +26,16 @@ export default async function Page({
     return <>Error fetching tournament data</>;
   }
 
-  const playerStats = await createPlayerStats(tournament);
+  const [mapStats, overallStats] = await makeStatistics(tournament);
 
   return (
     <div className="m-2 flex gap-10">
       <StatisticsApp />
-      <StatisticsView stats={playerStats} tournament={tournament} />
+      <StatisticsView
+        mapStats={mapStats}
+        overallStats={overallStats}
+        tournament={tournament}
+      />
     </div>
   );
 }

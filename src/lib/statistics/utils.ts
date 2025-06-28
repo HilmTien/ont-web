@@ -1,7 +1,14 @@
-import { Statistics, StatisticsEntry } from "./interfaces";
+import {
+  MapStatistics,
+  MapStatsEntry,
+  OverallStatistics,
+  OverallStatisticsEntry,
+  PlayerStatistics,
+  PlayerStatsEntry,
+} from "./interfaces";
 import { TournamentQueryData } from "./query";
 
-function applyStatistics(entries: StatisticsEntry[]) {
+function applyStatistics(entries: MapStatsEntry[]) {
   const scores = entries.map((entry) => entry.score);
   const maxScore = Math.max(...scores);
   const minScore = Math.min(...scores);
@@ -32,10 +39,90 @@ function applyStatistics(entries: StatisticsEntry[]) {
   });
 }
 
-export async function createPlayerStats(
+function createOverallStats(
+  mapStats: MapStatistics,
+  playerStats: PlayerStatistics,
+) {
+  const overallStats: OverallStatistics = {};
+  const maps = Object.values(mapStats);
+
+  maps.forEach((map) => {
+    for (let i = 0; i < map.length; i++) {
+      const currentMap = map[i];
+      const player = overallStats[currentMap.osuId];
+      if (player) {
+        player.zSum += currentMap.zScore;
+        player.sumOfPlacements += currentMap.mapPlacement;
+        player.percentMax += currentMap.percentMax;
+        player.percentDifference += currentMap.percentDifference;
+        player.score += currentMap.score;
+      } else {
+        const player: OverallStatisticsEntry = {
+          name: currentMap.name,
+          osuId: currentMap.osuId,
+          zSum: currentMap.zScore,
+          sumOfPlacements: currentMap.mapPlacement,
+          percentMax: currentMap.percentMax,
+          percentDifference: currentMap.percentDifference,
+          score: currentMap.score,
+          avgScore: 0,
+        };
+        overallStats[currentMap.osuId] = player;
+      }
+    }
+  });
+
+  Object.values(overallStats).forEach((plr) => {
+    const playerStat = playerStats[plr.osuId];
+    plr.avgScore = plr.score / playerStat.length;
+  });
+
+  return overallStats;
+}
+
+function createPlayerStats(mapStats: MapStatistics) {
+  const playerStats: PlayerStatistics = {};
+  const mapKey = Object.keys(mapStats);
+  const maps = Object.values(mapStats);
+
+  maps.forEach((map, i) => {
+    for (let v = 0; v < map.length; v++) {
+      const currentMap = map[v];
+      const player = playerStats[currentMap.osuId];
+      if (player) {
+        const playerMap: PlayerStatsEntry = {
+          mapIndex: mapKey[i],
+          name: currentMap.name,
+          score: currentMap.score,
+          mapPlacement: currentMap.mapPlacement,
+          percentMax: currentMap.percentMax,
+          percentDifference: currentMap.percentDifference,
+          zScore: currentMap.zScore,
+        };
+        player.push(playerMap);
+      } else {
+        playerStats[currentMap.osuId] = [];
+        const playerMap: PlayerStatsEntry = {
+          mapIndex: mapKey[i],
+          name: currentMap.name,
+          score: currentMap.score,
+          mapPlacement: currentMap.mapPlacement,
+          percentMax: currentMap.percentMax,
+          percentDifference: currentMap.percentDifference,
+          zScore: currentMap.zScore,
+        };
+        playerStats[currentMap.osuId].push(playerMap);
+      }
+    }
+  });
+
+  return playerStats;
+}
+
+export async function makeStatistics(
   tournament: TournamentQueryData,
-): Promise<Statistics> {
-  const stats: Statistics = {};
+): Promise<[MapStatistics, OverallStatistics]> {
+  const mapStats: MapStatistics = {};
 
   const mappoolMaps = tournament.tournament_stages[0].mappool_maps.sort(
     (a, b) =>
@@ -46,21 +133,27 @@ export async function createPlayerStats(
   );
 
   mappoolMaps.forEach((map) => {
-    const playerScore = map.scores.map((plrScore) => {
-      const username = plrScore.team_players.users.username;
+    const mapScore = map.scores.map((plrScore) => {
+      const user = plrScore.team_players.users;
       return {
-        name: username,
+        name: user.username,
+        osuId: user.osu_id,
         score: plrScore.score,
         mapPlacement: 0,
         percentMax: 0,
         percentDifference: 1,
         zScore: 0,
-      } as StatisticsEntry;
+      } as MapStatsEntry;
     });
 
-    applyStatistics(playerScore);
-    stats[map.map_index] = playerScore;
+    applyStatistics(mapScore);
+
+    mapStats[map.map_index] = mapScore;
   });
 
-  return stats;
+  const playerStats = createPlayerStats(mapStats);
+
+  const overallStats = createOverallStats(mapStats, playerStats);
+
+  return [mapStats, overallStats];
 }
