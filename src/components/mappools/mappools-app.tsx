@@ -14,7 +14,7 @@ export async function MappoolsApp() {
   }
 
   const stageButtons = stages.map((stage, i) => (
-    <a key={i} href={`/mappools/${i}`}>
+    <a key={i} href={`/mappools/${i + 1}`}>
       {stage.stage_name}
     </a>
   ));

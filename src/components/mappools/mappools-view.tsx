@@ -1,29 +1,34 @@
-import { ModsEntry } from "@/lib/interfaces/mappools";
-import { MapEntry } from "@/lib/interfaces/statistics";
+import { MappoolQueryData } from "@/lib/mappools/query";
 import Image from "next/image";
+import React from "react";
 
 interface MappoolsViewProps {
-  beatmaps: MapEntry;
-  mapMods: ModsEntry;
+  query: MappoolQueryData;
 }
 
-export function MappoolsView({ beatmaps, mapMods }: MappoolsViewProps) {
-  const mappoolA = [];
-  const mappoolB = [];
+export function MappoolsView({ query }: MappoolsViewProps) {
+  const mappoolA: React.ReactElement[] = [];
+  const mappoolB: React.ReactElement[] = [];
 
-  for (const map in beatmaps) {
-    const beatmap = beatmaps[map];
-    const mods = mapMods[map];
+  const mappoolMaps = query.tournament_stages[0].mappool_maps.sort((a, b) =>
+    a.map_index.localeCompare(b.map_index, undefined, {
+      numeric: true,
+      sensitivity: "base",
+    }),
+  );
+
+  mappoolMaps.forEach((map) => {
+    const beatmap = map.beatmaps;
 
     if (!beatmap.cover || beatmap.cover.endsWith("cover.jpg?0")) {
       beatmap.cover = "/beatmaps/default-bg.png";
     }
 
     const mapCard = (
-      <div key={map} className="w-96">
+      <div key={map.map_index} className="w-96">
         <div className="flex justify-between">
-          <h1>{map}</h1>
-          <h1>{mods}</h1>
+          <h1>{map.map_index}</h1>
+          <h1>{map.mods}</h1>
         </div>
         <a href={`https://osu.ppy.sh/b/${beatmap.osu_id}`} target="_blank">
           <Image
@@ -35,12 +40,10 @@ export function MappoolsView({ beatmaps, mapMods }: MappoolsViewProps) {
             className="w-96"
           ></Image>
         </a>
-
         <h2>
           {beatmap.artist} - {beatmap.name} [{beatmap.difficulty_name}]
         </h2>
         <p>{beatmap.mapper}</p>
-
         <div className="flex flex-row gap-5">
           <div className="flex flex-row gap-2">
             <p>SR {beatmap.star_rating}</p>
@@ -57,13 +60,13 @@ export function MappoolsView({ beatmaps, mapMods }: MappoolsViewProps) {
       </div>
     );
 
-    if (map[0] === "A") {
+    if (map.map_index[0] === "A") {
       mappoolA.push(mapCard);
     }
-    if (map[0] === "B") {
+    if (map.map_index[0] === "B") {
       mappoolB.push(mapCard);
     }
-  }
+  });
 
   return (
     <div className="flex flex-row gap-20">
