@@ -596,7 +596,7 @@ export type Database = {
         };
         Insert: {
           id?: number;
-          is_public: boolean;
+          is_public?: boolean;
           stage_index: number;
           stage_name: string;
           stage_type: Database["public"]["Enums"]["stage_types"];
