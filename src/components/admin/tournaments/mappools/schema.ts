@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const mappoolMapFormSchema = z.object({
-  osu_id: z.number(),
-  map_index: z.string(),
+  osuId: z.number(),
+  mapIndex: z.string(),
   mods: z.string(),
 });
 
