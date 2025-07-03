@@ -1,10 +1,13 @@
 "use server";
 
+import { Tables } from "@/generated/database.types";
 import { findBeatmap } from "@/lib/beatmaps/utils";
 import { ServerActionResponse } from "@/lib/error";
 import { createServerClient } from "@/lib/server";
 
-export async function addBeatmap(id: number): Promise<ServerActionResponse> {
+export async function addBeatmap(
+  id: number,
+): Promise<ServerActionResponse<Tables<"beatmaps">>> {
   const supabase = await createServerClient();
   const submittedBeatmap = await findBeatmap(id);
 
@@ -15,7 +18,7 @@ export async function addBeatmap(id: number): Promise<ServerActionResponse> {
     .single();
 
   if (!beatmap) {
-    await supabase.from("beatmaps").insert({
+    const { data: insertBeatmap } = await supabase.from("beatmaps").insert({
       name: submittedBeatmap.beatmapset.title,
       artist: submittedBeatmap.beatmapset.artist,
       difficulty_name: submittedBeatmap.version,
@@ -32,8 +35,14 @@ export async function addBeatmap(id: number): Promise<ServerActionResponse> {
       osu_id: id,
       cover: submittedBeatmap.beatmapset.covers.cover,
     });
+
+    if (!insertBeatmap) {
+      return { error: "Beatmap could not be inserted" };
+    }
+
+    return insertBeatmap;
   } else if (submittedBeatmap.last_updated > beatmap.last_updated) {
-    await supabase
+    const { data: updateBeatmap } = await supabase
       .from("beatmaps")
       .update({
         name: submittedBeatmap.beatmapset.title,
@@ -53,7 +62,13 @@ export async function addBeatmap(id: number): Promise<ServerActionResponse> {
         cover: submittedBeatmap.beatmapset.covers.cover,
       })
       .eq("osu_id", id);
+
+    if (!updateBeatmap) {
+      return { error: "Beatmap could not be updated" };
+    }
+
+    return updateBeatmap;
   } else {
-    console.log("The beatmap is already in the database.");
+    return { error: "Beatmap already in the database" };
   }
 }
