@@ -3,9 +3,13 @@ import { auth } from "@/auth";
 export async function findBeatmap(id: number) {
   const session = await auth();
 
+  if (!session) {
+    throw new Error("User not logged in");
+  }
+
   const response = await fetch(`https://osu.ppy.sh/api/v2/beatmaps/${id}`, {
     headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
+      Authorization: `Bearer ${session.accessToken}`,
     },
   });
 
