@@ -10,9 +10,13 @@ interface StatisticsOverallProps {
 
 type Keys = keyof OverallStatisticsEntry;
 
-type Columns = {
+type Column<T> = {
   header: string;
-  format?: (val: number) => number;
+  format?: (val: T) => string;
+};
+
+type Columns = {
+  [K in Keys]: Column<OverallStatisticsEntry[K]>;
 };
 
 export function StatisticsOverall({ stats }: StatisticsOverallProps) {
@@ -30,25 +34,25 @@ export function StatisticsOverall({ stats }: StatisticsOverallProps) {
     "Average Score",
   ];
 
-  const columns: Record<Keys, Columns> = {
+  const columns: Columns = {
     name: { header: "Spiller" },
     sumOfPlacements: { header: "Sum of Placements" },
     zSum: {
       header: "Z-sum",
-      format: (val: number) => Math.round(val * 100) / 100,
+      format: (val) => (Math.round(val * 100) / 100).toFixed(2),
     },
     percentMax: {
       header: "Percent Max",
-      format: (val: number) => Math.round(val * 100) / 100,
+      format: (val) => (Math.round(val * 100) / 100).toFixed(2),
     },
     percentDifference: {
       header: "Percent Difference",
-      format: (val: number) => Math.round(val * 100) / 100,
+      format: (val) => (Math.round(val * 100) / 100).toFixed(2),
     },
     score: { header: "Score" },
     avgScore: {
       header: "Average Score",
-      format: (val: number) => Math.floor(val),
+      format: (val) => String(Math.floor(val)),
     },
     osuId: { header: "User ID" },
   };
@@ -113,13 +117,16 @@ export function StatisticsOverall({ stats }: StatisticsOverallProps) {
           <tr key={plr.osuId}>
             <td className="text-center">{i + 1}</td>
             {headers.map((h) => {
-              const key = keys.find((col) => columns[col].header === h);
+              const key = keys.find(
+                (col): col is keyof OverallStatisticsEntry =>
+                  columns[col].header === h,
+              );
               if (!key) return null;
 
               const value = plr[key];
-              const roundedValue = columns[key].format
-                ? columns[key].format(value as number)
-                : value;
+              const column = columns[key] as Column<typeof value>;
+
+              const roundedValue = column.format ? column.format(value) : value;
 
               return (
                 <td key={h} className="text-center">
