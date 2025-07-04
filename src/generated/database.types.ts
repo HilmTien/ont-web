@@ -47,12 +47,15 @@ export type Database = {
           ar: number | null
           artist: string
           bpm: number
+          cover: string | null
           cs: number | null
           difficulty_name: string
           drain_time: number
           hp: number | null
           id: number
+          last_updated: string
           mapper: string
+          mapset_host: string
           name: string
           od: number | null
           osu_id: number | null
@@ -62,12 +65,15 @@ export type Database = {
           ar?: number | null
           artist: string
           bpm: number
+          cover?: string | null
           cs?: number | null
           difficulty_name: string
           drain_time: number
           hp?: number | null
           id?: number
+          last_updated: string
           mapper: string
+          mapset_host: string
           name: string
           od?: number | null
           osu_id?: number | null
@@ -77,12 +83,15 @@ export type Database = {
           ar?: number | null
           artist?: string
           bpm?: number
+          cover?: string | null
           cs?: number | null
           difficulty_name?: string
           drain_time?: number
           hp?: number | null
           id?: number
+          last_updated?: string
           mapper?: string
+          mapset_host?: string
           name?: string
           od?: number | null
           osu_id?: number | null
@@ -579,6 +588,7 @@ export type Database = {
       tournament_stages: {
         Row: {
           id: number
+          is_public: boolean
           stage_index: number
           stage_name: string
           stage_type: Database["public"]["Enums"]["stage_types"]
@@ -586,6 +596,7 @@ export type Database = {
         }
         Insert: {
           id?: number
+          is_public?: boolean
           stage_index: number
           stage_name: string
           stage_type: Database["public"]["Enums"]["stage_types"]
@@ -593,6 +604,7 @@ export type Database = {
         }
         Update: {
           id?: number
+          is_public?: boolean
           stage_index?: number
           stage_name?: string
           stage_type?: Database["public"]["Enums"]["stage_types"]
