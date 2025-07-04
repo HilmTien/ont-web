@@ -1,29 +1,26 @@
-export interface MapStatistics {
-  [mapIndex: string]: MapStatsEntry[];
-}
-
-export interface MapStatsEntry {
+interface StatsEntry {
   name: string;
-  osuId: number;
   score: number;
   mapPlacement: number;
   percentMax: number;
   percentDifference: number;
   zScore: number;
+}
+
+export interface MapStatistics {
+  [mapIndex: string]: MapStatsEntry[];
+}
+
+export interface MapStatsEntry extends StatsEntry {
+  osuId: number;
 }
 
 export interface PlayerStatistics {
   [playerId: string]: PlayerStatsEntry[];
 }
 
-export interface PlayerStatsEntry {
+export interface PlayerStatsEntry extends StatsEntry {
   mapIndex: string;
-  name: string;
-  score: number;
-  mapPlacement: number;
-  percentMax: number;
-  percentDifference: number;
-  zScore: number;
 }
 
 export interface OverallStatistics {
