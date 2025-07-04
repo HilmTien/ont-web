@@ -13,18 +13,25 @@ interface StatisticsViewProps {
   statistics: StatisticsQueryData;
 }
 
+interface MapInfoData {
+  artist: string;
+  songName: string;
+  difficulty: string;
+  cover: string;
+}
+
 export function StatisticsView({
   mapStats,
   overallStats,
   statistics,
 }: StatisticsViewProps) {
   const [map, setMap] = React.useState("Overall");
-  const [mapData, setMapData] = React.useState<string[]>([
-    "",
-    "",
-    "",
-    "/beatmaps/default-bg.png",
-  ]);
+  const [mapData, setMapData] = React.useState<MapInfoData>({
+    artist: "",
+    songName: "",
+    difficulty: "",
+    cover: "/beatmaps/default-bg.png",
+  });
 
   React.useMemo(() => {
     const beatmap = statistics.tournament_stages[0].mappool_maps.find(
@@ -32,7 +39,12 @@ export function StatisticsView({
     );
 
     if (!beatmap) {
-      setMapData(["", "", "", "/beatmaps/default-bg.png"]);
+      setMapData({
+        artist: "",
+        songName: "",
+        difficulty: "",
+        cover: "/beatmaps/default-bg.png",
+      });
       return;
     }
 
@@ -42,12 +54,12 @@ export function StatisticsView({
       mapInfo.cover = "/beatmaps/default-bg.png";
     }
 
-    setMapData([
-      mapInfo.artist,
-      mapInfo.name,
-      mapInfo.difficulty_name,
-      mapInfo.cover,
-    ]);
+    setMapData({
+      artist: mapInfo.artist,
+      songName: mapInfo.name,
+      difficulty: mapInfo.difficulty_name,
+      cover: mapInfo.cover,
+    });
   }, [map, statistics.tournament_stages]);
 
   const mapButtons = [
@@ -75,9 +87,11 @@ export function StatisticsView({
       <div className="mb-5 flex gap-2">{mapButtons}</div>
 
       <div className={map === "Overall" ? "hidden" : "mb-5 flex flex-col"}>
-        <p>{`${mapData[0]} - ${mapData[1]} [${mapData[2]}]`} </p>
+        <p>
+          {`${mapData.artist} - ${mapData.songName} [${mapData.difficulty}]`}{" "}
+        </p>
         <Image
-          src={mapData[3]}
+          src={mapData.cover}
           alt="Beatmap Image"
           width="0"
           height="0"
