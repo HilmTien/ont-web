@@ -47,7 +47,7 @@ function createOverallStats(
   const mapStatsValues = Object.values(mapStats);
 
   mapStatsValues.forEach((mapStats) => {
-    for (let currentMap of mapStats) {
+    for (const currentMap of mapStats) {
       const player = overallStats[currentMap.osuId];
       if (player) {
         player.zSum += currentMap.zScore;
