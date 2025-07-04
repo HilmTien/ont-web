@@ -1,7 +1,7 @@
 "use client";
 
 import { MapStatistics, OverallStatistics } from "@/lib/statistics/interfaces";
-import { TournamentQueryData } from "@/lib/statistics/query";
+import { StatisticsQueryData } from "@/lib/statistics/query";
 import Image from "next/image";
 import React from "react";
 import { StatisticsMap } from "./statistics-map";
@@ -10,13 +10,13 @@ import { StatisticsOverall } from "./statistics-overall";
 interface StatisticsViewProps {
   mapStats: MapStatistics;
   overallStats: OverallStatistics;
-  tournament: TournamentQueryData;
+  statistics: StatisticsQueryData;
 }
 
 export function StatisticsView({
   mapStats,
   overallStats,
-  tournament,
+  statistics,
 }: StatisticsViewProps) {
   const [map, setMap] = React.useState("Overall");
   const [mapData, setMapData] = React.useState<string[]>([
@@ -27,7 +27,7 @@ export function StatisticsView({
   ]);
 
   React.useMemo(() => {
-    const beatmap = tournament.tournament_stages[0].mappool_maps.find(
+    const beatmap = statistics.tournament_stages[0].mappool_maps.find(
       (m) => m.map_index === map,
     );
 
@@ -48,7 +48,7 @@ export function StatisticsView({
       mapInfo.difficulty_name,
       mapInfo.cover,
     ]);
-  }, [map, tournament.tournament_stages]);
+  }, [map, statistics.tournament_stages]);
 
   const mapButtons = [
     <button

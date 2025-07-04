@@ -37,4 +37,4 @@ export async function getStatistics(
     .single();
 }
 
-export type TournamentQueryData = QueryData<ReturnType<typeof getStatistics>>;
+export type StatisticsQueryData = QueryData<ReturnType<typeof getStatistics>>;
