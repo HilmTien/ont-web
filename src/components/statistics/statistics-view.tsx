@@ -83,7 +83,7 @@ export function StatisticsView({
   ];
 
   return (
-    <div>
+    <div className={!statistics.tournament_stages[0].is_public ? "hidden" : ""}>
       <div className="mb-5 flex gap-2">{mapButtons}</div>
 
       <div className={map === "Overall" ? "hidden" : "mb-5 flex flex-col"}>

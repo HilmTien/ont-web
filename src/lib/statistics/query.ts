@@ -15,6 +15,7 @@ export async function getStatistics(
     .select(
       `
         tournament_stages(
+          is_public,
           mappool_maps(
             map_index,
             beatmaps(
