@@ -17,13 +17,6 @@ interface StatisticsViewProps {
   statistics: StatisticsQueryData;
 }
 
-interface MapInfoData {
-  artist: string;
-  songName: string;
-  difficulty: string;
-  cover: string;
-}
-
 export function StatisticsView({
   mapStats,
   overallStats,
