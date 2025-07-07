@@ -37,3 +37,10 @@ export interface OverallStatisticsEntry {
   score: number;
   avgScore: number;
 }
+
+export const defaultMapData = {
+  artist: "",
+  songName: "",
+  difficulty: "",
+  cover: "/beatmaps/default-bg.png",
+};

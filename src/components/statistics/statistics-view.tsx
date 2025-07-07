@@ -1,6 +1,10 @@
 "use client";
 
-import { MapStatistics, OverallStatistics } from "@/lib/statistics/interfaces";
+import {
+  defaultMapData,
+  MapStatistics,
+  OverallStatistics,
+} from "@/lib/statistics/interfaces";
 import { StatisticsQueryData } from "@/lib/statistics/query";
 import Image from "next/image";
 import React from "react";
@@ -26,41 +30,23 @@ export function StatisticsView({
   statistics,
 }: StatisticsViewProps) {
   const [map, setMap] = React.useState("Overall");
-  const [mapData, setMapData] = React.useState<MapInfoData>({
-    artist: "",
-    songName: "",
-    difficulty: "",
-    cover: "/beatmaps/default-bg.png",
-  });
 
-  React.useMemo(() => {
-    const beatmap = statistics.tournament_stages[0].mappool_maps.find(
-      (m) => m.map_index === map,
-    );
+  const beatmap = statistics.tournament_stages[0].mappool_maps.find(
+    (m) => m.map_index === map,
+  )?.beatmaps;
 
-    if (!beatmap) {
-      setMapData({
-        artist: "",
-        songName: "",
-        difficulty: "",
-        cover: "/beatmaps/default-bg.png",
-      });
-      return;
-    }
+  const mapData = beatmap
+    ? {
+        artist: beatmap.artist,
+        songName: beatmap.name,
+        difficulty: beatmap.difficulty_name,
+        cover: beatmap.cover,
+      }
+    : defaultMapData;
 
-    const mapInfo = beatmap.beatmaps;
-
-    if (!mapInfo.cover || mapInfo.cover.endsWith("cover.jpg?0")) {
-      mapInfo.cover = "/beatmaps/default-bg.png";
-    }
-
-    setMapData({
-      artist: mapInfo.artist,
-      songName: mapInfo.name,
-      difficulty: mapInfo.difficulty_name,
-      cover: mapInfo.cover,
-    });
-  }, [map, statistics.tournament_stages]);
+  if (!mapData.cover || mapData.cover.endsWith("cover.jpg?0")) {
+    mapData.cover = "/beatmaps/default-bg.png";
+  }
 
   const mapButtons = [
     <button
