@@ -36,15 +36,15 @@ export function StatisticsMap({ map, mapStats }: StatisticsMapProps) {
     mapPlacement: { header: "Map Placement" },
     zScore: {
       header: "Z-score",
-      format: (val) => (Math.round(val * 100) / 100).toFixed(2),
+      format: (val) => val.toFixed(2),
     },
     percentMax: {
       header: "Percent Max",
-      format: (val) => (Math.round(val * 100) / 100).toFixed(2),
+      format: (val) => val.toFixed(2),
     },
     percentDifference: {
       header: "Percent Difference",
-      format: (val) => (Math.round(val * 100) / 100).toFixed(2),
+      format: (val) => val.toFixed(2),
     },
     score: { header: "Score" },
     osuId: { header: "User ID" },
