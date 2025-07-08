@@ -1,1 +1,0 @@
-alter table "public"."tournament_stages" add column "is_public" boolean not null;

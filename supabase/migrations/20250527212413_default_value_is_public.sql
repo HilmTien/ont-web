@@ -1,1 +1,0 @@
-alter table "public"."tournament_stages" alter column "is_public" set default false;
