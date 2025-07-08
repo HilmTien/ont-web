@@ -1,7 +1,11 @@
 "use client";
 
-import { MapStatistics, OverallStatistics } from "@/lib/statistics/interfaces";
-import { TournamentQueryData } from "@/lib/statistics/query";
+import {
+  defaultMapData,
+  MapStatistics,
+  OverallStatistics,
+} from "@/lib/statistics/interfaces";
+import { StatisticsQueryData } from "@/lib/statistics/query";
 import Image from "next/image";
 import React from "react";
 import { StatisticsMap } from "./statistics-map";
@@ -10,45 +14,32 @@ import { StatisticsOverall } from "./statistics-overall";
 interface StatisticsViewProps {
   mapStats: MapStatistics;
   overallStats: OverallStatistics;
-  tournament: TournamentQueryData;
+  statistics: StatisticsQueryData;
 }
 
 export function StatisticsView({
   mapStats,
   overallStats,
-  tournament,
+  statistics,
 }: StatisticsViewProps) {
   const [map, setMap] = React.useState("Overall");
-  const [mapData, setMapData] = React.useState<string[]>([
-    "",
-    "",
-    "",
-    "/beatmaps/default-bg.png",
-  ]);
 
-  React.useMemo(() => {
-    const beatmap = tournament.tournament_stages[0].mappool_maps.find(
-      (m) => m.map_index === map,
-    );
+  const beatmap = statistics.tournament_stages[0].mappool_maps.find(
+    (m) => m.map_index === map,
+  )?.beatmaps;
 
-    if (!beatmap) {
-      setMapData(["", "", "", "/beatmaps/default-bg.png"]);
-      return;
-    }
+  const mapData = beatmap
+    ? {
+        artist: beatmap.artist,
+        songName: beatmap.name,
+        difficulty: beatmap.difficulty_name,
+        cover: beatmap.cover,
+      }
+    : defaultMapData;
 
-    const mapInfo = beatmap.beatmaps;
-
-    if (!mapInfo.cover || mapInfo.cover.endsWith("cover.jpg?0")) {
-      mapInfo.cover = "/beatmaps/default-bg.png";
-    }
-
-    setMapData([
-      mapInfo.artist,
-      mapInfo.name,
-      mapInfo.difficulty_name,
-      mapInfo.cover,
-    ]);
-  }, [map, tournament.tournament_stages]);
+  if (!mapData.cover || mapData.cover.endsWith("cover.jpg?0")) {
+    mapData.cover = "/beatmaps/default-bg.png";
+  }
 
   const mapButtons = [
     <button
@@ -71,13 +62,15 @@ export function StatisticsView({
   ];
 
   return (
-    <div>
+    <div className={!statistics.tournament_stages[0].is_public ? "hidden" : ""}>
       <div className="mb-5 flex gap-2">{mapButtons}</div>
 
       <div className={map === "Overall" ? "hidden" : "mb-5 flex flex-col"}>
-        <p>{`${mapData[0]} - ${mapData[1]} [${mapData[2]}]`} </p>
+        <p>
+          {`${mapData.artist} - ${mapData.songName} [${mapData.difficulty}]`}{" "}
+        </p>
         <Image
-          src={mapData[3]}
+          src={mapData.cover}
           alt="Beatmap Image"
           width="0"
           height="0"

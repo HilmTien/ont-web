@@ -8,9 +8,13 @@ interface StatisticsMapProps {
 
 type Keys = keyof MapStatsEntry;
 
-type Columns = {
+type Column<T> = {
   header: string;
-  format?: (val: number) => number;
+  format?: (val: T) => string;
+};
+
+type Columns = {
+  [K in Keys]: Column<MapStatsEntry[K]>;
 };
 
 export function StatisticsMap({ map, mapStats }: StatisticsMapProps) {
@@ -27,20 +31,20 @@ export function StatisticsMap({ map, mapStats }: StatisticsMapProps) {
     "Score",
   ];
 
-  const columns: Record<Keys, Columns> = {
+  const columns: Columns = {
     name: { header: "Spiller" },
     mapPlacement: { header: "Map Placement" },
     zScore: {
       header: "Z-score",
-      format: (val: number) => Math.round(val * 100) / 100,
+      format: (val) => val.toFixed(2),
     },
     percentMax: {
       header: "Percent Max",
-      format: (val: number) => Math.round(val * 100) / 100,
+      format: (val) => val.toFixed(2),
     },
     percentDifference: {
       header: "Percent Difference",
-      format: (val: number) => Math.round(val * 100) / 100,
+      format: (val) => val.toFixed(2),
     },
     score: { header: "Score" },
     osuId: { header: "User ID" },
@@ -106,17 +110,21 @@ export function StatisticsMap({ map, mapStats }: StatisticsMapProps) {
           <tr key={plr.osuId}>
             <td className="text-center">{i + 1}</td>
             {headers.map((h) => {
-              const key = keys.find((col) => columns[col].header === h);
+              const key = keys.find(
+                (col): col is keyof MapStatsEntry => columns[col].header === h,
+              );
               if (!key) return null;
 
               const value = plr[key];
-              const roundedValue = columns[key].format
-                ? columns[key].format(value as number)
+              const column = columns[key] as Column<typeof value>;
+
+              const formattedValue = column.format
+                ? column.format(value)
                 : value;
 
               return (
                 <td key={h} className="text-center">
-                  {roundedValue}
+                  {formattedValue}
                 </td>
               );
             })}

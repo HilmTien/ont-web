@@ -6,7 +6,7 @@ import {
   PlayerStatistics,
   PlayerStatsEntry,
 } from "./interfaces";
-import { TournamentQueryData } from "./query";
+import { StatisticsQueryData } from "./query";
 
 function applyStatistics(entries: MapStatsEntry[]) {
   const scores = entries.map((entry) => entry.score);
@@ -44,11 +44,10 @@ function createOverallStats(
   playerStats: PlayerStatistics,
 ) {
   const overallStats: OverallStatistics = {};
-  const maps = Object.values(mapStats);
+  const mapStatsValues = Object.values(mapStats);
 
-  maps.forEach((map) => {
-    for (let i = 0; i < map.length; i++) {
-      const currentMap = map[i];
+  mapStatsValues.forEach((mapStats) => {
+    for (const currentMap of mapStats) {
       const player = overallStats[currentMap.osuId];
       if (player) {
         player.zSum += currentMap.zScore;
@@ -120,11 +119,11 @@ function createPlayerStats(mapStats: MapStatistics) {
 }
 
 export async function makeStatistics(
-  tournament: TournamentQueryData,
+  statistics: StatisticsQueryData,
 ): Promise<[MapStatistics, OverallStatistics]> {
   const mapStats: MapStatistics = {};
 
-  const mappoolMaps = tournament.tournament_stages[0].mappool_maps.sort(
+  const mappoolMaps = statistics.tournament_stages[0].mappool_maps.sort(
     (a, b) =>
       a.map_index.localeCompare(b.map_index, undefined, {
         numeric: true,

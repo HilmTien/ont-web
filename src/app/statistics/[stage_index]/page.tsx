@@ -17,16 +17,16 @@ export default async function Page({
 
   const supabase = await createServerClient();
 
-  const { data: tournament } = await getStatistics(supabase, {
+  const { data: statistics } = await getStatistics(supabase, {
     id: 1,
     stageIndex: stageIndex,
   });
 
-  if (!tournament) {
-    return <>Error fetching tournament data</>;
+  if (!statistics) {
+    return <>Error fetching statistics data</>;
   }
 
-  const [mapStats, overallStats] = await makeStatistics(tournament);
+  const [mapStats, overallStats] = await makeStatistics(statistics);
 
   return (
     <div className="m-2 flex gap-10">
@@ -34,7 +34,7 @@ export default async function Page({
       <StatisticsView
         mapStats={mapStats}
         overallStats={overallStats}
-        tournament={tournament}
+        statistics={statistics}
       />
     </div>
   );

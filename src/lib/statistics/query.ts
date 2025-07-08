@@ -15,6 +15,7 @@ export async function getStatistics(
     .select(
       `
         tournament_stages(
+          is_public,
           mappool_maps(
             map_index,
             beatmaps(
@@ -37,4 +38,4 @@ export async function getStatistics(
     .single();
 }
 
-export type TournamentQueryData = QueryData<ReturnType<typeof getStatistics>>;
+export type StatisticsQueryData = QueryData<ReturnType<typeof getStatistics>>;
