@@ -1,6 +1,7 @@
 "use server";
 
 import { Tables } from "@/generated/database.types";
+import { TournamentQueryData } from "@/lib/admin/tournaments/mappools/query";
 import { isActionError, ServerActionResponse } from "@/lib/error";
 import { createServerClient } from "@/lib/server";
 import { revalidatePath } from "next/cache";
@@ -12,36 +13,24 @@ export async function addMappoolMap(
     mapIndex: string;
     mods: string;
   },
-  stageId: number,
+  tournament: TournamentQueryData,
 ): Promise<ServerActionResponse<Tables<"mappool_maps">>> {
   const supabase = await createServerClient();
 
   const { data: beatmap } = await supabase
     .from("beatmaps")
-    .select(`*, mappool_maps(id, map_index)`)
-    .eq("mappool_maps.stage_id", stageId)
-    .eq("osu_id", data.osuId)
-    .single();
-
-  const { data: tournament } = await supabase
-    .from("tournaments")
     .select(
       `
-      id,
-      tournament_stages(
-        mappool_maps(
-          id,
-          map_index
-        )
+      *,
+      mappool_maps(
+        id,
+        map_index
       )
       `,
     )
-    .eq("tournament_stages.id", stageId)
+    .eq("mappool_maps.stage_id", tournament.tournament_stages[0].id)
+    .eq("osu_id", data.osuId)
     .single();
-
-  if (!tournament) {
-    return { error: "Error fetching tournament data" };
-  }
 
   let beatmapId: number;
 
@@ -67,7 +56,7 @@ export async function addMappoolMap(
       .update({
         map_index: data.mapIndex,
         mods: data.mods,
-        stage_id: stageId,
+        stage_id: tournament.tournament_stages[0].id,
         beatmap_id: beatmapId,
       })
       .eq("id", mappoolMap.id)
@@ -79,6 +68,8 @@ export async function addMappoolMap(
     }
 
     revalidatePath(`admin/tournaments/${tournament.id}/mappools`);
+
+    console.log("map updated");
     return updateMappoolMap;
   }
 
@@ -87,7 +78,7 @@ export async function addMappoolMap(
     .insert({
       map_index: data.mapIndex,
       mods: data.mods,
-      stage_id: stageId,
+      stage_id: tournament.tournament_stages[0].id,
       beatmap_id: beatmapId,
     })
     .select()
@@ -98,6 +89,7 @@ export async function addMappoolMap(
   }
 
   revalidatePath(`admin/tournaments/${tournament.id}/mappools`);
+  console.log("map added");
   return addedMappoolMap;
 }
 
@@ -112,28 +104,37 @@ export async function deleteMappoolMap(
     .select()
     .single();
 
+  if (!deletedMappoolMap) {
+    return { error: "Could not delete the mappool map" };
+  }
+
   const { data: tournament } = await supabase
     .from("tournaments")
     .select(
       `
-    id,
-    tournament_stages(
+      id,
+      tournament_stages(
       mappool_maps(
         id
       )
     )
     `,
     )
-    .eq("tournament_stages.mappool_maps.id", id)
-    .single();
+    .eq("tournament_stages.mappool_maps.id", id);
 
-  if (!deletedMappoolMap) {
-    return { error: "Could not delete the mappool map" };
+  if (!tournament) {
+    return { error: "Could not get tournament data" };
   }
 
-  if (tournament) {
-    revalidatePath(`admin/tournaments/${tournament.id}/mappools`);
+  const specificTournament = tournament.find(
+    (tourney) => tourney.tournament_stages.length > 0,
+  );
+
+  if (!specificTournament) {
+    return { error: "Could not find the specific tournament" };
   }
+
+  revalidatePath(`admin/tournaments/${specificTournament.id}/mappools`);
 
   return deletedMappoolMap;
 }

@@ -1,8 +1,8 @@
 import { DeleteMapButton } from "@/components/admin/tournaments/mappools/delete-map-button";
 import { MappoolsForm } from "@/components/admin/tournaments/mappools/mappools-form";
 import { TogglePublicButton } from "@/components/admin/tournaments/mappools/toggle-public-button";
+import { getTournament } from "@/lib/admin/tournaments/mappools/query";
 import { createServerClient } from "@/lib/server";
-import { QueryData } from "@supabase/supabase-js";
 import Image from "next/image";
 
 export default async function Page({
@@ -18,39 +18,11 @@ export default async function Page({
 
   const supabase = await createServerClient();
 
-  const tournamentQuery = supabase
-    .from("tournaments")
-    .select(
-      `
-      id,
-    tournament_stages(
-      id,
-      stage_name,
-      stage_index,
-      is_public,
-      mappool_maps(
-        id,
-        map_index,
-        mods,
-        beatmaps(
-          *
-        )  
-      )
-    )
-    `,
-    )
-    .eq("id", id)
-    .single();
+  const { data: tournament } = await getTournament(supabase, { id: id });
 
-  type Tournament = QueryData<typeof tournamentQuery>;
-
-  const { data: tournamentData } = await tournamentQuery;
-
-  if (!tournamentData) {
+  if (!tournament) {
     return <>Error fetching tournament data</>;
   }
-
-  const tournament: Tournament = tournamentData;
 
   tournament.tournament_stages.sort((a, b) => a.stage_index - b.stage_index);
   tournament.tournament_stages[0].mappool_maps.sort((a, b) =>
@@ -110,7 +82,7 @@ export default async function Page({
               </td>
             ))}
             <td>
-              <MappoolsForm stageId={stage.id} />
+              <MappoolsForm tournament={tournament} />
             </td>
           </tr>
         ))}
