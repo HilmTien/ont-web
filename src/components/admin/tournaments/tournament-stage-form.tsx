@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 
 import { createTournamentStage } from "@/actions/tournament-stage";
-import { PublicTournamentStagesInsertSchema } from "@/generated/zod-schema-types";
-import { publicTournamentStagesInsertSchemaSchema } from "@/generated/zod-schemas";
+import { PublicTournamentStagesInsert } from "@/generated/zod-schema-types";
+import { publicTournamentStagesInsertSchema } from "@/generated/zod-schemas";
 import { isActionError } from "@/lib/error";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -13,8 +13,8 @@ interface TournamentStageFormProps {
 }
 
 export function TournamentStageForm({ id }: TournamentStageFormProps) {
-  const form = useForm<PublicTournamentStagesInsertSchema>({
-    resolver: zodResolver(publicTournamentStagesInsertSchemaSchema),
+  const form = useForm<PublicTournamentStagesInsert>({
+    resolver: zodResolver(publicTournamentStagesInsertSchema),
     defaultValues: {
       stage_name: "My Stage",
       stage_index: 1,
@@ -22,7 +22,7 @@ export function TournamentStageForm({ id }: TournamentStageFormProps) {
     },
   });
 
-  const onSubmit = async (data: PublicTournamentStagesInsertSchema) => {
+  const onSubmit = async (data: PublicTournamentStagesInsert) => {
     const result = await createTournamentStage(data);
 
     if (isActionError(result)) {

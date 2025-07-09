@@ -3,13 +3,13 @@
 import { useForm } from "react-hook-form";
 
 import { createTournament } from "@/actions/tournament";
-import { PublicTournamentsInsertSchema } from "@/generated/zod-schema-types";
-import { publicTournamentsInsertSchemaSchema } from "@/generated/zod-schemas";
+import { PublicTournamentsInsert } from "@/generated/zod-schema-types";
+import { publicTournamentsInsertSchema } from "@/generated/zod-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export function TournamentForm() {
-  const form = useForm<PublicTournamentsInsertSchema>({
-    resolver: zodResolver(publicTournamentsInsertSchemaSchema),
+  const form = useForm<PublicTournamentsInsert>({
+    resolver: zodResolver(publicTournamentsInsertSchema),
     defaultValues: {
       name: "My Osu! Tournament",
       acronym: "MOT",

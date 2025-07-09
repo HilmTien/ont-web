@@ -1,9 +1,9 @@
 "use server";
 
-import { PublicTournamentsInsertSchema } from "@/generated/zod-schema-types";
+import { PublicTournamentsInsert } from "@/generated/zod-schema-types";
 import { createServerClient } from "@/lib/server";
 
-export async function createTournament(data: PublicTournamentsInsertSchema) {
+export async function createTournament(data: PublicTournamentsInsert) {
   const supabase = await createServerClient();
 
   await supabase.from("tournaments").insert(data);

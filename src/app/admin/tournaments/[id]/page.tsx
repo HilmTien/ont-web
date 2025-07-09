@@ -50,6 +50,7 @@ export default async function Page({
             ))}
         </tbody>
       </table>
+      <a href={`./${id}/mappools`}>Edit Mappool</a>
     </div>
   );
 }
