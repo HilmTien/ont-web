@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  defaultMapData,
-  MapStatistics,
-  OverallStatistics,
-} from "@/lib/statistics/interfaces";
+import { MapStatistics, OverallStatistics } from "@/lib/statistics/interfaces";
 import { StatisticsQueryData } from "@/lib/statistics/query";
 import Image from "next/image";
 import React from "react";
@@ -16,6 +12,13 @@ interface StatisticsViewProps {
   overallStats: OverallStatistics;
   statistics: StatisticsQueryData;
 }
+
+const defaultMapData = {
+  artist: "",
+  songName: "",
+  difficulty: "",
+  cover: "/beatmaps/default-bg.png",
+};
 
 export function StatisticsView({
   mapStats,
