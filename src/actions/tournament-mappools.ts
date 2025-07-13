@@ -38,15 +38,11 @@ export async function addMappoolMap(
     const newBeatmap = await addBeatmap(data.osuId);
 
     if (isActionError(newBeatmap)) {
-      console.log(newBeatmap)
       return { error: `Beatmap could not be added: ${newBeatmap.error}` };
     }
 
     beatmapId = newBeatmap.id;
-    console.log("added beatmap has gotten id")
   }
-
-  console.log("beatmap id")
 
   const mappoolMap = tournament.tournament_stages[0].mappool_maps.find(
     (map) => map.map_index === data.mapIndex,
