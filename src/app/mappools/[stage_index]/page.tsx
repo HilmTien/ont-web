@@ -16,20 +16,20 @@ export default async function Page({
 
   const supabase = await createServerClient();
 
-  const { data: mappoolQuery } = await getMappool(supabase, {
+  const { data: mappool } = await getMappool(supabase, {
     id: 1,
     stageIndex: stageIndex,
   });
 
-  if (!mappoolQuery) {
+  if (!mappool) {
     return <>Error fetching mappool data</>;
   }
 
-  if (mappoolQuery.tournament_stages[0].is_public) {
+  if (mappool.tournament_stages[0].is_public) {
     return (
       <div className="m-2 flex gap-36">
         <MappoolsApp />
-        <MappoolsView query={mappoolQuery} />
+        <MappoolsView data={mappool} />
       </div>
     );
   } else {

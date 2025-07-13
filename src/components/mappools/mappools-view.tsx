@@ -1,16 +1,17 @@
-import { MappoolQueryData } from "@/lib/mappools/query";
+import { MappoolData } from "@/lib/mappools/query";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface MappoolsViewProps {
-  query: MappoolQueryData;
+  data: MappoolData;
 }
 
-export function MappoolsView({ query }: MappoolsViewProps) {
+export function MappoolsView({ data }: MappoolsViewProps) {
   const mappoolA: React.ReactElement[] = [];
   const mappoolB: React.ReactElement[] = [];
 
-  const mappoolMaps = query.tournament_stages[0].mappool_maps.sort((a, b) =>
+  const mappoolMaps = data.tournament_stages[0].mappool_maps.sort((a, b) =>
     a.map_index.localeCompare(b.map_index, undefined, {
       numeric: true,
       sensitivity: "base",
@@ -30,7 +31,7 @@ export function MappoolsView({ query }: MappoolsViewProps) {
           <h1>{map.map_index}</h1>
           <h1>{map.mods}</h1>
         </div>
-        <a href={`https://osu.ppy.sh/b/${beatmap.osu_id}`} target="_blank">
+        <Link href={`https://osu.ppy.sh/b/${beatmap.osu_id}`} target="_blank">
           <Image
             src={beatmap.cover}
             alt="Beatmap Image"
@@ -39,7 +40,7 @@ export function MappoolsView({ query }: MappoolsViewProps) {
             sizes="100vw"
             className="w-96"
           ></Image>
-        </a>
+        </Link>
         <h2>
           {beatmap.artist} - {beatmap.name} [{beatmap.difficulty_name}]
         </h2>

@@ -1,4 +1,5 @@
 import { createServerClient } from "@/lib/server";
+import Link from "next/link";
 
 export async function MappoolsApp() {
   const supabase = await createServerClient();
@@ -14,9 +15,9 @@ export async function MappoolsApp() {
   }
 
   const stageButtons = stages.map((stage, i) => (
-    <a key={i} href={`/mappools/${i + 1}`}>
+    <Link key={i} href={`/mappools/${i + 1}`}>
       {stage.stage_name}
-    </a>
+    </Link>
   ));
 
   return <div className="flex flex-col">{stageButtons}</div>;

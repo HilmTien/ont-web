@@ -1,14 +1,14 @@
 import { Database } from "@/generated/database.types";
 import { QueryData, SupabaseClient } from "@supabase/supabase-js";
 
-interface QueryParams {
+interface MappoolParams {
   id: number;
   stageIndex: number;
 }
 
 export async function getMappool(
   supabase: SupabaseClient<Database>,
-  params: QueryParams,
+  params: MappoolParams,
 ) {
   return supabase
     .from("tournaments")
@@ -31,4 +31,4 @@ export async function getMappool(
     .single();
 }
 
-export type MappoolQueryData = QueryData<ReturnType<typeof getMappool>>;
+export type MappoolData = QueryData<ReturnType<typeof getMappool>>;

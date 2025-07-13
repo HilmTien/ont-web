@@ -32,19 +32,21 @@ export async function addMappoolMap(
     .eq("osu_id", data.osuId)
     .single();
 
-  let beatmapId: number;
+  let beatmapId = beatmap?.id;
 
-  if (!beatmap) {
+  if (!beatmapId) {
     const newBeatmap = await addBeatmap(data.osuId);
 
     if (isActionError(newBeatmap)) {
+      console.log(newBeatmap)
       return { error: `Beatmap could not be added: ${newBeatmap.error}` };
     }
 
     beatmapId = newBeatmap.id;
-  } else {
-    beatmapId = beatmap.id;
+    console.log("added beatmap has gotten id")
   }
+
+  console.log("beatmap id")
 
   const mappoolMap = tournament.tournament_stages[0].mappool_maps.find(
     (map) => map.map_index === data.mapIndex,
@@ -69,7 +71,6 @@ export async function addMappoolMap(
 
     revalidatePath(`admin/tournaments/${tournament.id}/mappools`);
 
-    console.log("map updated");
     return updateMappoolMap;
   }
 
@@ -89,7 +90,6 @@ export async function addMappoolMap(
   }
 
   revalidatePath(`admin/tournaments/${tournament.id}/mappools`);
-  console.log("map added");
   return addedMappoolMap;
 }
 
@@ -148,7 +148,7 @@ export async function updateIsPublic(
 
   const { data: updatedIsPublic } = await supabase
     .from("tournament_stages")
-    .update({ is_public: !isPublic })
+    .update({ is_public: isPublic })
     .eq("id", stageId)
     .select()
     .single();

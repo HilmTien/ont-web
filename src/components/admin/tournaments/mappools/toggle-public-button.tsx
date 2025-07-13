@@ -16,7 +16,7 @@ export function TogglePublicButton({
   return (
     <button
       className="cursor-pointer"
-      onClick={() => updateIsPublic(tournamentId, isPublic, stageId)}
+      onClick={() => updateIsPublic(tournamentId, !isPublic, stageId)}
     >
       {isPublic ? "PUBLIC" : "NOT PUBLIC"}
     </button>
