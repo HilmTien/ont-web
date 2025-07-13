@@ -4,6 +4,7 @@ import { TogglePublicButton } from "@/components/admin/tournaments/mappools/togg
 import { getTournament } from "@/lib/admin/tournaments/mappools/query";
 import { createServerClient } from "@/lib/server";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Page({
   params,
@@ -59,7 +60,7 @@ export default async function Page({
                     <p>{map.beatmaps.difficulty_name}</p>
                     <p>{map.beatmaps.mapper}</p>
                   </div>
-                  <a
+                  <Link
                     href={`https://osu.ppy.sh/b/${map.beatmaps.osu_id}`}
                     target="_blank"
                   >
@@ -76,7 +77,7 @@ export default async function Page({
                       sizes="100vw"
                       className="ml-5 w-56"
                     ></Image>
-                  </a>
+                  </Link>
                   <DeleteMapButton id={map.id} />
                 </div>
               </td>
