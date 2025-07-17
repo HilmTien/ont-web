@@ -4,6 +4,7 @@ import { createServerClient } from "@/lib/server";
 import { auth } from "@/auth";
 import { ServerActionResponse } from "@/lib/error";
 import { Tables } from "@/generated/database.types";
+import { revalidatePath } from "next/cache";
 
 export async function createRegistration(
   data: Omit<PublicRegistrationsInsertSchema, "registered_at" | "user_id">,
@@ -50,6 +51,8 @@ export async function createRegistration(
   if (!newRegistration) {
     return { error: "Registration failed" };
   }
+
+  revalidatePath(`/tournament/${data.tournament_id}`);
 
   return newRegistration;
 }
