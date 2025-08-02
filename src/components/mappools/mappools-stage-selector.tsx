@@ -1,7 +1,7 @@
 import { createServerClient } from "@/lib/server";
 import Link from "next/link";
 
-export async function MappoolsApp() {
+export async function MappoolsStageSelector() {
   const supabase = await createServerClient();
 
   const { data: stages } = await supabase

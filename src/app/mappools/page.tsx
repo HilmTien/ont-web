@@ -1,5 +1,5 @@
-import { MappoolsApp } from "@/components/mappools/mappools-app";
+import { MappoolsStageSelector } from "@/components/mappools/mappools-stage-selector";
 
 export default async function Page() {
-  return <MappoolsApp />;
+  return <MappoolsStageSelector />;
 }

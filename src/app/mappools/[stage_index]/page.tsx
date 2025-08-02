@@ -1,4 +1,4 @@
-import { MappoolsApp } from "@/components/mappools/mappools-app";
+import { MappoolsStageSelector } from "@/components/mappools/mappools-stage-selector";
 import { MappoolsView } from "@/components/mappools/mappools-view";
 import { getMappool } from "@/lib/mappools/query";
 import { createServerClient } from "@/lib/server";
@@ -28,14 +28,14 @@ export default async function Page({
   if (mappool.tournament_stages[0].is_public) {
     return (
       <div className="m-2 flex gap-36">
-        <MappoolsApp />
+        <MappoolsStageSelector />
         <MappoolsView data={mappool} />
       </div>
     );
   } else {
     return (
       <div className="m-2 flex gap-36">
-        <MappoolsApp />
+        <MappoolsStageSelector />
         <>Mappool not released yet</>
       </div>
     );
