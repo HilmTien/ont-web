@@ -1,7 +1,6 @@
 "use server";
 
 import { Tables } from "@/generated/database.types";
-import { TournamentQueryData } from "@/lib/admin/tournaments/mappools/query";
 import { isActionError, ServerActionResponse } from "@/lib/error";
 import { createServerClient } from "@/lib/server";
 import { revalidatePath } from "next/cache";
@@ -13,9 +12,31 @@ export async function addMappoolMap(
     mapIndex: string;
     mods: string;
   },
-  tournament: TournamentQueryData,
+  id: number,
+  stageId: number,
 ): Promise<ServerActionResponse<Tables<"mappool_maps">>> {
   const supabase = await createServerClient();
+
+  const { data: tournament } = await supabase.from("tournaments").select(
+    `
+    id,
+    tournament_stages(
+      id,
+      mappool_maps(
+        id,
+        map_index
+      )
+    )
+    `)
+    .eq("id", id)
+    .eq("tournament_stages.id", stageId)
+    .single()
+
+  console.log(id)
+
+  if (!tournament) {
+    return { error: `Error fetching tournament data` }
+  }
 
   const { data: beatmap } = await supabase
     .from("beatmaps")

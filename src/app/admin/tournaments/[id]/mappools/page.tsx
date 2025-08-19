@@ -25,6 +25,10 @@ export default async function Page({
     return <>Error fetching tournament data</>;
   }
 
+  if (tournament.tournament_stages.length === 0) {
+    return <>Add stages to edit mappool</>;
+  }
+
   tournament.tournament_stages.sort((a, b) => a.stage_index - b.stage_index);
   tournament.tournament_stages[0].mappool_maps.sort((a, b) =>
     a.map_index.localeCompare(b.map_index, undefined, {
@@ -83,7 +87,7 @@ export default async function Page({
               </td>
             ))}
             <td>
-              <MappoolsForm tournament={tournament} />
+              <MappoolsForm id={id} stageId={stage.id} />
             </td>
           </tr>
         ))}

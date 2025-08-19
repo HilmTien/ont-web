@@ -35,3 +35,4 @@ export async function getTournament(
 }
 
 export type TournamentQueryData = QueryData<ReturnType<typeof getTournament>>;
+

@@ -1,23 +1,23 @@
 "use client";
 
 import { addMappoolMap } from "@/actions/tournament-mappools";
-import { TournamentQueryData } from "@/lib/admin/tournaments/mappools/query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { mappoolMapFormSchema, MappoolMapFormSchema } from "./schema";
 
 interface MappoolsFormProps {
-  tournament: TournamentQueryData;
+  id: number;
+  stageId: number;
 }
 
-export function MappoolsForm({ tournament }: MappoolsFormProps) {
+export function MappoolsForm({ id, stageId }: MappoolsFormProps) {
   const form = useForm<MappoolMapFormSchema>({
     resolver: zodResolver(mappoolMapFormSchema),
   });
 
   return (
     <form
-      onSubmit={form.handleSubmit((data) => addMappoolMap(data, tournament))}
+      onSubmit={form.handleSubmit((data) => addMappoolMap(data, id, stageId))}
     >
       <input {...form.register("mapIndex")} />
       <input
