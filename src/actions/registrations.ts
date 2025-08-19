@@ -1,9 +1,9 @@
 "use server";
-import { PublicRegistrationsInsertSchema } from "@/generated/zod-schema-types";
-import { createServerClient } from "@/lib/server";
 import { auth } from "@/auth";
-import { ServerActionResponse } from "@/lib/error";
 import { Tables } from "@/generated/database.types";
+import { PublicRegistrationsInsertSchema } from "@/generated/zod-schema-types";
+import { ServerActionResponse } from "@/lib/error";
+import { createServerClient } from "@/lib/server";
 import { revalidatePath } from "next/cache";
 
 export async function createRegistration(
@@ -55,4 +55,12 @@ export async function createRegistration(
   revalidatePath(`/tournament/${data.tournament_id}`);
 
   return newRegistration;
+}
+
+export async function removeRegistration(userId: number, tournamentId: number) {
+  const supabase = await createServerClient();
+
+  await supabase.from("registrations").delete().eq("user_id", userId);
+
+  revalidatePath(`/admin/tournament/${tournamentId}`);
 }
