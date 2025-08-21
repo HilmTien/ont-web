@@ -32,8 +32,6 @@ export async function addMappoolMap(
     .eq("tournament_stages.id", stageId)
     .single()
 
-  console.log(id)
-
   if (!tournament) {
     return { error: `Error fetching tournament data` }
   }
