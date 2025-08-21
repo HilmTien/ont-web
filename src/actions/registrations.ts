@@ -1,13 +1,13 @@
 "use server";
 import { auth } from "@/auth";
 import { Tables } from "@/generated/database.types";
-import { PublicRegistrationsInsertSchema } from "@/generated/zod-schema-types";
+import { PublicRegistrationsInsert } from "@/generated/zod-schema-types";
 import { ServerActionResponse } from "@/lib/error";
 import { createServerClient } from "@/lib/server";
 import { revalidatePath } from "next/cache";
 
 export async function createRegistration(
-  data: Omit<PublicRegistrationsInsertSchema, "registered_at" | "user_id">,
+  data: Omit<PublicRegistrationsInsert, "registered_at" | "user_id">,
 ): Promise<ServerActionResponse<Tables<"registrations">>> {
   const supabase = await createServerClient();
 

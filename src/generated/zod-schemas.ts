@@ -635,7 +635,7 @@ export const publicTournamentStagesRowSchema = z.object({
 
 export const publicTournamentStagesInsertSchema = z.object({
   id: z.number().optional(),
-  is_public: z.boolean(),
+  is_public: z.boolean().optional(),
   stage_index: z.number(),
   stage_name: z.string(),
   stage_type: publicStageTypesSchema,
