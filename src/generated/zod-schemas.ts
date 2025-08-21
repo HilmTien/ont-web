@@ -24,25 +24,25 @@ export const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
     .nullable(),
 );
 
-export const publicAdminsRowSchemaSchema = z.object({
+export const publicAdminsRowSchema = z.object({
   id: z.number(),
   tournament_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicAdminsInsertSchemaSchema = z.object({
+export const publicAdminsInsertSchema = z.object({
   id: z.number().optional(),
   tournament_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicAdminsUpdateSchemaSchema = z.object({
+export const publicAdminsUpdateSchema = z.object({
   id: z.number().optional(),
   tournament_id: z.number().optional(),
   user_id: z.number().optional(),
 });
 
-export const publicAdminsRelationshipsSchemaSchema = z.tuple([
+export const publicAdminsRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("admins_tournament_id_fkey"),
     columns: z.tuple([z.literal("tournament_id")]),
@@ -59,73 +59,82 @@ export const publicAdminsRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicBeatmapsRowSchemaSchema = z.object({
+export const publicBeatmapsRowSchema = z.object({
   ar: z.number().nullable(),
   artist: z.string(),
   bpm: z.number(),
+  cover: z.string().nullable(),
   cs: z.number().nullable(),
   difficulty_name: z.string(),
   drain_time: z.number(),
   hp: z.number().nullable(),
   id: z.number(),
+  last_updated: z.string(),
   mapper: z.string(),
+  mapset_host: z.string(),
   name: z.string(),
   od: z.number().nullable(),
   osu_id: z.number().nullable(),
   star_rating: z.number(),
 });
 
-export const publicBeatmapsInsertSchemaSchema = z.object({
+export const publicBeatmapsInsertSchema = z.object({
   ar: z.number().optional().nullable(),
   artist: z.string(),
   bpm: z.number(),
+  cover: z.string().optional().nullable(),
   cs: z.number().optional().nullable(),
   difficulty_name: z.string(),
   drain_time: z.number(),
   hp: z.number().optional().nullable(),
   id: z.number().optional(),
+  last_updated: z.string(),
   mapper: z.string(),
+  mapset_host: z.string(),
   name: z.string(),
   od: z.number().optional().nullable(),
   osu_id: z.number().optional().nullable(),
   star_rating: z.number(),
 });
 
-export const publicBeatmapsUpdateSchemaSchema = z.object({
+export const publicBeatmapsUpdateSchema = z.object({
   ar: z.number().optional().nullable(),
   artist: z.string().optional(),
   bpm: z.number().optional(),
+  cover: z.string().optional().nullable(),
   cs: z.number().optional().nullable(),
   difficulty_name: z.string().optional(),
   drain_time: z.number().optional(),
   hp: z.number().optional().nullable(),
   id: z.number().optional(),
+  last_updated: z.string().optional(),
   mapper: z.string().optional(),
+  mapset_host: z.string().optional(),
   name: z.string().optional(),
   od: z.number().optional().nullable(),
   osu_id: z.number().optional().nullable(),
   star_rating: z.number().optional(),
 });
 
-export const publicCommentatorsRowSchemaSchema = z.object({
+export const publicCommentatorsRowSchema = z.object({
   id: z.number(),
   tournament_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicCommentatorsInsertSchemaSchema = z.object({
+export const publicCommentatorsInsertSchema = z.object({
   id: z.number().optional(),
   tournament_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicCommentatorsUpdateSchemaSchema = z.object({
+export const publicCommentatorsUpdateSchema = z.object({
   id: z.number().optional(),
   tournament_id: z.number().optional(),
   user_id: z.number().optional(),
 });
 
-export const publicCommentatorsRelationshipsSchemaSchema = z.tuple([
+export const publicCommentatorsRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("commentators_tournament_id_fkey"),
     columns: z.tuple([z.literal("tournament_id")]),
@@ -142,7 +151,7 @@ export const publicCommentatorsRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicMappoolMapsRowSchemaSchema = z.object({
+export const publicMappoolMapsRowSchema = z.object({
   beatmap_id: z.number(),
   id: z.number(),
   map_index: z.string(),
@@ -150,7 +159,7 @@ export const publicMappoolMapsRowSchemaSchema = z.object({
   stage_id: z.number(),
 });
 
-export const publicMappoolMapsInsertSchemaSchema = z.object({
+export const publicMappoolMapsInsertSchema = z.object({
   beatmap_id: z.number(),
   id: z.number().optional(),
   map_index: z.string(),
@@ -158,7 +167,7 @@ export const publicMappoolMapsInsertSchemaSchema = z.object({
   stage_id: z.number(),
 });
 
-export const publicMappoolMapsUpdateSchemaSchema = z.object({
+export const publicMappoolMapsUpdateSchema = z.object({
   beatmap_id: z.number().optional(),
   id: z.number().optional(),
   map_index: z.string().optional(),
@@ -166,7 +175,7 @@ export const publicMappoolMapsUpdateSchemaSchema = z.object({
   stage_id: z.number().optional(),
 });
 
-export const publicMappoolMapsRelationshipsSchemaSchema = z.tuple([
+export const publicMappoolMapsRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("mappool_maps_beatmap_id_fkey"),
     columns: z.tuple([z.literal("beatmap_id")]),
@@ -183,7 +192,7 @@ export const publicMappoolMapsRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicMatchesRowSchemaSchema = z.object({
+export const publicMatchesRowSchema = z.object({
   commentator1_id: z.number().nullable(),
   commentator2_id: z.number().nullable(),
   id: z.number(),
@@ -200,7 +209,7 @@ export const publicMatchesRowSchemaSchema = z.object({
   tournament_match_id: z.string(),
 });
 
-export const publicMatchesInsertSchemaSchema = z.object({
+export const publicMatchesInsertSchema = z.object({
   commentator1_id: z.number().optional().nullable(),
   commentator2_id: z.number().optional().nullable(),
   id: z.number().optional(),
@@ -217,7 +226,7 @@ export const publicMatchesInsertSchemaSchema = z.object({
   tournament_match_id: z.string(),
 });
 
-export const publicMatchesUpdateSchemaSchema = z.object({
+export const publicMatchesUpdateSchema = z.object({
   commentator1_id: z.number().optional().nullable(),
   commentator2_id: z.number().optional().nullable(),
   id: z.number().optional(),
@@ -234,7 +243,7 @@ export const publicMatchesUpdateSchemaSchema = z.object({
   tournament_match_id: z.string().optional(),
 });
 
-export const publicMatchesRelationshipsSchemaSchema = z.tuple([
+export const publicMatchesRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("matches_commentator1_id_fkey"),
     columns: z.tuple([z.literal("commentator1_id")]),
@@ -293,7 +302,7 @@ export const publicMatchesRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicQualifierLobbiesRowSchemaSchema = z.object({
+export const publicQualifierLobbiesRowSchema = z.object({
   id: z.number(),
   lobby_time: z.string(),
   mp_id: z.number().nullable(),
@@ -302,7 +311,7 @@ export const publicQualifierLobbiesRowSchemaSchema = z.object({
   tournament_match_id: z.string(),
 });
 
-export const publicQualifierLobbiesInsertSchemaSchema = z.object({
+export const publicQualifierLobbiesInsertSchema = z.object({
   id: z.number().optional(),
   lobby_time: z.string(),
   mp_id: z.number().optional().nullable(),
@@ -311,7 +320,7 @@ export const publicQualifierLobbiesInsertSchemaSchema = z.object({
   tournament_match_id: z.string(),
 });
 
-export const publicQualifierLobbiesUpdateSchemaSchema = z.object({
+export const publicQualifierLobbiesUpdateSchema = z.object({
   id: z.number().optional(),
   lobby_time: z.string().optional(),
   mp_id: z.number().optional().nullable(),
@@ -320,7 +329,7 @@ export const publicQualifierLobbiesUpdateSchemaSchema = z.object({
   tournament_match_id: z.string().optional(),
 });
 
-export const publicQualifierLobbiesRelationshipsSchemaSchema = z.tuple([
+export const publicQualifierLobbiesRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("qualifier_lobbies_referee_id_fkey"),
     columns: z.tuple([z.literal("referee_id")]),
@@ -337,28 +346,28 @@ export const publicQualifierLobbiesRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicQualifierSignupsRowSchemaSchema = z.object({
+export const publicQualifierSignupsRowSchema = z.object({
   id: z.number(),
   lobby_id: z.number(),
   signed_up_at: z.string(),
   user_id: z.number(),
 });
 
-export const publicQualifierSignupsInsertSchemaSchema = z.object({
+export const publicQualifierSignupsInsertSchema = z.object({
   id: z.number().optional(),
   lobby_id: z.number(),
   signed_up_at: z.string().optional(),
   user_id: z.number(),
 });
 
-export const publicQualifierSignupsUpdateSchemaSchema = z.object({
+export const publicQualifierSignupsUpdateSchema = z.object({
   id: z.number().optional(),
   lobby_id: z.number().optional(),
   signed_up_at: z.string().optional(),
   user_id: z.number().optional(),
 });
 
-export const publicQualifierSignupsRelationshipsSchemaSchema = z.tuple([
+export const publicQualifierSignupsRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("qualifier_signups_lobby_id_fkey"),
     columns: z.tuple([z.literal("lobby_id")]),
@@ -375,25 +384,25 @@ export const publicQualifierSignupsRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicRefereesRowSchemaSchema = z.object({
+export const publicRefereesRowSchema = z.object({
   id: z.number(),
   tournament_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicRefereesInsertSchemaSchema = z.object({
+export const publicRefereesInsertSchema = z.object({
   id: z.number().optional(),
   tournament_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicRefereesUpdateSchemaSchema = z.object({
+export const publicRefereesUpdateSchema = z.object({
   id: z.number().optional(),
   tournament_id: z.number().optional(),
   user_id: z.number().optional(),
 });
 
-export const publicRefereesRelationshipsSchemaSchema = z.tuple([
+export const publicRefereesRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("referees_tournament_id_fkey"),
     columns: z.tuple([z.literal("tournament_id")]),
@@ -410,28 +419,28 @@ export const publicRefereesRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicRegistrationsRowSchemaSchema = z.object({
+export const publicRegistrationsRowSchema = z.object({
   id: z.number(),
   registered_at: z.string(),
   tournament_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicRegistrationsInsertSchemaSchema = z.object({
+export const publicRegistrationsInsertSchema = z.object({
   id: z.number().optional(),
   registered_at: z.string().optional(),
   tournament_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicRegistrationsUpdateSchemaSchema = z.object({
+export const publicRegistrationsUpdateSchema = z.object({
   id: z.number().optional(),
   registered_at: z.string().optional(),
   tournament_id: z.number().optional(),
   user_id: z.number().optional(),
 });
 
-export const publicRegistrationsRelationshipsSchemaSchema = z.tuple([
+export const publicRegistrationsRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("registrations_tournament_id_fkey"),
     columns: z.tuple([z.literal("tournament_id")]),
@@ -448,7 +457,7 @@ export const publicRegistrationsRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicScoresRowSchemaSchema = z.object({
+export const publicScoresRowSchema = z.object({
   "100s": z.number().nullable(),
   "50s": z.number().nullable(),
   accuracy: z.number(),
@@ -463,7 +472,7 @@ export const publicScoresRowSchemaSchema = z.object({
   tournament_id: z.number(),
 });
 
-export const publicScoresInsertSchemaSchema = z.object({
+export const publicScoresInsertSchema = z.object({
   "100s": z.number().optional().nullable(),
   "50s": z.number().optional().nullable(),
   accuracy: z.number(),
@@ -478,7 +487,7 @@ export const publicScoresInsertSchemaSchema = z.object({
   tournament_id: z.number(),
 });
 
-export const publicScoresUpdateSchemaSchema = z.object({
+export const publicScoresUpdateSchema = z.object({
   "100s": z.number().optional().nullable(),
   "50s": z.number().optional().nullable(),
   accuracy: z.number().optional(),
@@ -493,7 +502,7 @@ export const publicScoresUpdateSchemaSchema = z.object({
   tournament_id: z.number().optional(),
 });
 
-export const publicScoresRelationshipsSchemaSchema = z.tuple([
+export const publicScoresRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("scores_mappool_map_id_fkey"),
     columns: z.tuple([z.literal("mappool_map_id")]),
@@ -517,25 +526,25 @@ export const publicScoresRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicStreamersRowSchemaSchema = z.object({
+export const publicStreamersRowSchema = z.object({
   id: z.number(),
   tournament_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicStreamersInsertSchemaSchema = z.object({
+export const publicStreamersInsertSchema = z.object({
   id: z.number().optional(),
   tournament_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicStreamersUpdateSchemaSchema = z.object({
+export const publicStreamersUpdateSchema = z.object({
   id: z.number().optional(),
   tournament_id: z.number().optional(),
   user_id: z.number().optional(),
 });
 
-export const publicStreamersRelationshipsSchemaSchema = z.tuple([
+export const publicStreamersRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("streamers_tournament_id_fkey"),
     columns: z.tuple([z.literal("tournament_id")]),
@@ -552,25 +561,25 @@ export const publicStreamersRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicTeamPlayersRowSchemaSchema = z.object({
+export const publicTeamPlayersRowSchema = z.object({
   id: z.number(),
   team_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicTeamPlayersInsertSchemaSchema = z.object({
+export const publicTeamPlayersInsertSchema = z.object({
   id: z.number().optional(),
   team_id: z.number(),
   user_id: z.number(),
 });
 
-export const publicTeamPlayersUpdateSchemaSchema = z.object({
+export const publicTeamPlayersUpdateSchema = z.object({
   id: z.number().optional(),
   team_id: z.number().optional(),
   user_id: z.number().optional(),
 });
 
-export const publicTeamPlayersRelationshipsSchemaSchema = z.tuple([
+export const publicTeamPlayersRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("team_players_team_id_fkey"),
     columns: z.tuple([z.literal("team_id")]),
@@ -587,25 +596,25 @@ export const publicTeamPlayersRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicTeamsRowSchemaSchema = z.object({
+export const publicTeamsRowSchema = z.object({
   id: z.number(),
   name: z.string(),
   tournament_id: z.number(),
 });
 
-export const publicTeamsInsertSchemaSchema = z.object({
+export const publicTeamsInsertSchema = z.object({
   id: z.number().optional(),
   name: z.string(),
   tournament_id: z.number(),
 });
 
-export const publicTeamsUpdateSchemaSchema = z.object({
+export const publicTeamsUpdateSchema = z.object({
   id: z.number().optional(),
   name: z.string().optional(),
   tournament_id: z.number().optional(),
 });
 
-export const publicTeamsRelationshipsSchemaSchema = z.tuple([
+export const publicTeamsRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("teams_tournament_id_fkey"),
     columns: z.tuple([z.literal("tournament_id")]),
@@ -615,31 +624,34 @@ export const publicTeamsRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicTournamentStagesRowSchemaSchema = z.object({
+export const publicTournamentStagesRowSchema = z.object({
   id: z.number(),
+  is_public: z.boolean(),
   stage_index: z.number(),
   stage_name: z.string(),
   stage_type: publicStageTypesSchema,
   tournament_id: z.number(),
 });
 
-export const publicTournamentStagesInsertSchemaSchema = z.object({
+export const publicTournamentStagesInsertSchema = z.object({
   id: z.number().optional(),
+  is_public: z.boolean().optional(),
   stage_index: z.number(),
   stage_name: z.string(),
   stage_type: publicStageTypesSchema,
   tournament_id: z.number(),
 });
 
-export const publicTournamentStagesUpdateSchemaSchema = z.object({
+export const publicTournamentStagesUpdateSchema = z.object({
   id: z.number().optional(),
+  is_public: z.boolean().optional(),
   stage_index: z.number().optional(),
   stage_name: z.string().optional(),
   stage_type: publicStageTypesSchema.optional(),
   tournament_id: z.number().optional(),
 });
 
-export const publicTournamentStagesRelationshipsSchemaSchema = z.tuple([
+export const publicTournamentStagesRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("tournament_stages_tournament_id_fkey"),
     columns: z.tuple([z.literal("tournament_id")]),
@@ -649,40 +661,40 @@ export const publicTournamentStagesRelationshipsSchemaSchema = z.tuple([
   }),
 ]);
 
-export const publicTournamentsRowSchemaSchema = z.object({
+export const publicTournamentsRowSchema = z.object({
   acronym: z.string(),
   id: z.number(),
   name: z.string(),
   team_size: z.number().nullable(),
 });
 
-export const publicTournamentsInsertSchemaSchema = z.object({
+export const publicTournamentsInsertSchema = z.object({
   acronym: z.string(),
   id: z.number().optional(),
   name: z.string(),
   team_size: z.number().optional().nullable(),
 });
 
-export const publicTournamentsUpdateSchemaSchema = z.object({
+export const publicTournamentsUpdateSchema = z.object({
   acronym: z.string().optional(),
   id: z.number().optional(),
   name: z.string().optional(),
   team_size: z.number().optional().nullable(),
 });
 
-export const publicUsersRowSchemaSchema = z.object({
+export const publicUsersRowSchema = z.object({
   id: z.number(),
   osu_id: z.number(),
   username: z.string(),
 });
 
-export const publicUsersInsertSchemaSchema = z.object({
+export const publicUsersInsertSchema = z.object({
   id: z.number().optional(),
   osu_id: z.number(),
   username: z.string(),
 });
 
-export const publicUsersUpdateSchemaSchema = z.object({
+export const publicUsersUpdateSchema = z.object({
   id: z.number().optional(),
   osu_id: z.number().optional(),
   username: z.string().optional(),
