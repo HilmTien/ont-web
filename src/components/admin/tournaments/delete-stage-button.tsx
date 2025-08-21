@@ -1,10 +1,10 @@
 "use client";
 
 import { deleteTournamentStage } from "@/actions/tournament-stage";
-import { PublicTournamentStagesRowSchema } from "@/generated/zod-schema-types";
+import { PublicTournamentStagesRow } from "@/generated/zod-schema-types";
 
 interface DeleteStageButtonProps {
-  stage: PublicTournamentStagesRowSchema;
+  stage: PublicTournamentStagesRow;
 }
 
 export function DeleteStageButton({ stage }: DeleteStageButtonProps) {
