@@ -2,16 +2,18 @@
 
 import { useForm } from "react-hook-form";
 
-import { createMatch } from "@/actions/schedule";
-import { PublicMatchesInsert } from "@/generated/zod-schema-types";
-import { publicMatchesInsertSchema } from "@/generated/zod-schemas";
+import { editMatch } from "@/actions/schedule";
+import { PublicMatchesUpdate } from "@/generated/zod-schema-types";
+import { publicMatchesUpdateSchema } from "@/generated/zod-schemas";
 import {
   CommentatorsQueryData,
+  MatchesQueryData,
   RefereesQueryData,
   StagesQueryData,
   StreamersQueryData,
   TeamsQueryData,
 } from "@/lib/schedule/query";
+import { removeNullProperties } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 interface MatchFormProps {
@@ -22,22 +24,17 @@ interface MatchFormProps {
   };
   teams: TeamsQueryData;
   stages: StagesQueryData;
-  tournamentId: number;
+  match: MatchesQueryData[number];
 }
 
-export function MatchForm({
-  staff,
-  teams,
-  stages,
-  tournamentId,
-}: MatchFormProps) {
-  const form = useForm<PublicMatchesInsert>({
-    resolver: zodResolver(publicMatchesInsertSchema),
-    defaultValues: { tournament_id: tournamentId },
+export function EditMatchForm({ staff, teams, stages, match }: MatchFormProps) {
+  const form = useForm<PublicMatchesUpdate>({
+    resolver: zodResolver(publicMatchesUpdateSchema),
+    defaultValues: { ...removeNullProperties(match) },
   });
 
   return (
-    <form onSubmit={form.handleSubmit(createMatch)}>
+    <form onSubmit={form.handleSubmit((data) => editMatch(data, match.id))}>
       <select
         id="referee"
         {...form.register("referee_id", {
@@ -90,7 +87,7 @@ export function MatchForm({
           </option>
         ))}
       </select>
-      <input type="datetime-local" {...form.register("match_time")}></input>
+      <input {...form.register("match_time")}></input>
       <select
         id="teams-1"
         {...form.register("team1_id", {

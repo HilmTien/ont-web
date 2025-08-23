@@ -1,4 +1,13 @@
+import { EditMatchForm } from "@/components/admin/tournaments/match-edit";
 import { MatchForm } from "@/components/admin/tournaments/match-form";
+import {
+  getCommentators,
+  getMatches,
+  getReferees,
+  getStages,
+  getStreamers,
+  getTeams,
+} from "@/lib/schedule/query";
 import { createServerClient } from "@/lib/server";
 
 export default async function Page({
@@ -14,26 +23,54 @@ export default async function Page({
 
   const supabase = await createServerClient();
 
-  const { data: matches } = await supabase
-    .from("matches")
-    .select("*, team1:teams!team1_id(name), team2:teams!team2_id(name)")
-    .eq("tournament_id", id);
+  const { data: matches } = await getMatches(supabase, { tournamentId: id });
+
+  const { data: streamers } = await getStreamers(supabase, {
+    tournamentId: id,
+  });
+
+  const { data: commentators } = await getCommentators(supabase, {
+    tournamentId: id,
+  });
+
+  const { data: referees } = await getReferees(supabase, { tournamentId: id });
+
+  if (!streamers || !commentators || !referees) {
+    return <>Error fetching staff data</>;
+  }
+
+  const { data: teams } = await getTeams(supabase, { tournamentId: id });
+
+  if (!teams) {
+    return <>Error fetching teams</>;
+  }
+
+  const { data: stages } = await getStages(supabase, { tournamentId: id });
+
+  if (!stages) {
+    return <>Error fetching stages</>;
+  }
 
   return (
     <>
-      <MatchForm />
-      <table>
-        <tbody>
-          {matches &&
-            matches.map((match) => (
-              <tr key={match.id} className="flex flex-row justify-between">
-                <td>{match.team1.name}</td>
-                <td>{match.team2.name}</td>
-                <td>{match.match_time}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <MatchForm
+        staff={{ commentators, streamers, referees }}
+        teams={teams}
+        stages={stages}
+        tournamentId={id}
+      />
+      <div className="mt-4">
+        {matches &&
+          matches.map((match) => (
+            <EditMatchForm
+              key={match.id}
+              staff={{ commentators, streamers, referees }}
+              teams={teams}
+              stages={stages}
+              match={match}
+            />
+          ))}
+      </div>
     </>
   );
 }
