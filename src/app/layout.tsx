@@ -1,15 +1,17 @@
 import { metadata as meta } from "@/lib/metadata";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Jersey_25, Jersey_25_Charted } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jersey25 = Jersey_25({
+  variable: "--font-jersey-25",
   subsets: ["latin"],
+  weight: "400",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jersey25Charted = Jersey_25_Charted({
+  variable: "--font-jersey-25-charted",
   subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata = meta;
@@ -22,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${jersey25.variable} ${jersey25Charted.variable} antialiased`}
       >
         {children}
       </body>
