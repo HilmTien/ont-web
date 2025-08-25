@@ -12,7 +12,7 @@ export async function addMappoolMap(
     mapIndex: string;
     mods: string;
   },
-  id: number,
+  tourneyId: number,
   stageId: number,
 ): Promise<ServerActionResponse<Tables<"mappool_maps">>> {
   const supabase = await createServerClient();
@@ -28,7 +28,7 @@ export async function addMappoolMap(
       )
     )
     `)
-    .eq("id", id)
+    .eq("id", tourneyId)
     .eq("tournament_stages.id", stageId)
     .single()
 
@@ -152,26 +152,4 @@ export async function deleteMappoolMap(
   revalidatePath(`admin/tournaments/${specificTournament.id}/mappools`);
 
   return deletedMappoolMap;
-}
-
-export async function updateIsPublic(
-  tournamentId: number,
-  isPublic: boolean,
-  stageId: number,
-): Promise<ServerActionResponse<Tables<"tournament_stages">>> {
-  const supabase = await createServerClient();
-
-  const { data: updatedIsPublic } = await supabase
-    .from("tournament_stages")
-    .update({ is_public: isPublic })
-    .eq("id", stageId)
-    .select()
-    .single();
-
-  if (!updatedIsPublic) {
-    return { error: "Could not update the isPublic field" };
-  }
-
-  revalidatePath(`admin/tournaments/${tournamentId}/mappools`);
-  return updatedIsPublic;
 }

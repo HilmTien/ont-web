@@ -1,6 +1,6 @@
 "use client";
 
-import { updateIsPublic } from "@/actions/tournament-mappools";
+import { updateIsPublic } from "@/actions/tournament-stage";
 
 interface TogglePublicButtonProps {
   tournamentId: number;
