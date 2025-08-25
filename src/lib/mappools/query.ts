@@ -2,7 +2,7 @@ import { Database } from "@/generated/database.types";
 import { QueryData, SupabaseClient } from "@supabase/supabase-js";
 
 interface MappoolParams {
-  id: number;
+  tourneyId: number;
   stageIndex: number;
 }
 
@@ -11,23 +11,24 @@ export async function getMappool(
   params: MappoolParams,
 ) {
   return supabase
-    .from("tournaments")
+    .from("tournament_stages")
     .select(
       `
-        tournament_stages(
-          is_public,
-          mappool_maps(
-            map_index,
-            mods,
-            beatmaps(
-              *
-            )
-          )
+      is_public,
+      mappool_maps(
+        map_index,
+        mods,
+        beatmaps(
+          *
         )
-        `,
+      ),
+      tournaments(
+        id
+      )
+    `,
     )
-    .eq("id", params.id)
-    .eq("tournament_stages.stage_index", params.stageIndex)
+    .eq("tournaments.id", params.tourneyId)
+    .eq("stage_index", params.stageIndex)
     .single();
 }
 

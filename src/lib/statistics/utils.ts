@@ -123,12 +123,11 @@ export async function makeStatistics(
 ): Promise<[MapStatistics, OverallStatistics]> {
   const mapStats: MapStatistics = {};
 
-  const mappoolMaps = statistics.tournament_stages[0].mappool_maps.sort(
-    (a, b) =>
-      a.map_index.localeCompare(b.map_index, undefined, {
-        numeric: true,
-        sensitivity: "base",
-      }),
+  const mappoolMaps = statistics.mappool_maps.sort((a, b) =>
+    a.map_index.localeCompare(b.map_index, undefined, {
+      numeric: true,
+      sensitivity: "base",
+    }),
   );
 
   mappoolMaps.forEach((map) => {

@@ -30,12 +30,15 @@ export default async function Page({
   }
 
   tournament.tournament_stages.sort((a, b) => a.stage_index - b.stage_index);
-  tournament.tournament_stages[0].mappool_maps.sort((a, b) =>
-    a.map_index.localeCompare(b.map_index, undefined, {
-      numeric: true,
-      sensitivity: "base",
-    }),
-  );
+
+  for (const stage of tournament.tournament_stages) {
+    stage.mappool_maps.sort((a, b) =>
+      a.map_index.localeCompare(b.map_index, undefined, {
+        numeric: true,
+        sensitivity: "base",
+      }),
+    );
+  }
 
   return (
     <table className="mx-5">
@@ -87,7 +90,7 @@ export default async function Page({
               </td>
             ))}
             <td>
-              <MappoolsForm id={id} stageId={stage.id} />
+              <MappoolsForm tourneyId={id} stageId={stage.id} />
             </td>
           </tr>
         ))}

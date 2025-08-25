@@ -6,18 +6,20 @@ import { useForm } from "react-hook-form";
 import { mappoolMapFormSchema, MappoolMapFormSchema } from "./schema";
 
 interface MappoolsFormProps {
-  id: number;
+  tourneyId: number;
   stageId: number;
 }
 
-export function MappoolsForm({ id, stageId }: MappoolsFormProps) {
+export function MappoolsForm({ tourneyId, stageId }: MappoolsFormProps) {
   const form = useForm<MappoolMapFormSchema>({
     resolver: zodResolver(mappoolMapFormSchema),
   });
 
   return (
     <form
-      onSubmit={form.handleSubmit((data) => addMappoolMap(data, id, stageId))}
+      onSubmit={form.handleSubmit((data) =>
+        addMappoolMap(data, tourneyId, stageId),
+      )}
     >
       <input {...form.register("mapIndex")} />
       <input

@@ -17,23 +17,26 @@ export async function addMappoolMap(
 ): Promise<ServerActionResponse<Tables<"mappool_maps">>> {
   const supabase = await createServerClient();
 
-  const { data: tournament } = await supabase.from("tournaments").select(
-    `
-    id,
-    tournament_stages(
+  const { data: tournamentStage } = await supabase
+    .from("tournament_stages")
+    .select(
+      `
       id,
       mappool_maps(
         id,
         map_index
+      ),
+      tournaments(
+        id
       )
+    `,
     )
-    `)
-    .eq("id", tourneyId)
-    .eq("tournament_stages.id", stageId)
-    .single()
+    .eq("id", stageId)
+    .eq("tournaments.id", tourneyId)
+    .single();
 
-  if (!tournament) {
-    return { error: `Error fetching tournament data` }
+  if (!tournamentStage) {
+    return { error: `Error fetching tournament stage data` };
   }
 
   const { data: beatmap } = await supabase
@@ -47,7 +50,7 @@ export async function addMappoolMap(
       )
       `,
     )
-    .eq("mappool_maps.stage_id", tournament.tournament_stages[0].id)
+    .eq("mappool_maps.stage_id", tournamentStage.id)
     .eq("osu_id", data.osuId)
     .single();
 
@@ -63,7 +66,7 @@ export async function addMappoolMap(
     beatmapId = newBeatmap.id;
   }
 
-  const mappoolMap = tournament.tournament_stages[0].mappool_maps.find(
+  const mappoolMap = tournamentStage.mappool_maps.find(
     (map) => map.map_index === data.mapIndex,
   );
 
@@ -73,7 +76,7 @@ export async function addMappoolMap(
       .update({
         map_index: data.mapIndex,
         mods: data.mods,
-        stage_id: tournament.tournament_stages[0].id,
+        stage_id: tournamentStage.id,
         beatmap_id: beatmapId,
       })
       .eq("id", mappoolMap.id)
@@ -84,7 +87,9 @@ export async function addMappoolMap(
       return { error: "Mappool map could not be updated" };
     }
 
-    revalidatePath(`admin/tournaments/${tournament.id}/mappools`);
+    revalidatePath(
+      `admin/tournaments/${tournamentStage.tournaments.id}/mappools`,
+    );
 
     return updateMappoolMap;
   }
@@ -94,7 +99,7 @@ export async function addMappoolMap(
     .insert({
       map_index: data.mapIndex,
       mods: data.mods,
-      stage_id: tournament.tournament_stages[0].id,
+      stage_id: tournamentStage.id,
       beatmap_id: beatmapId,
     })
     .select()
@@ -104,7 +109,9 @@ export async function addMappoolMap(
     return { error: "Mappool map could not be added" };
   }
 
-  revalidatePath(`admin/tournaments/${tournament.id}/mappools`);
+  revalidatePath(
+    `admin/tournaments/${tournamentStage.tournaments.id}/mappools`,
+  );
   return addedMappoolMap;
 }
 

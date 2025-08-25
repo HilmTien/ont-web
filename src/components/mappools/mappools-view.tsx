@@ -11,7 +11,7 @@ export function MappoolsView({ data }: MappoolsViewProps) {
   const mappoolA: React.ReactElement[] = [];
   const mappoolB: React.ReactElement[] = [];
 
-  const mappoolMaps = data.tournament_stages[0].mappool_maps.sort((a, b) =>
+  const mappoolMaps = data.mappool_maps.sort((a, b) =>
     a.map_index.localeCompare(b.map_index, undefined, {
       numeric: true,
       sensitivity: "base",
