@@ -52,6 +52,7 @@ export default async function Page({
         </tbody>
       </table>
       <Link href={`./${id}/mappools`}>Edit Mappool</Link>
+      <Link href={`./${id}/schedule`}>Edit Matches</Link>
     </div>
   );
 }
