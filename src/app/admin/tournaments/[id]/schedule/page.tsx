@@ -1,3 +1,4 @@
+import { DeleteMatchButton } from "@/components/admin/tournaments/delete-match-button";
 import { EditMatchForm } from "@/components/admin/tournaments/match-edit";
 import { MatchForm } from "@/components/admin/tournaments/match-form";
 import {
@@ -68,13 +69,16 @@ export default async function Page({
                 new Date(b.match_time).getTime(),
             )
             .map((match) => (
-              <EditMatchForm
-                key={match.id}
-                staff={{ commentators, streamers, referees }}
-                teams={teams}
-                stages={stages}
-                match={match}
-              />
+              <div className="flex justify-between">
+                <EditMatchForm
+                  key={match.id}
+                  staff={{ commentators, streamers, referees }}
+                  teams={teams}
+                  stages={stages}
+                  match={match}
+                />
+                <DeleteMatchButton match={match} />
+              </div>
             ))}
       </div>
     </>
