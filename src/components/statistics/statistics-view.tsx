@@ -27,7 +27,7 @@ export function StatisticsView({
 }: StatisticsViewProps) {
   const [map, setMap] = React.useState("Overall");
 
-  const beatmap = statistics.tournament_stages[0].mappool_maps.find(
+  const beatmap = statistics.mappool_maps.find(
     (m) => m.map_index === map,
   )?.beatmaps;
 
@@ -65,7 +65,7 @@ export function StatisticsView({
   ];
 
   return (
-    <div className={!statistics.tournament_stages[0].is_public ? "hidden" : ""}>
+    <div className={!statistics.is_public ? "hidden" : ""}>
       <div className="mb-5 flex gap-2">{mapButtons}</div>
 
       <div className={map === "Overall" ? "hidden" : "mb-5 flex flex-col"}>

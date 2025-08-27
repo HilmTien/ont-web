@@ -1,6 +1,7 @@
 import { DeleteStageButton } from "@/components/admin/tournaments/delete-stage-button";
 import { TournamentStageForm } from "@/components/admin/tournaments/tournament-stage-form";
 import { createServerClient } from "@/lib/server";
+import Link from "next/link";
 
 export default async function Page({
   params,
@@ -50,6 +51,7 @@ export default async function Page({
             ))}
         </tbody>
       </table>
+      <Link href={`./${id}/mappools`}>Edit Mappool</Link>
     </div>
   );
 }
