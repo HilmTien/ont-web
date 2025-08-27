@@ -14,7 +14,7 @@ export async function addMappoolMap(
   },
   tourneyId: number,
   stageId: number,
-): Promise<ServerActionResponse<Tables<"mappool_maps">>> {
+): ServerActionResponse<Tables<"mappool_maps">> {
   const supabase = await createServerClient();
 
   const { data: tournamentStage } = await supabase
@@ -117,7 +117,7 @@ export async function addMappoolMap(
 
 export async function deleteMappoolMap(
   id: number,
-): Promise<ServerActionResponse<Tables<"mappool_maps">>> {
+): ServerActionResponse<Tables<"mappool_maps">> {
   const supabase = await createServerClient();
   const { data: deletedMappoolMap } = await supabase
     .from("mappool_maps")

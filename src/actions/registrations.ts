@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 
 export async function createRegistration(
   data: Omit<PublicRegistrationsInsert, "registered_at" | "user_id">,
-): Promise<ServerActionResponse<Tables<"registrations">>> {
+): ServerActionResponse<Tables<"registrations">> {
   const supabase = await createServerClient();
 
   const session = await auth();
@@ -57,10 +57,24 @@ export async function createRegistration(
   return newRegistration;
 }
 
-export async function removeRegistration(userId: number, tournamentId: number) {
+export async function removeRegistration(
+  userId: number,
+  tournamentId: number,
+): ServerActionResponse<Tables<"registrations">> {
   const supabase = await createServerClient();
 
-  await supabase.from("registrations").delete().eq("user_id", userId);
+  const { data: user } = await supabase
+    .from("registrations")
+    .delete()
+    .eq("user_id", userId)
+    .select()
+    .single();
+
+  if (!user) {
+    return { error: "Cannot remove registration" };
+  }
 
   revalidatePath(`/admin/tournament/${tournamentId}`);
+
+  return user;
 }
