@@ -100,6 +100,11 @@ export function EditMatchForm({ staff, teams, stages, match }: MatchFormProps) {
           </option>
         ))}
       </select>
+      <input
+        {...form.register("team1_score", {
+          setValueAs: (v) => (v === "" ? null : parseInt(v)),
+        })}
+      />
       <select
         id="teams-2"
         {...form.register("team2_id", {
@@ -112,6 +117,11 @@ export function EditMatchForm({ staff, teams, stages, match }: MatchFormProps) {
           </option>
         ))}
       </select>
+      <input
+        {...form.register("team2_score", {
+          setValueAs: (v) => (v === "" ? null : parseInt(v)),
+        })}
+      />
       <select
         id="stage"
         {...form.register("stage_id", {
@@ -125,6 +135,11 @@ export function EditMatchForm({ staff, teams, stages, match }: MatchFormProps) {
         ))}
       </select>
       <input {...form.register("tournament_match_id")} />
+      <input
+        {...form.register("mp_id", {
+          setValueAs: (v) => (v === "" ? null : parseInt(v)),
+        })}
+      />
       <input type="submit" />
     </form>
   );
