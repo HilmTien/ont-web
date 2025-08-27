@@ -1,4 +1,6 @@
+import Navbar from "@/components/general/navbar/navbar";
 import { metadata as meta } from "@/lib/metadata";
+import { SessionProvider } from "next-auth/react";
 import { Jersey_25, Jersey_25_Charted } from "next/font/google";
 import "./globals.css";
 
@@ -26,7 +28,10 @@ export default function RootLayout({
       <body
         className={`${jersey25.variable} ${jersey25Charted.variable} antialiased`}
       >
-        {children}
+        <SessionProvider>
+          <Navbar />
+          <main className="mt-24">{children}</main>
+        </SessionProvider>
       </body>
     </html>
   );
