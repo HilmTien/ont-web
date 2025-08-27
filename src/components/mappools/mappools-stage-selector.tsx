@@ -1,7 +1,7 @@
 import { createServerClient } from "@/lib/server";
 import Link from "next/link";
 
-export async function StatisticsApp() {
+export async function MappoolsStageSelector() {
   const supabase = await createServerClient();
 
   const { data: stages } = await supabase
@@ -15,7 +15,7 @@ export async function StatisticsApp() {
   }
 
   const stageButtons = stages.map((stage, i) => (
-    <Link key={i} href={`/statistics/${i + 1}`}>
+    <Link key={i} href={`/mappools/${i + 1}`}>
       {stage.stage_name}
     </Link>
   ));

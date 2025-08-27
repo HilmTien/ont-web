@@ -1,5 +1,5 @@
-import { StatisticsApp } from "@/components/statistics/statistics-app";
+import { StatisticsStageSelector } from "@/components/statistics/statistics-stage-selector";
 
 export default function Page() {
-  return <StatisticsApp />;
+  return <StatisticsStageSelector />;
 }

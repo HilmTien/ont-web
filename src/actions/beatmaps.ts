@@ -47,7 +47,7 @@ export async function addBeatmap(
       hp: submittedBeatmap.drain,
       osu_id: id,
       cover: submittedBeatmap.beatmapset.covers.cover,
-    });
+    }).select().single();
 
     if (!insertBeatmap) {
       return { error: "Beatmap could not be inserted" };
