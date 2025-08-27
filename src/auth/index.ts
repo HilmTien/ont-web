@@ -34,7 +34,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         params: {
           scope: "identify public",
         },
-      }
+      },
     }),
     ...(process.env.NODE_ENV === "development" ? [MockOsu] : []),
   ],
