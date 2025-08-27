@@ -1,6 +1,6 @@
-import { createServerClient } from "@/lib/server";
-import { RegisterButton } from "@/components/tournaments/tournament-registration";
 import { auth } from "@/auth";
+import { RegisterButton } from "@/components/tournaments/tournament-registration";
+import { createServerClient } from "@/lib/server";
 
 export default async function Page({
   params,

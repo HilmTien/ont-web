@@ -11,7 +11,7 @@ import { revalidatePath } from "next/cache";
 
 export async function createTournamentStage(
   data: PublicTournamentStagesInsert,
-): Promise<ServerActionResponse> {
+): ServerActionResponse<Tables<"tournament_stages">> {
   const supabase = await createServerClient();
 
   const { data: stages } = await supabase
@@ -26,29 +26,54 @@ export async function createTournamentStage(
     return { error: "Cannot have duplicate stage index" };
   }
 
-  await supabase.from("tournament_stages").insert(data);
+  const { data: insertedStage, error } = await supabase
+    .from("tournament_stages")
+    .insert(data)
+    .select()
+    .single();
+
+  if (!insertedStage) {
+    await supabase.from("errors").insert(error);
+
+    return { error: "Could not insert stage" };
+  }
 
   revalidatePath(`/admin/tournament/${data.tournament_id}`);
+
+  return insertedStage;
 }
 
 export async function deleteTournamentStage(
   stage: PublicTournamentStagesRow,
-): Promise<ServerActionResponse> {
+): ServerActionResponse<Tables<"tournament_stages">> {
   const supabase = await createServerClient();
 
-  await supabase.from("tournament_stages").delete().eq("id", stage.id);
+  const { data: deletedStage, error } = await supabase
+    .from("tournament_stages")
+    .delete()
+    .eq("id", stage.id)
+    .select()
+    .single();
+
+  if (!deletedStage) {
+    await supabase.from("errors").insert(error);
+
+    return { error: "Could not delete stage" };
+  }
 
   revalidatePath(`/admin/tournament/${stage.tournament_id}`);
+
+  return deletedStage;
 }
 
 export async function updateIsPublic(
   tournamentId: number,
   isPublic: boolean,
   stageId: number,
-): Promise<ServerActionResponse<Tables<"tournament_stages">>> {
+): ServerActionResponse<Tables<"tournament_stages">> {
   const supabase = await createServerClient();
 
-  const { data: updatedIsPublic } = await supabase
+  const { data: updatedIsPublic, error } = await supabase
     .from("tournament_stages")
     .update({ is_public: isPublic })
     .eq("id", stageId)
@@ -56,9 +81,12 @@ export async function updateIsPublic(
     .single();
 
   if (!updatedIsPublic) {
+    await supabase.from("errors").insert(error);
+
     return { error: "Could not update the isPublic field" };
   }
 
   revalidatePath(`admin/tournaments/${tournamentId}/mappools`);
+
   return updatedIsPublic;
 }
