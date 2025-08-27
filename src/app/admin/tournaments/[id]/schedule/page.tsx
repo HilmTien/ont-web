@@ -69,7 +69,7 @@ export default async function Page({
                 new Date(b.match_time).getTime(),
             )
             .map((match) => (
-              <div className="flex justify-between">
+              <div className="flex justify-between" key={match.id}>
                 <EditMatchForm
                   key={match.id}
                   staff={{ commentators, streamers, referees }}
