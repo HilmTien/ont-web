@@ -1,4 +1,4 @@
-import { StatisticsApp } from "@/components/statistics/statistics-app";
+import { StatisticsStageSelector } from "@/components/statistics/statistics-stage-selector";
 import { StatisticsView } from "@/components/statistics/statistics-view";
 import { createServerClient } from "@/lib/server";
 import { getStatistics } from "@/lib/statistics/query";
@@ -30,7 +30,7 @@ export default async function Page({
 
   return (
     <div className="m-2 flex gap-10">
-      <StatisticsApp />
+      <StatisticsStageSelector />
       <StatisticsView
         mapStats={mapStats}
         overallStats={overallStats}
