@@ -20,3 +20,9 @@ export async function editMatch(match: PublicMatchesUpdate, id: number) {
 
   await supabase.from("matches").update(match).eq("id", id);
 }
+
+export async function deleteMatch(id: number) {
+  const supabase = await createServerClient();
+
+  await supabase.from("matches").delete().eq("id", id);
+}
