@@ -26,13 +26,15 @@ export async function createTournamentStage(
     return { error: "Cannot have duplicate stage index" };
   }
 
-  const { data: insertedStage } = await supabase
+  const { data: insertedStage, error } = await supabase
     .from("tournament_stages")
     .insert(data)
     .select()
     .single();
 
   if (!insertedStage) {
+    await supabase.from("errors").insert(error);
+
     return { error: "Could not insert stage" };
   }
 
@@ -46,7 +48,7 @@ export async function deleteTournamentStage(
 ): ServerActionResponse<Tables<"tournament_stages">> {
   const supabase = await createServerClient();
 
-  const { data: deletedStage } = await supabase
+  const { data: deletedStage, error } = await supabase
     .from("tournament_stages")
     .delete()
     .eq("id", stage.id)
@@ -54,6 +56,8 @@ export async function deleteTournamentStage(
     .single();
 
   if (!deletedStage) {
+    await supabase.from("errors").insert(error);
+
     return { error: "Could not delete stage" };
   }
 
@@ -69,7 +73,7 @@ export async function updateIsPublic(
 ): ServerActionResponse<Tables<"tournament_stages">> {
   const supabase = await createServerClient();
 
-  const { data: updatedIsPublic } = await supabase
+  const { data: updatedIsPublic, error } = await supabase
     .from("tournament_stages")
     .update({ is_public: isPublic })
     .eq("id", stageId)
@@ -77,6 +81,8 @@ export async function updateIsPublic(
     .single();
 
   if (!updatedIsPublic) {
+    await supabase.from("errors").insert(error);
+
     return { error: "Could not update the isPublic field" };
   }
 

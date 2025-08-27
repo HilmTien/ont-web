@@ -22,20 +22,22 @@ export async function onUserLogin(
     .single();
 
   if (!user) {
-    const { data: insertedUser } = await supabase
+    const { data: insertedUser, error: insertError } = await supabase
       .from("users")
       .insert({ osu_id: user_id, username: username })
       .select()
       .single();
 
     if (!insertedUser) {
+      await supabase.from("errors").insert(insertError);
+
       return { error: "Could not insert user" };
     }
 
     return insertedUser;
   }
 
-  const { data: updatedUser } = await supabase
+  const { data: updatedUser, error: updateError } = await supabase
     .from("users")
     .update({ username: username })
     .eq("id", user.id)
@@ -43,6 +45,8 @@ export async function onUserLogin(
     .single();
 
   if (!updatedUser) {
+    await supabase.from("errors").insert(updateError);
+
     return { error: "Could not update user" };
   }
 

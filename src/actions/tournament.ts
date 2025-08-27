@@ -10,13 +10,15 @@ export async function createTournament(
 ): ServerActionResponse<Tables<"tournaments">> {
   const supabase = await createServerClient();
 
-  const { data: insertedTournament } = await supabase
+  const { data: insertedTournament, error } = await supabase
     .from("tournaments")
     .insert(data)
     .select()
     .single();
 
   if (!insertedTournament) {
+    await supabase.from("errors").insert(error);
+
     return { error: "Could not insert tournament" };
   }
 

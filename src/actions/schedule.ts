@@ -15,13 +15,15 @@ export async function createMatch(
 ): ServerActionResponse<Tables<"matches">> {
   const supabase = await createServerClient();
 
-  const { data: insertedMatch } = await supabase
+  const { data: insertedMatch, error } = await supabase
     .from("matches")
     .insert(match)
     .select()
     .single();
 
   if (!insertedMatch) {
+    await supabase.from("errors").insert(error);
+
     return { error: "Could not insert match" };
   }
 
@@ -36,7 +38,7 @@ export async function editMatch(
 ): ServerActionResponse<Tables<"matches">> {
   const supabase = await createServerClient();
 
-  const { data: updatedMatch } = await supabase
+  const { data: updatedMatch, error } = await supabase
     .from("matches")
     .update(match)
     .eq("id", id)
@@ -44,6 +46,8 @@ export async function editMatch(
     .single();
 
   if (!updatedMatch) {
+    await supabase.from("errors").insert(error);
+
     return { error: "Could not insert match" };
   }
 
@@ -55,7 +59,7 @@ export async function deleteMatch(
 ): ServerActionResponse<Tables<"matches">> {
   const supabase = await createServerClient();
 
-  const { data: deletedMatch } = await supabase
+  const { data: deletedMatch, error } = await supabase
     .from("matches")
     .delete()
     .eq("id", match.id)
@@ -63,6 +67,8 @@ export async function deleteMatch(
     .single();
 
   if (!deletedMatch) {
+    await supabase.from("errors").insert(error);
+
     return { error: "Could not delete match" };
   }
 

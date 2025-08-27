@@ -14,16 +14,18 @@ export async function createRegistration(
   const session = await auth();
 
   if (!session || !session.osuId) {
-    return { error: "Login" };
+    return { error: "Not logged in" };
   }
 
-  const { data: user } = await supabase
+  const { data: user, error: userError } = await supabase
     .from("users")
     .select("id")
     .eq("osu_id", session.osuId)
     .single();
 
   if (!user) {
+    await supabase.from("errors").insert(userError);
+
     return { error: "User not found in database" };
   }
 
@@ -38,7 +40,7 @@ export async function createRegistration(
     return { error: "Already registered" };
   }
 
-  const { data: newRegistration } = await supabase
+  const { data: newRegistration, error: registrationError } = await supabase
     .from("registrations")
     .insert({
       user_id: user.id,
@@ -49,6 +51,8 @@ export async function createRegistration(
     .single();
 
   if (!newRegistration) {
+    await supabase.from("errors").insert(registrationError);
+
     return { error: "Registration failed" };
   }
 
@@ -63,7 +67,7 @@ export async function removeRegistration(
 ): ServerActionResponse<Tables<"registrations">> {
   const supabase = await createServerClient();
 
-  const { data: user } = await supabase
+  const { data: user, error } = await supabase
     .from("registrations")
     .delete()
     .eq("user_id", userId)
@@ -71,6 +75,8 @@ export async function removeRegistration(
     .single();
 
   if (!user) {
+    await supabase.from("errors").insert(error);
+
     return { error: "Cannot remove registration" };
   }
 

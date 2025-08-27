@@ -17,7 +17,7 @@ export async function addMappoolMap(
 ): ServerActionResponse<Tables<"mappool_maps">> {
   const supabase = await createServerClient();
 
-  const { data: tournamentStage } = await supabase
+  const { data: tournamentStage, error: tournamentStageError } = await supabase
     .from("tournament_stages")
     .select(
       `
@@ -36,6 +36,8 @@ export async function addMappoolMap(
     .single();
 
   if (!tournamentStage) {
+    await supabase.from("errors").insert(tournamentStageError);
+
     return { error: `Error fetching tournament stage data` };
   }
 
@@ -71,19 +73,22 @@ export async function addMappoolMap(
   );
 
   if (mappoolMap) {
-    const { data: updateMappoolMap } = await supabase
-      .from("mappool_maps")
-      .update({
-        map_index: data.mapIndex,
-        mods: data.mods,
-        stage_id: tournamentStage.id,
-        beatmap_id: beatmapId,
-      })
-      .eq("id", mappoolMap.id)
-      .select()
-      .single();
+    const { data: updateMappoolMap, error: updateMappoolMapError } =
+      await supabase
+        .from("mappool_maps")
+        .update({
+          map_index: data.mapIndex,
+          mods: data.mods,
+          stage_id: tournamentStage.id,
+          beatmap_id: beatmapId,
+        })
+        .eq("id", mappoolMap.id)
+        .select()
+        .single();
 
     if (!updateMappoolMap) {
+      await supabase.from("errors").insert(updateMappoolMapError);
+
       return { error: "Mappool map could not be updated" };
     }
 
@@ -94,7 +99,7 @@ export async function addMappoolMap(
     return updateMappoolMap;
   }
 
-  const { data: addedMappoolMap } = await supabase
+  const { data: addedMappoolMap, error: addedMappoolMapError } = await supabase
     .from("mappool_maps")
     .insert({
       map_index: data.mapIndex,
@@ -106,12 +111,15 @@ export async function addMappoolMap(
     .single();
 
   if (!addedMappoolMap) {
+    await supabase.from("errors").insert(addedMappoolMapError);
+
     return { error: "Mappool map could not be added" };
   }
 
   revalidatePath(
     `admin/tournaments/${tournamentStage.tournaments.id}/mappools`,
   );
+
   return addedMappoolMap;
 }
 
@@ -119,18 +127,17 @@ export async function deleteMappoolMap(
   id: number,
 ): ServerActionResponse<Tables<"mappool_maps">> {
   const supabase = await createServerClient();
-  const { data: deletedMappoolMap } = await supabase
-    .from("mappool_maps")
-    .delete()
-    .eq("id", id)
-    .select()
-    .single();
+
+  const { data: deletedMappoolMap, error: deletedMappoolMapError } =
+    await supabase.from("mappool_maps").delete().eq("id", id).select().single();
 
   if (!deletedMappoolMap) {
+    await supabase.from("errors").insert(deletedMappoolMapError);
+
     return { error: "Could not delete the mappool map" };
   }
 
-  const { data: tournament } = await supabase
+  const { data: tournament, error: tournamentError } = await supabase
     .from("tournaments")
     .select(
       `
@@ -145,6 +152,8 @@ export async function deleteMappoolMap(
     .eq("tournament_stages.mappool_maps.id", id);
 
   if (!tournament) {
+    await supabase.from("errors").insert(tournamentError);
+
     return { error: "Could not get tournament data" };
   }
 
