@@ -61,15 +61,21 @@ export default async function Page({
       />
       <div className="mt-4">
         {matches &&
-          matches.map((match) => (
-            <EditMatchForm
-              key={match.id}
-              staff={{ commentators, streamers, referees }}
-              teams={teams}
-              stages={stages}
-              match={match}
-            />
-          ))}
+          matches
+            .toSorted(
+              (a, b) =>
+                new Date(a.match_time).getTime() -
+                new Date(b.match_time).getTime(),
+            )
+            .map((match) => (
+              <EditMatchForm
+                key={match.id}
+                staff={{ commentators, streamers, referees }}
+                teams={teams}
+                stages={stages}
+                match={match}
+              />
+            ))}
       </div>
     </>
   );
