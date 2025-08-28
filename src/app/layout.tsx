@@ -29,7 +29,7 @@ export default function RootLayout({
         className={`${jersey25.variable} ${jersey25Charted.variable} antialiased`}
       >
         <SessionProvider>
-          <div className="fixed top-0 left-0 h-full w-full bg-[url('/background/bg.png')] bg-cover bg-center bg-no-repeat blur-xs brightness-50"></div>
+          <div className="fixed top-0 left-0 z-[-1] h-full w-full bg-[url('/background/bg.png')] bg-cover bg-center bg-no-repeat blur-xs brightness-50"></div>
           <Navbar />
           <main className="pt-36">{children}</main>
         </SessionProvider>
