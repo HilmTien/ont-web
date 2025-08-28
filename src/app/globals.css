@@ -3,6 +3,9 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-content: #1a3f4d;
+  --color-navbar: #337d99;
+  --color-accent: #b4294d;
 }
 
 /*
@@ -30,7 +33,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #0d1f26;
     --foreground: #ededed;
   }
 }

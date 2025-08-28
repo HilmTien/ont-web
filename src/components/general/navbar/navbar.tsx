@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -35,24 +36,34 @@ export default function Navbar() {
 
   return (
     <header
-      className={`bg-red-800" fixed top-0 left-0 z-50 w-full transition-all ${navBg ? "bg-red-800" : ""}`}
+      className={`bg-red-800" fixed top-0 left-0 z-50 w-full transition-all ${navBg ? "bg-navbar" : ""}`}
     >
       <nav
         className={`mx-auto flex w-[calc(100%-50px)] max-w-screen-lg items-center gap-5 transition-all ${navBg ? "h-12" : "h-24"}`}
       >
         <Link href={"/"} className="mr-auto font-bold">
-          O!NT
+          <Image
+            src={"/logos/ont/new-logo.png"}
+            alt="Logo"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className={`transition-all ${navBg ? "w-20" : "w-36"}`}
+          ></Image>
         </Link>
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={pathname.startsWith(link.href) ? "font-bold" : ""}
-          >
-            {link.label}
-          </Link>
-        ))}
-        <LogIn />
+        <div className="flex">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`text-accent block w-24 text-center font-semibold ${pathname.startsWith(link.href) ? "font-bold" : ""}`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        <LogIn navBg={navBg} />
       </nav>
     </header>
   );
