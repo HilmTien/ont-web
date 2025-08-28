@@ -2,6 +2,7 @@ import Navbar from "@/components/general/navbar/navbar";
 import { metadata as meta } from "@/lib/metadata";
 import { SessionProvider } from "next-auth/react";
 import { Jersey_25, Jersey_25_Charted } from "next/font/google";
+import { Tooltip } from "radix-ui";
 import "./globals.css";
 
 const jersey25 = Jersey_25({
@@ -29,9 +30,11 @@ export default function RootLayout({
         className={`${jersey25.variable} ${jersey25Charted.variable} antialiased`}
       >
         <SessionProvider>
-          <div className="fixed top-0 left-0 z-[-1] h-full w-full bg-[url('/background/bg.png')] bg-cover bg-center bg-no-repeat blur-xs brightness-50"></div>
-          <Navbar />
-          <main className="pt-36">{children}</main>
+          <Tooltip.Provider>
+            <div className="fixed top-0 left-0 z-[-1] h-full w-full bg-[url('/background/bg.png')] bg-cover bg-center bg-no-repeat blur-xs brightness-50"></div>
+            <Navbar />
+            <main className="pt-36">{children}</main>
+          </Tooltip.Provider>
         </SessionProvider>
       </body>
     </html>

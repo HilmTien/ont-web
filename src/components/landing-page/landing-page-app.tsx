@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function LandingPageApp() {
   return (
     <div className="mx-auto max-w-[1200px] px-4">
-      <section className="mb-8 flex flex-row items-center justify-between bg-gray-700 p-10">
+      <section className="bg-content mb-8 flex flex-row items-center justify-between p-10 shadow-2xl">
         <div>
           <h1 className="text-4xl font-bold">ONT 5</h1>
           <h2 className="mt-2 text-xl">TonyWorep</h2>
@@ -14,7 +14,6 @@ export default function LandingPageApp() {
           <iframe
             src="https://www.youtube.com/embed/rJ4r8YWzS40?si=XJm5D2FrW27J647c"
             title="YouTube video player"
-            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             className="h-full w-full"
@@ -45,7 +44,7 @@ export default function LandingPageApp() {
 
         <div className="flex flex-1 gap-4">
           <Link
-            href="/mappool"
+            href="/mappools"
             className="flex-1 bg-gray-700 py-2 text-center text-xl text-white"
           >
             Mappool
