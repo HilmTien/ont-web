@@ -132,6 +132,30 @@ export type Database = {
           },
         ]
       }
+      errors: {
+        Row: {
+          code: string | null
+          created_at: string | null
+          details: string | null
+          hint: string | null
+          id: number
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string | null
+          details?: string | null
+          hint?: string | null
+          id?: number
+        }
+        Update: {
+          code?: string | null
+          created_at?: string | null
+          details?: string | null
+          hint?: string | null
+          id?: number
+        }
+        Relationships: []
+      }
       mappool_maps: {
         Row: {
           beatmap_id: number
