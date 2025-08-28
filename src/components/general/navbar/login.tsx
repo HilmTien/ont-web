@@ -24,7 +24,7 @@ export default function LogIn({ navBg }: LogInProps) {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={`rounded-[50%] transition-all ${navBg ? "w-10" : "w-15"}`}
+                className={`rounded-[50%] transition-all ${navBg ? "w-12" : "w-15"}`}
               ></Image>
             </button>
           }
