@@ -39,7 +39,7 @@ export default function Navbar() {
       className={`bg-red-800" fixed top-0 left-0 z-50 w-full transition-all ${navBg ? "bg-navbar" : ""}`}
     >
       <nav
-        className={`mx-auto flex w-[calc(100%-50px)] max-w-screen-lg items-center gap-5 transition-all ${navBg ? "h-12" : "h-24"}`}
+        className={`mx-auto flex w-[calc(100%-50px)] max-w-screen-lg items-center gap-5 transition-all ${navBg ? "h-16" : "h-32"}`}
       >
         <Link href={"/"} className="mr-auto font-bold">
           <Image
@@ -48,7 +48,7 @@ export default function Navbar() {
             width={0}
             height={0}
             sizes="100vw"
-            className={`transition-all ${navBg ? "w-20" : "w-36"}`}
+            className={`transition-all ${navBg ? "w-24" : "w-36"}`}
           ></Image>
         </Link>
         <div className="flex">
@@ -56,7 +56,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-accent block w-24 text-center font-semibold ${pathname.startsWith(link.href) ? "font-bold" : ""}`}
+              className={`text-accent block w-28 text-center text-lg ${pathname.startsWith(link.href) ? "font-bold" : "font-semibold"}`}
             >
               {link.label}
             </Link>
