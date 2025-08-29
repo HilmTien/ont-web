@@ -29,7 +29,7 @@ export default async function Page({
   const [mapStats, overallStats] = await makeStatistics(statistics);
 
   return (
-    <div className="m-2 flex gap-10">
+    <div className="bg-content shadow-container z-1 m-2 mx-auto flex max-w-[75%] flex-col p-5">
       <StatisticsStageSelector />
       <StatisticsView
         mapStats={mapStats}

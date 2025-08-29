@@ -20,5 +20,5 @@ export async function StatisticsStageSelector() {
     </Link>
   ));
 
-  return <div className="flex flex-col">{stageButtons}</div>;
+  return <div className="mx-auto flex gap-5">{stageButtons}</div>;
 }
