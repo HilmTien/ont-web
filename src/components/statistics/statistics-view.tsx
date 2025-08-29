@@ -88,7 +88,7 @@ export function StatisticsView({
         </div>
 
         <div className="flex max-w-[50%]">
-          <Link href={`https://osu.ppy.sh/b/${mapData.osuId}`}>
+          <Link target="_blank" href={`https://osu.ppy.sh/b/${mapData.osuId}`}>
             <Image
               src={mapData.cover}
               alt="Beatmap Image"
