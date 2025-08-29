@@ -3,14 +3,14 @@ import Link from "next/link";
 
 export default function LandingPageApp() {
   return (
-    <div className="mx-auto max-w-[1200px] px-4">
+    <div className="mx-auto max-w-[80vw] px-4">
       <section className="bg-content mb-8 flex flex-row items-center justify-between p-10 shadow-2xl">
         <div>
-          <h1 className="text-4xl font-bold">ONT 5</h1>
+          <h1 className="text-4xl font-bold">osu! Norge Turnering 5</h1>
           <h2 className="mt-2 text-xl">TonyWorep</h2>
         </div>
 
-        <div className="aspect-video w-full max-w-md overflow-hidden rounded-2xl border-4 border-gray-400">
+        <div className="aspect-video w-full max-w-[40rem] overflow-hidden rounded-2xl border-4 border-gray-400">
           <iframe
             src="https://www.youtube.com/embed/rJ4r8YWzS40?si=XJm5D2FrW27J647c"
             title="YouTube video player"
