@@ -36,7 +36,7 @@ export default function LogIn({ navBg }: LogInProps) {
             <Link
               href={`https://osu.ppy.sh/users/${session.data.osuId}`}
               target="_blank"
-              className=""
+              className="font-semibold"
             >
               {session.data.user.name}
             </Link>

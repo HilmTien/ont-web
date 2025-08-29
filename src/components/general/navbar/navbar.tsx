@@ -36,7 +36,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`bg-red-800" fixed top-0 left-0 z-50 w-full transition-all ${navBg ? "bg-navbar" : ""}`}
+      className={`bg-red-800" fixed top-0 left-0 z-50 w-full transition-all ${navBg ? "bg-navbar border-accent border-b-2" : "border-accent border-b-0"}`}
     >
       <nav
         className={`mx-auto flex w-[calc(100%-50px)] max-w-screen-lg items-center gap-5 transition-all ${navBg ? "h-16" : "h-32"}`}
