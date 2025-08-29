@@ -25,19 +25,17 @@ export default async function Page({
     return <>Error fetching mappool data</>;
   }
 
-  if (mappool.is_public) {
-    return (
-      <div className="m-2 flex gap-36">
-        <MappoolsStageSelector />
+  return (
+    <div className="bg-content shadow-container z-1 m-2 mx-auto flex max-w-[75%] flex-col">
+      <div className="border-accent mx-auto border-b-2">
+        <MappoolsStageSelector stageIndex={stageIndex} />
+      </div>
+
+      {mappool.is_public ? (
         <MappoolsView data={mappool} />
-      </div>
-    );
-  } else {
-    return (
-      <div className="m-2 flex gap-36">
-        <MappoolsStageSelector />
-        <>Mappool not released yet</>
-      </div>
-    );
-  }
+      ) : (
+        <p className="mx-auto p-8">Mappoolet er ikke ute enda</p>
+      )}
+    </div>
+  );
 }

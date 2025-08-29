@@ -30,7 +30,9 @@ export default async function Page({
 
   return (
     <div className="bg-content shadow-container z-1 m-2 mx-auto flex max-w-[75%] flex-col p-5">
-      <StatisticsStageSelector />
+      <div className="border-accent mx-auto border-b-2">
+        <StatisticsStageSelector stageIndex={stageIndex} />
+      </div>
       <StatisticsView
         mapStats={mapStats}
         overallStats={overallStats}

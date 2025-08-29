@@ -3,10 +3,10 @@
 import { MapStatistics, OverallStatistics } from "@/lib/statistics/interfaces";
 import { StatisticsQueryData } from "@/lib/statistics/query";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { StatisticsMap } from "./statistics-map";
 import { StatisticsOverall } from "./statistics-overall";
-import Link from "next/link";
 
 interface StatisticsViewProps {
   mapStats: MapStatistics;
@@ -52,7 +52,7 @@ export function StatisticsView({
   const mapButtons = [
     <button
       key="overall"
-      className="focus: focus:bg-accent cursor-pointer rounded bg-gray-900 px-4 py-2 hover:bg-gray-800"
+      className="focus: focus:bg-accent bg-table cursor-pointer rounded px-4 py-2 hover:bg-gray-800"
       type="button"
       onClick={() => setMap("Overall")}
     >
@@ -61,7 +61,7 @@ export function StatisticsView({
     ...Object.keys(mapStats).map((mapKey) => (
       <button
         key={mapKey}
-        className="focus:bg-accent cursor-pointer rounded bg-gray-900 px-4 py-2 hover:bg-gray-800"
+        className="focus:bg-accent bg-table cursor-pointer rounded px-4 py-2 hover:bg-gray-800"
         onClick={() => setMap(mapKey)}
       >
         {mapKey}

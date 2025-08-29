@@ -98,12 +98,12 @@ export function StatisticsOverall({ stats }: StatisticsOverallProps) {
 
   return (
     <div className="overflow-auto">
-      <table className="w-full border-collapse bg-gray-900 text-white">
+      <table className="bg-table w-full border-collapse text-white">
         <thead>
-          <tr className="border-b border-gray-700">
+          <tr className="border-content border-b">
             {headers.map((h, i) => (
               <th
-                className="cursor-pointer border border-gray-700 px-5 py-2 text-center hover:bg-gray-800"
+                className="border-content cursor-pointer border px-5 py-2 text-center hover:bg-gray-800"
                 key={i}
                 onClick={() => sortHeader(i)}
               >
@@ -116,7 +116,7 @@ export function StatisticsOverall({ stats }: StatisticsOverallProps) {
         <tbody>
           {table.map((plr, i) => (
             <tr key={plr.osuId}>
-              <td className="border border-gray-700 text-center">{i + 1}</td>
+              <td className="border-content border text-center">{i + 1}</td>
               {headers.map((h) => {
                 const key = keys.find(
                   (col): col is keyof OverallStatisticsEntry =>
@@ -134,7 +134,7 @@ export function StatisticsOverall({ stats }: StatisticsOverallProps) {
                 return (
                   <td
                     key={h}
-                    className="border border-gray-700 px-5 py-2 text-center"
+                    className="border-content border px-5 py-2 text-center"
                   >
                     {roundedValue}
                   </td>

@@ -1,7 +1,13 @@
 import { createServerClient } from "@/lib/server";
 import Link from "next/link";
 
-export async function MappoolsStageSelector() {
+interface MappoolsStageSelectorProps {
+  stageIndex: number;
+}
+
+export async function MappoolsStageSelector({
+  stageIndex,
+}: MappoolsStageSelectorProps) {
   const supabase = await createServerClient();
 
   const { data: stages } = await supabase
@@ -15,10 +21,14 @@ export async function MappoolsStageSelector() {
   }
 
   const stageButtons = stages.map((stage, i) => (
-    <Link key={i} href={`/mappools/${i + 1}`}>
+    <Link
+      key={i}
+      href={`/mappools/${i + 1}`}
+      className={`${stageIndex === i + 1 ? "text-accent font-semibold" : ""}`}
+    >
       {stage.stage_name}
     </Link>
   ));
 
-  return <div className="flex flex-col">{stageButtons}</div>;
+  return <div className="mx-auto flex gap-5 pt-5 text-lg">{stageButtons}</div>;
 }
