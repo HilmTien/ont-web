@@ -1,13 +1,29 @@
 import { signIn } from "@/auth";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LandingPageApp() {
   return (
-    <div className="mx-auto max-w-[80vw] px-4">
-      <section className="bg-content mb-8 flex flex-row items-center justify-between p-10 shadow-2xl">
-        <div>
-          <h1 className="text-4xl font-bold">osu! Norge Turnering 5</h1>
-          <h2 className="mt-2 text-xl">TonyWorep</h2>
+    <div className="mx-auto max-w-[75vw] px-4">
+      <section className="bg-content shadow-container mb-8 flex flex-row items-center justify-between p-10">
+        <div className="p-10">
+          <div className="flex flex-row items-center justify-center">
+            <Image
+              src={"/logos/ont/new-logo.png"}
+              alt="Logo"
+              width={0}
+              height={0}
+              sizes="100vw"
+              className={"w-35"}
+            ></Image>
+            <p className="text-4xl font-bold">
+              osu! Norge Turnering <span className="">5</span>
+            </p>
+          </div>
+          <p className="mt-2 text-xl">
+            Vi fokuserer <span className="underline">fortsatt</span> på høy
+            produksjon.
+          </p>
         </div>
 
         <div className="aspect-video w-full max-w-[40rem] overflow-hidden rounded-2xl border-4 border-gray-400">
@@ -22,11 +38,11 @@ export default function LandingPageApp() {
       </section>
 
       <section className="flex items-end gap-10">
-        <div className="min-w-[480px]">
-          <h3 className="mb-4 border-b-2 border-gray-300 pb-2 text-xl font-semibold">
+        <div className="min-w-[430px]">
+          <p className="border-accent mb-4 border-b-2 pb-2 text-2xl font-semibold tracking-[0.3em]">
             TIDSLINJE
-          </h3>
-          <ul className="space-y-2">
+          </p>
+          <ul className="space-y-2 text-xl">
             <li className="flex justify-between">
               <span className="font-medium">REGS</span>
               <span>1. September - 1. September</span>
@@ -45,13 +61,13 @@ export default function LandingPageApp() {
         <div className="flex flex-1 gap-4">
           <Link
             href="/mappools"
-            className="flex-1 bg-gray-700 py-2 text-center text-xl text-white"
+            className="bg-accent ml-20 flex-1 py-3 text-center text-xl shadow-2xl"
           >
             Mappool
           </Link>
           <Link
             href="/"
-            className="flex-1 bg-gray-700 py-2 text-center text-xl text-white"
+            className="bg-accent ml-10 flex-1 py-3 text-center text-xl shadow-2xl"
           >
             Register
           </Link>

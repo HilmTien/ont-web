@@ -42,13 +42,15 @@ export default function LogIn({ navBg }: LogInProps) {
             </Link>
           </DropdownMenu.Item>
           <Separator.Root className="mx-3 h-[1px] bg-white" />
-          <DropdownMenu.Item className="mx-4">
-            <button
-              onClick={() => signOut()}
-              className="hover:bg-navbar my-4 w-full cursor-pointer rounded-md px-4 py-1 text-left transition-colors"
-            >
-              Logg ut
-            </button>
+          <DropdownMenu.Item>
+            <div className="mx-4">
+              <button
+                onClick={() => signOut()}
+                className="hover:bg-navbar my-4 w-full cursor-pointer rounded-md px-4 py-1 text-left transition-colors"
+              >
+                Logg ut
+              </button>
+            </div>
           </DropdownMenu.Item>
         </Dropdown>
       ) : session.status === "unauthenticated" ? (
