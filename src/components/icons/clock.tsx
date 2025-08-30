@@ -1,3 +1,5 @@
+import { IconProps } from "./icon-props";
+
 export default function Clock({ className }: IconProps) {
   return (
     <svg

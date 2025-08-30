@@ -1,3 +1,5 @@
+import { IconProps } from "./icon-props";
+
 export function Link({ className }: IconProps) {
   return (
     <svg
