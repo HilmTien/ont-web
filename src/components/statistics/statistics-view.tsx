@@ -97,7 +97,7 @@ export function StatisticsView({
         className={
           map === "Overall"
             ? "hidden"
-            : "shadow-container mb-8 flex flex-col justify-between md:flex-row"
+            : "shadow-container bg-card mb-8 flex flex-col justify-between md:flex-row"
         }
       >
         <div className="flex max-w-[50%] flex-col justify-between px-5">
