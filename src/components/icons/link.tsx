@@ -1,12 +1,12 @@
-export function Link() {
+export function Link({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       stroke-width="1.5"
-      stroke="#000000"
-      className="size-5"
+      stroke="currentColor"
+      className={`size-5 ${className}`}
     >
       <path
         stroke-linecap="round"
