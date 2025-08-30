@@ -26,6 +26,8 @@ export default async function Page({
     return <>No matches for this stage</>;
   }
 
+  console.log(matches);
+
   return (
     <div className="bg-content shadow-container z-1 m-2 mx-auto flex max-w-[75%] flex-col">
       {matches.map((match) => (
