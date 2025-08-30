@@ -97,7 +97,7 @@ export function StatisticsView({
         className={
           map === "Overall"
             ? "hidden"
-            : "shadow-container bg-card mb-8 flex flex-col justify-between md:flex-row"
+            : "shadow-container bg-card mb-8 flex flex-col justify-between rounded-md md:flex-row"
         }
       >
         <div className="flex max-w-[50%] flex-col justify-between px-5">
@@ -155,7 +155,7 @@ export function StatisticsView({
               width="0"
               height="0"
               sizes="100vw"
-              className="w-full"
+              className="w-full rounded-r-md"
             ></Image>
           </Link>
         </div>
