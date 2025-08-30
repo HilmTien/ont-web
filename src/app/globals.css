@@ -3,6 +3,7 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-disabled: #606060;
   --color-content: #1a3f4d;
   --color-navbar: #337d99;
   --color-accent: #d91c5d;
