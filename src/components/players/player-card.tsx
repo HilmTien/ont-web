@@ -9,7 +9,7 @@ interface PlayerCardProps {
 export default function PlayerCard({ username, osu_id }: PlayerCardProps) {
   return (
     <li className="p-5">
-      <div className="bg-card flex min-h-[50px] w-62 flex-row items-center rounded-md p-5 shadow-2xl">
+      <div className="bg-card flex min-h-[50px] w-60 flex-row items-center rounded-md p-5 shadow-2xl">
         <div>
           <Image
             src={`https://a.ppy.sh/${osu_id}`}

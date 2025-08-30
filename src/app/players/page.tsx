@@ -1,5 +1,6 @@
 import { createServerClient } from "@/lib/server";
 import PlayerCard from "@/components/players/player-card";
+import Content from "@/components/general/content";
 
 export default async function Page() {
   const supabase = await createServerClient();
@@ -14,7 +15,7 @@ export default async function Page() {
   }
 
   return (
-    <div className="bg-content shadow-container z-1 m-2 mx-auto flex min-h-90 max-w-[75%] flex-col">
+    <Content>
       <ol className="flex flex-wrap justify-center">
         {registrations.map((registration) => (
           <PlayerCard
@@ -25,6 +26,6 @@ export default async function Page() {
           />
         ))}
       </ol>
-    </div>
+    </Content>
   );
 }

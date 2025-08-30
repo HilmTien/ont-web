@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function LandingPageApp() {
   return (
-    <div className="mx-auto max-w-[75vw] px-4">
+    <div className="mx-auto max-w-[75%]">
       <section className="bg-content shadow-container mb-8 flex flex-row items-center justify-between p-10">
         <div className="p-10">
           <div className="flex flex-row items-center justify-center">

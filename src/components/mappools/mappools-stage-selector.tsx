@@ -30,5 +30,5 @@ export async function MappoolsStageSelector({
     </Link>
   ));
 
-  return <div className="mx-auto flex gap-5 pt-5 text-lg">{stageButtons}</div>;
+  return <div className="mx-auto flex gap-5 text-lg">{stageButtons}</div>;
 }
