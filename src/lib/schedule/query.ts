@@ -5,6 +5,10 @@ interface QueryParams {
   tournamentId: number;
 }
 
+interface StageMatchesQueryParams extends QueryParams {
+  stageIndex: number;
+}
+
 export async function getCommentators(
   supabase: SupabaseClient<Database>,
   params: QueryParams,
@@ -76,3 +80,54 @@ export async function getMatches(
 }
 
 export type MatchesQueryData = QueryData<ReturnType<typeof getMatches>>;
+
+export async function getStageMatches(
+  supabase: SupabaseClient<Database>,
+  params: StageMatchesQueryParams,
+) {
+  return supabase
+    .from("matches")
+    .select(
+      `
+      id,
+      match_time,
+      team1_score,
+      team2_score,
+      mp_id,
+      tournament_match_id,
+      team1:teams!team1_id(name),
+      team2:teams!team2_id(name),
+      referees(
+        users(
+          username,
+          osu_id
+        )
+      ),
+      streamers(
+        users(
+          username,
+          osu_id
+        )
+      ),
+      commentator1:commentators!commentator1_id(
+        users(
+          username,
+          osu_id
+        )
+      ),
+      commentator2:commentators!commentator2_id(
+        users(
+          username,
+          osu_id
+        )
+      ),
+      tournament_stages(stage_index)
+      `,
+    )
+    .eq("tournament_id", params.tournamentId)
+    .eq("tournament_stages.stage_index", params.stageIndex);
+}
+
+export type StageMatchesQueryData = QueryData<
+  ReturnType<typeof getStageMatches>
+>;
