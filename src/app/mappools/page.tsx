@@ -11,7 +11,7 @@ export default async function Page() {
     .eq("is_public", true)
     .order("stage_index");
 
-  if (!stages) {
+  if (!stages || stages.length == 0) {
     return <>Error no stages</>;
   }
 
