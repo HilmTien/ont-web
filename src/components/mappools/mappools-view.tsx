@@ -58,13 +58,14 @@ export function MappoolsView({ data }: MappoolsViewProps) {
         <div className="mt-auto flex gap-7 px-5 pb-2">
           <div className="flex flex-row gap-2 text-lg">
             <p className="flex items-center gap-1">
-              <Star /> {beatmap.star_rating}
+              <Star className="stroke-accent" /> {beatmap.star_rating}
             </p>
             <p className="flex items-center gap-1">
-              <Clock /> {formatSecondsToMMSS(beatmap.drain_time)}
+              <Clock className="stroke-accent" />{" "}
+              {formatSecondsToMMSS(beatmap.drain_time)}
             </p>
             <p className="flex items-center gap-1">
-              <MusicNote /> {beatmap.bpm}
+              <MusicNote className="stroke-accent" /> {beatmap.bpm}
             </p>
           </div>
           <div className="flex flex-row gap-2 text-lg">
