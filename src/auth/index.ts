@@ -107,6 +107,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return matches ? matches.length != 0 : false;
           }).length,
           country_code: profile.country_code,
+          rank: profile.statistics_rulesets.osu.global_rank,
+          accuracy: profile.statistics_rulesets.osu.hit_accuracy,
+          maximum_combo: profile.statistics_rulesets.osu.maximum_combo,
+          play_count: profile.statistics_rulesets.osu.play_count,
+          pp: profile.statistics_rulesets.osu.pp,
         });
 
         return {

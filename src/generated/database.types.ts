@@ -667,31 +667,43 @@ export type Database = {
       }
       users: {
         Row: {
+          accuracy: number | null
           badges: number | null
           country_code: string | null
           id: number
           is_restricted: boolean
+          maximum_combo: number | null
           osu_id: number
+          play_count: number | null
+          pp: number | null
           rank: number | null
           tournament_badges: number | null
           username: string
         }
         Insert: {
+          accuracy?: number | null
           badges?: number | null
           country_code?: string | null
           id?: number
           is_restricted: boolean
+          maximum_combo?: number | null
           osu_id: number
+          play_count?: number | null
+          pp?: number | null
           rank?: number | null
           tournament_badges?: number | null
           username: string
         }
         Update: {
+          accuracy?: number | null
           badges?: number | null
           country_code?: string | null
           id?: number
           is_restricted?: boolean
+          maximum_combo?: number | null
           osu_id?: number
+          play_count?: number | null
+          pp?: number | null
           rank?: number | null
           tournament_badges?: number | null
           username?: string
