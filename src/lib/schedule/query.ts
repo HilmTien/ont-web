@@ -15,7 +15,7 @@ export async function getCommentators(
 ) {
   return supabase
     .from("commentators")
-    .select("id, users(username)")
+    .select("id, users(username, osu_id)")
     .eq("tournament_id", params.tournamentId);
 }
 
@@ -25,7 +25,7 @@ export async function getReferees(
 ) {
   return supabase
     .from("referees")
-    .select("id, users(username)")
+    .select("id, users(username, osu_id)")
     .eq("tournament_id", params.tournamentId);
 }
 
@@ -35,7 +35,7 @@ export async function getStreamers(
 ) {
   return supabase
     .from("streamers")
-    .select("id, users(username)")
+    .select("id, users(username, osu_id)")
     .eq("tournament_id", params.tournamentId);
 }
 

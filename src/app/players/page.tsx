@@ -22,8 +22,7 @@ export default async function Page() {
           <PlayerCard
             key={registration.users.osu_id}
             username={registration.users.username}
-            osu_id={registration.users.osu_id}
-            registered_at={registration.registered_at}
+            osuId={registration.users.osu_id}
           />
         ))}
       </ol>
