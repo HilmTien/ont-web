@@ -7,7 +7,9 @@ export default async function Page() {
 
   const { data: registrations } = await supabase
     .from("registrations")
-    .select("registered_at, users(username, osu_id, rank)")
+    .select(
+      "registered_at, users(username, osu_id, rank, accuracy, pp, play_count, maximum_combo)",
+    )
     .eq("tournament_id", 1);
 
   if (!registrations) {
@@ -21,8 +23,13 @@ export default async function Page() {
           <PlayerCard
             key={registration.users.osu_id}
             username={registration.users.username}
+            registeredAt={registration.registered_at}
             osuId={registration.users.osu_id}
-            rank={registration.users.rank}
+            rank={registration.users.rank ?? 0}
+            accuracy={registration.users.accuracy ?? 0}
+            pp={registration.users.pp ?? 0}
+            playCount={registration.users.play_count ?? 0}
+            maximumCombo={registration.users.maximum_combo ?? 0}
           />
         ))}
       </ol>

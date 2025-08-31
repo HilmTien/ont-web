@@ -4,14 +4,38 @@ import Link from "next/link";
 interface PlayerCardProps {
   username: string;
   osuId: number;
-  rank: number | null;
+  registeredAt: string;
+  rank: number;
+  accuracy: number;
+  pp: number;
+  playCount: number;
+  maximumCombo: number;
 }
 
-export default function PlayerCard({ username, osuId, rank }: PlayerCardProps) {
+export default function PlayerCard({
+  username,
+  osuId,
+  rank,
+  accuracy,
+  pp,
+  playCount,
+  maximumCombo,
+  registeredAt,
+}: PlayerCardProps) {
+  const dateObj = new Date(registeredAt);
+
+  const date = dateObj.getDate();
+  const month = dateObj.getMonth();
+  const time = dateObj.toLocaleTimeString("no", {
+    hour12: false,
+    hour: "numeric",
+    minute: "numeric",
+  });
+
   return (
     <li className="p-5">
-      <div className="bg-card flex min-h-[50px] w-72 flex-row items-center rounded-md p-2 shadow-2xl">
-        <div>
+      <div className="bg-card flex w-72 flex-col rounded-md p-3 shadow-md">
+        <div className="flex items-center">
           <Image
             src={`https://a.ppy.sh/${osuId}`}
             alt="Logo"
@@ -20,10 +44,8 @@ export default function PlayerCard({ username, osuId, rank }: PlayerCardProps) {
             sizes="100vw"
             className="w-14 rounded-md"
           />
-        </div>
 
-        <div className="ml-2 flex min-w-0 flex-1 flex-row items-center justify-between">
-          <div className="flex flex-col">
+          <div className="ml-3 flex flex-1 items-center justify-between">
             <Link
               href={`https://osu.ppy.sh/users/${osuId}`}
               target="_blank"
@@ -31,11 +53,23 @@ export default function PlayerCard({ username, osuId, rank }: PlayerCardProps) {
             >
               {username}
             </Link>
-            <p className="text-xs">{`BWS: ${rank}`}</p>
+            <span className="ml-2 font-semibold">BWS: 1</span>
           </div>
-
-          <span className="ml-2 font-semibold">{`#${rank}`}</span>
         </div>
+
+        <details className="mt-2 cursor-pointer text-xs">
+          <summary>Detaljer</summary>
+          <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1">
+            <p>Rank: {rank}</p>
+            <p>Accuracy: {accuracy}</p>
+            <p>PP: {pp}</p>
+            <p>Play Count: {playCount}</p>
+            <p>Max Combo: {maximumCombo}</p>
+            <p>
+              Reg: {date}/{month} {time}
+            </p>
+          </div>
+        </details>
       </div>
     </li>
   );
