@@ -3,6 +3,9 @@ import { createServerClient } from "@/lib/server";
 import Image from "next/image";
 import Link from "next/link";
 import { RegisterButton } from "../tournaments/tournament-registration";
+import Discord from "../icons/discord";
+import Youtube from "../icons/youtube";
+import Twitch from "../icons/twitch";
 
 export default async function LandingPageApp() {
   const session = await auth();
@@ -29,7 +32,7 @@ export default async function LandingPageApp() {
 
   return (
     <div className="mx-auto max-w-[75%]">
-      <section className="bg-content shadow-container mb-8 flex flex-row items-center justify-between p-10">
+      <section className="bg-content shadow-container mb-4 flex flex-row items-center justify-between p-10">
         <div className="">
           <div className="ml-10 flex w-full flex-col items-start justify-center">
             <Image
@@ -50,7 +53,7 @@ export default async function LandingPageApp() {
           </div>
         </div>
 
-        <div className="border-accent aspect-video h-full w-full max-w-[50%] overflow-hidden rounded-md border-4">
+        <div className="border-accent aspect-video h-full w-120 max-w-[50%] overflow-hidden rounded-md border-4">
           <iframe
             src="https://www.youtube.com/embed/MSeZTBKf5cI?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0"
             title="YouTube video player"
@@ -61,41 +64,95 @@ export default async function LandingPageApp() {
         </div>
       </section>
 
-      <section className="flex items-end gap-10">
-        <div className="min-w-[470px]">
-          <p className="border-accent mb-4 border-b-2 pb-2 text-2xl font-semibold tracking-[0.3em]">
+      <section className="flex items-center gap-10">
+        <div className="min-w-[550px]">
+          <p className="border-accent mb-4 border-b-2 pb-2 text-2xl font-semibold">
             TIDSLINJE
           </p>
           <ul className="space-y-2 text-xl">
             <li className="flex justify-between">
-              <span className="font-medium">REGS</span>
-              <span>1. September - 1. September</span>
+              <span className="font-medium">Registeringer</span>
+              <span>1. September - 14. September</span>
             </li>
             <li className="flex justify-between">
-              <span className="font-medium">Kvalifisering</span>
-              <span>1. September - 1. September</span>
+              <span className="font-medium">Registeringer</span>
+              <span>1. September - 14. September</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="font-medium">Gruppespill</span>
+              <span>15. September - 21. September</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="font-medium">Runoff runde 1</span>
+              <span>22. September - 28. September</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="font-medium">Runoff runde 2</span>
+              <span>29. Oktober - 5. Oktober</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="font-medium">Swiss Uke 1 (0-0, 1-0, 0-1)</span>
+              <span>6. Oktober - 12. Oktober</span>
             </li>
             <li className="flex justify-between">
               <span className="font-medium">UKE 1</span>
-              <span>1. September - 1. September</span>
+              <span>13. Oktober - 19. Oktober</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="font-medium">UKE 1</span>
+              <span>20. Oktober - 26. Oktober</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="font-medium">UKE 1</span>
+              <span>20. Oktober - 26. Oktober</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="font-medium">UKE 1</span>
+              <span>20. Oktober - 26. Oktober</span>
             </li>
           </ul>
         </div>
 
-        <div className="flex flex-1 gap-4">
-          <Link
-            href="/mappools"
-            className="bg-accent ml-20 flex-1 py-3 text-center text-xl shadow-2xl"
-          >
-            Mappool
-          </Link>
-          {session ? (
-            <RegisterButton tournamentId={1} registered={registered} />
-          ) : (
-            <div className="bg-disabled ml-10 flex-1 py-3 text-center text-xl shadow-2xl">
-              Logg inn for å melde på
-            </div>
-          )}
+        <div className="flex flex-1 flex-col gap-15">
+          <div className="g flex items-center justify-between space-x-4 px-50">
+            <Link
+              href="https://discord.com/invite/zY5dwFEbSx/"
+              target="_blank"
+              className=""
+            >
+              <Discord></Discord>
+            </Link>
+            <Link
+              href="https://twitch.tv/osunorge"
+              target="_blank"
+              className=""
+            >
+              <Twitch></Twitch>
+            </Link>
+
+            <Link
+              href="https://youtube.com/@osunorge"
+              target="_blank"
+              className=""
+            >
+              <Youtube></Youtube>
+            </Link>
+          </div>
+          <div className="flex gap-4">
+            <Link
+              href="/mappools"
+              className="bg-accent flex-1 py-3 text-center text-xl shadow-2xl"
+            >
+              Mappool
+            </Link>
+            {session ? (
+              <RegisterButton tournamentId={1} registered={registered} />
+            ) : (
+              <div className="bg-disabled flex-1 py-3 text-center text-xl shadow-2xl">
+                Logg inn for å melde på
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
