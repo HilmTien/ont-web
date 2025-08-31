@@ -39,6 +39,13 @@ export type PublicCommentatorsUpdate = z.infer<
 export type PublicCommentatorsRelationships = z.infer<
   typeof generated.publicCommentatorsRelationshipsSchema
 >;
+export type PublicErrorsRow = z.infer<typeof generated.publicErrorsRowSchema>;
+export type PublicErrorsInsert = z.infer<
+  typeof generated.publicErrorsInsertSchema
+>;
+export type PublicErrorsUpdate = z.infer<
+  typeof generated.publicErrorsUpdateSchema
+>;
 export type PublicMappoolMapsRow = z.infer<
   typeof generated.publicMappoolMapsRowSchema
 >;

@@ -1,10 +1,10 @@
 import { StageMatchesQueryData } from "@/lib/schedule/query";
+import Image from "next/image";
 import Link from "next/link";
 import { Link as LinkIcon } from "../icons/link";
-import Image from "next/image";
 
 interface MatchCardProps {
-  match: StageMatchesQueryData[number];
+  match: StageMatchesQueryData["matches"][number];
 }
 
 export function MatchCard({ match }: MatchCardProps) {

@@ -1,6 +1,7 @@
 "use server";
 
 import { Tables } from "@/generated/database.types";
+import { PublicUsersInsert } from "@/generated/zod-schema-types";
 import { ServerActionResponse } from "@/lib/error";
 import { createServerClient } from "@/lib/server";
 
@@ -10,21 +11,20 @@ import { createServerClient } from "@/lib/server";
  * @param user_id The osu! user id of the user logging in
  */
 export async function onUserLogin(
-  username: string,
-  user_id: number,
+  data: PublicUsersInsert,
 ): ServerActionResponse<Tables<"users">> {
   const supabase = await createServerClient();
 
   const { data: user } = await supabase
     .from("users")
     .select()
-    .eq("osu_id", user_id)
+    .eq("osu_id", data.osu_id)
     .single();
 
   if (!user) {
     const { data: insertedUser, error: insertError } = await supabase
       .from("users")
-      .insert({ osu_id: user_id, username: username })
+      .insert(data)
       .select()
       .single();
 
@@ -39,7 +39,7 @@ export async function onUserLogin(
 
   const { data: updatedUser, error: updateError } = await supabase
     .from("users")
-    .update({ username: username })
+    .update(data)
     .eq("id", user.id)
     .select()
     .single();

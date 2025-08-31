@@ -19,12 +19,12 @@ export default async function Page({
 
   const supabase = await createServerClient();
 
-  const { data: matches } = await getStageMatches(supabase, {
+  const { data: stage } = await getStageMatches(supabase, {
     tournamentId: 1,
     stageIndex: stageIndex,
   });
 
-  if (!matches || matches.length == 0) {
+  if (!stage || stage.matches.length == 0) {
     return <>No matches for this stage</>;
   }
 
@@ -33,7 +33,7 @@ export default async function Page({
       <div className="border-accent mx-auto border-b-2">
         <ScheduleStageSelector stageIndex={stageIndex} />
       </div>
-      {matches.map((match) => (
+      {stage.matches.map((match) => (
         <MatchCard match={match} key={match.id}></MatchCard>
       ))}
     </Content>

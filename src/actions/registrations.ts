@@ -19,7 +19,7 @@ export async function createRegistration(
 
   const { data: user, error: userError } = await supabase
     .from("users")
-    .select("id")
+    .select("id, country_code, is_restricted")
     .eq("osu_id", session.osuId)
     .single();
 
@@ -27,6 +27,14 @@ export async function createRegistration(
     await supabase.from("errors").insert(userError);
 
     return { error: "User not found in database" };
+  }
+
+  if (user.country_code != "NO") {
+    return { error: "User is not from Norway" };
+  }
+
+  if (user.is_restricted) {
+    return { error: "User is restricted" };
   }
 
   const { data: existingRegistration } = await supabase
