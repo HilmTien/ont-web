@@ -1,3 +1,4 @@
+import Content from "@/components/general/content";
 import { createServerClient } from "@/lib/server";
 import { redirect } from "next/navigation";
 
@@ -12,7 +13,11 @@ export default async function Page() {
     .order("stage_index");
 
   if (!stages || stages.length == 0) {
-    return <>Error no stages</>;
+    return (
+      <Content>
+        <p className="mx-auto my-2">No stages</p>
+      </Content>
+    );
   }
 
   return redirect(`/statistics/${stages[stages.length - 1].stage_index}`);
