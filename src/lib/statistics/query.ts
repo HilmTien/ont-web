@@ -20,6 +20,7 @@ export async function getStatistics(
         is_public,
         mappool_maps(
           map_index,
+          mods,
           beatmaps(
             *
           ),

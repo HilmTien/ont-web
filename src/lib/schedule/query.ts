@@ -15,7 +15,7 @@ export async function getCommentators(
 ) {
   return supabase
     .from("commentators")
-    .select("id, users(username)")
+    .select("id, users(username, osu_id)")
     .eq("tournament_id", params.tournamentId);
 }
 
@@ -25,7 +25,7 @@ export async function getReferees(
 ) {
   return supabase
     .from("referees")
-    .select("id, users(username)")
+    .select("id, users(username, osu_id)")
     .eq("tournament_id", params.tournamentId);
 }
 
@@ -35,7 +35,7 @@ export async function getStreamers(
 ) {
   return supabase
     .from("streamers")
-    .select("id, users(username)")
+    .select("id, users(username, osu_id)")
     .eq("tournament_id", params.tournamentId);
 }
 
@@ -86,46 +86,49 @@ export async function getStageMatches(
   params: StageMatchesQueryParams,
 ) {
   return supabase
-    .from("matches")
+    .from("tournament_stages")
     .select(
       `
-      id,
-      match_time,
-      team1_score,
-      team2_score,
-      mp_id,
-      tournament_match_id,
-      team1:teams!team1_id(name),
-      team2:teams!team2_id(name),
-      referees(
-        users(
-          username,
-          osu_id
+      matches(
+        id,
+        match_time,
+        team1_score,
+        team2_score,
+        mp_id,
+        tournament_match_id,
+        team1:teams!team1_id(name),
+        team2:teams!team2_id(name),
+        referees(
+          users(
+            username,
+            osu_id
+          )
+        ),
+        streamers(
+          users(
+            username,
+            osu_id
+          )
+        ),
+        commentator1:commentators!commentator1_id(
+          users(
+            username,
+            osu_id
+          )
+        ),
+        commentator2:commentators!commentator2_id(
+          users(
+            username,
+            osu_id
+          )
         )
       ),
-      streamers(
-        users(
-          username,
-          osu_id
-        )
-      ),
-      commentator1:commentators!commentator1_id(
-        users(
-          username,
-          osu_id
-        )
-      ),
-      commentator2:commentators!commentator2_id(
-        users(
-          username,
-          osu_id
-        )
-      ),
-      tournament_stages(stage_index)
+      tournaments(id)
       `,
     )
-    .eq("tournament_id", params.tournamentId)
-    .eq("tournament_stages.stage_index", params.stageIndex);
+    .eq("tournaments.id", params.tournamentId)
+    .eq("stage_index", params.stageIndex)
+    .single();
 }
 
 export type StageMatchesQueryData = QueryData<

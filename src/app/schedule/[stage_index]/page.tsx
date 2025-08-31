@@ -1,6 +1,8 @@
+import Content from "@/components/general/content";
 import { MatchCard } from "@/components/schedule/match-card";
 import { getStageMatches } from "@/lib/schedule/query";
 import { createServerClient } from "@/lib/server";
+import { ScheduleStageSelector } from "@/components/schedule/schedule-stage-selector";
 
 export default async function Page({
   params,
@@ -17,20 +19,23 @@ export default async function Page({
 
   const supabase = await createServerClient();
 
-  const { data: matches } = await getStageMatches(supabase, {
+  const { data: stage } = await getStageMatches(supabase, {
     tournamentId: 1,
     stageIndex: stageIndex,
   });
 
-  if (!matches || matches.length == 0) {
+  if (!stage || stage.matches.length == 0) {
     return <>No matches for this stage</>;
   }
 
   return (
-    <div className="bg-content shadow-container z-1 m-2 mx-auto flex max-w-[75%] flex-col">
-      {matches.map((match) => (
+    <Content>
+      <div className="border-accent mx-auto border-b-2">
+        <ScheduleStageSelector stageIndex={stageIndex} />
+      </div>
+      {stage.matches.map((match) => (
         <MatchCard match={match} key={match.id}></MatchCard>
       ))}
-    </div>
+    </Content>
   );
 }

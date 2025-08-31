@@ -2,6 +2,7 @@ import { MappoolsStageSelector } from "@/components/mappools/mappools-stage-sele
 import { MappoolsView } from "@/components/mappools/mappools-view";
 import { getMappool } from "@/lib/mappools/query";
 import { createServerClient } from "@/lib/server";
+import Content from "@/components/general/content";
 
 export default async function Page({
   params,
@@ -26,7 +27,7 @@ export default async function Page({
   }
 
   return (
-    <div className="bg-content shadow-container z-1 m-2 mx-auto flex max-w-[75%] flex-col">
+    <Content>
       <div className="border-accent mx-auto border-b-2">
         <MappoolsStageSelector stageIndex={stageIndex} />
       </div>
@@ -36,6 +37,6 @@ export default async function Page({
       ) : (
         <p className="mx-auto p-8">Mappoolet er ikke ute enda</p>
       )}
-    </div>
+    </Content>
   );
 }
