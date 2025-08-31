@@ -66,7 +66,7 @@ export default async function LandingPageApp() {
 
       <section className="flex items-center gap-10">
         <div className="min-w-[30vw]">
-          <p className="border-accent mb-4 border-b-2 pb-2 text-2xl font-semibold">
+          <p className="border-accent mb-2 border-b-2 pb-2 text-2xl font-semibold">
             TIDSLINJE
           </p>
           <ul className="space-y-1 text-lg">
