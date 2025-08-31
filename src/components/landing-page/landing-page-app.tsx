@@ -1,8 +1,32 @@
-import { signIn } from "@/auth";
-import Link from "next/link";
+import { auth, signIn } from "@/auth";
+import { createServerClient } from "@/lib/server";
 import Image from "next/image";
+import Link from "next/link";
+import { RegisterButton } from "../tournaments/tournament-registration";
 
-export default function LandingPageApp() {
+export default async function LandingPageApp() {
+  const session = await auth();
+
+  const supabase = await createServerClient();
+
+  let registered: boolean;
+
+  if (session) {
+    const { data: user } = await supabase
+      .from("users")
+      .select("registrations(id)")
+      .eq("osu_id", session?.osuId)
+      .single();
+
+    if (!user) {
+      registered = false;
+    } else {
+      registered = user.registrations.length != 0;
+    }
+  } else {
+    registered = false;
+  }
+
   return (
     <div className="mx-auto max-w-[75%]">
       <section className="bg-content shadow-container mb-8 flex flex-row items-center justify-between p-10">
@@ -65,12 +89,13 @@ export default function LandingPageApp() {
           >
             Mappool
           </Link>
-          <Link
-            href="/"
-            className="bg-accent ml-10 flex-1 py-3 text-center text-xl shadow-2xl"
-          >
-            Register
-          </Link>
+          {session ? (
+            <RegisterButton tournamentId={1} registered={registered} />
+          ) : (
+            <div className="bg-disabled ml-10 flex-1 py-3 text-center text-xl shadow-2xl">
+              Logg inn for å melde på
+            </div>
+          )}
         </div>
       </section>
 
