@@ -89,6 +89,7 @@ export async function getStageMatches(
     .from("tournament_stages")
     .select(
       `
+      is_public,
       matches(
         id,
         match_time,

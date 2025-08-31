@@ -8,12 +8,26 @@ interface MatchCardProps {
 }
 
 export function MatchCard({ match }: MatchCardProps) {
+  const dateObj = new Date(match.match_time);
+  const date = dateObj.getDate();
+  const month = dateObj
+    .toLocaleString("default", { month: "short" })
+    .toUpperCase();
+  const day = ["SØN", "MAN", "TIR", "ONS", "TOR", "FRE", "LØR"][
+    dateObj.getDay()
+  ];
+  const time = dateObj.toLocaleTimeString("no", {
+    hour12: false,
+    hour: "numeric",
+    minute: "numeric",
+  });
+
   return (
     <div className="bg-card shadow-2x m-4 mt-14 flex items-center rounded-md text-xl shadow-2xl">
       <div className="flex h-40 w-40 flex-col items-center justify-center font-semibold">
         <p>{match.tournament_match_id}</p>
-        <p>14. SEP (SØN)</p>
-        <p className="text-4xl">14:00</p>
+        <p>{`${date}. ${month} (${day})`}</p>
+        <p className="text-4xl">{time}</p>
       </div>
 
       <div className="flex flex-1 items-center justify-between">
