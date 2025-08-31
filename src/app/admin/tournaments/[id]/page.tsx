@@ -54,6 +54,7 @@ export default async function Page({
       <div className="flex flex-col">
         <Link href={`./${id}/mappools`}>Edit Mappool</Link>
         <Link href={`./${id}/schedule`}>Edit Matches</Link>
+        <Link href={`./${id}/players`}>Edit Players</Link>
       </div>
     </div>
   );
