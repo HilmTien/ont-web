@@ -53,7 +53,7 @@ export default async function LandingPageApp() {
           </div>
         </div>
 
-        <div className="border-accent aspect-video h-full w-120 max-w-[50%] overflow-hidden rounded-md border-4">
+        <div className="border-accent aspect-video h-full w-[25vw] max-w-[50%] overflow-hidden rounded-md border-4">
           <iframe
             src="https://www.youtube.com/embed/MSeZTBKf5cI?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0"
             title="YouTube video player"
@@ -65,7 +65,7 @@ export default async function LandingPageApp() {
       </section>
 
       <section className="flex items-center gap-10">
-        <div className="min-w-[550px]">
+        <div className="min-w-[30vw]">
           <p className="border-accent mb-4 border-b-2 pb-2 text-2xl font-semibold">
             TIDSLINJE
           </p>
