@@ -22,6 +22,9 @@ export function MatchCard({ match }: MatchCardProps) {
     minute: "numeric",
   });
 
+  const player1 = match.team1.team_players[0]?.users;
+  const player2 = match.team2.team_players[0]?.users;
+
   return (
     <div className="bg-card shadow-2x m-4 flex items-center rounded-md text-xl shadow-2xl">
       <div className="flex h-40 w-40 flex-col items-center justify-center font-semibold">
@@ -33,7 +36,7 @@ export function MatchCard({ match }: MatchCardProps) {
       <div className="flex flex-1 items-center justify-between">
         <div className="flex w-1/3 items-center justify-start gap-5">
           <Image
-            src={`https://a.ppy.sh/18382591`}
+            src={`https://a.ppy.sh/${player1.osu_id}`}
             alt="Team 1 Logo"
             width={0}
             height={0}
@@ -52,7 +55,7 @@ export function MatchCard({ match }: MatchCardProps) {
         <div className="flex w-1/3 items-center justify-end gap-5">
           <span className="font-semibold">{match.team2.name}</span>
           <Image
-            src={`https://a.ppy.sh/18382591`}
+            src={`https://a.ppy.sh/${player2.osu_id}`}
             alt="Team 2 Logo"
             width={0}
             height={0}
@@ -62,7 +65,7 @@ export function MatchCard({ match }: MatchCardProps) {
         </div>
       </div>
 
-      <div className="flex h-40 w-40 flex-col items-center justify-center gap-1 border-l text-center text-sm">
+      <div className="flex h-40 w-40 flex-col items-center justify-center gap-1 text-center text-sm">
         {match.mp_id ? (
           <Link
             target="_blank"

@@ -97,8 +97,31 @@ export async function getStageMatches(
         team2_score,
         mp_id,
         tournament_match_id,
-        team1:teams!team1_id(name),
-        team2:teams!team2_id(name),
+
+        team1:teams!team1_id(
+          id,
+          name,
+          team_players(
+            users(
+              id,
+              username,
+              osu_id
+            )
+          )
+        ),
+
+        team2:teams!team2_id(
+          id,
+          name,
+          team_players(
+            users(
+              id,
+              username,
+              osu_id
+            )
+          )
+        ),
+
         referees(
           users(
             username,
