@@ -672,6 +672,7 @@ export type Database = {
           id: number
           is_restricted: boolean
           osu_id: number
+          rank: number | null
           tournament_badges: number | null
           username: string
         }
@@ -681,6 +682,7 @@ export type Database = {
           id?: number
           is_restricted: boolean
           osu_id: number
+          rank?: number | null
           tournament_badges?: number | null
           username: string
         }
@@ -690,6 +692,7 @@ export type Database = {
           id?: number
           is_restricted?: boolean
           osu_id?: number
+          rank?: number | null
           tournament_badges?: number | null
           username?: string
         }

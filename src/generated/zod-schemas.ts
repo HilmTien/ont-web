@@ -712,6 +712,7 @@ export const publicUsersRowSchema = z.object({
   id: z.number(),
   is_restricted: z.boolean(),
   osu_id: z.number(),
+  rank: z.number().nullable(),
   tournament_badges: z.number().nullable(),
   username: z.string(),
 });
@@ -722,6 +723,7 @@ export const publicUsersInsertSchema = z.object({
   id: z.number().optional(),
   is_restricted: z.boolean(),
   osu_id: z.number(),
+  rank: z.number().optional().nullable(),
   tournament_badges: z.number().optional().nullable(),
   username: z.string(),
 });
@@ -732,6 +734,7 @@ export const publicUsersUpdateSchema = z.object({
   id: z.number().optional(),
   is_restricted: z.boolean().optional(),
   osu_id: z.number().optional(),
+  rank: z.number().optional().nullable(),
   tournament_badges: z.number().optional().nullable(),
   username: z.string().optional(),
 });

@@ -1,14 +1,14 @@
 insert into "public"."users"
-  (username, osu_id, is_restricted, country_code, badges, tournament_badges)
+  (username, osu_id, is_restricted, country_code, badges, tournament_badges, rank, pp, accuracy, play_count, maximum_combo)
 values
-  ('MockHost', 1, false, 'NO', 0, 0),
-  ('MockReferee', 2, false, 'NO', 0, 0),
-  ('MockCommentator', 3, false, 'NO', 0, 0),
-  ('MockStreamer', 4, false, 'NO', 0, 0),
-  ('MockPlayer1', 5, false, 'NO', 0, 0),
-  ('MockPlayer2', 6, false, 'NO', 0, 0),
-  ('MockPlayer3', 7, false, 'NO', 0, 0),
-  ('MockPlayer4', 8, false, 'NO', 0, 0);
+  ('MockHost', 1, false, 'NO', 0, 0, 0, 0, 0, 0, 0),
+  ('MockReferee', 2, false, 'NO', 0, 0, 0, 0, 0, 0, 0),
+  ('MockCommentator', 3, false, 'NO', 0, 0, 0, 0, 0, 0, 0),
+  ('MockStreamer', 4, false, 'NO', 0, 0, 0, 0, 0, 0, 0),
+  ('MockPlayer1', 5, false, 'NO', 0, 0, 1234, 12345.12345, 99.9, 123456, 1234),
+  ('MockPlayer2', 6, false, 'NO', 0, 0, 5678, 1234.1234, 98, 12345, 1248),
+  ('MockPlayer3', 7, false, 'NO', 0, 0, 91011, 123.123, 99.5, 1234, 1357),
+  ('MockPlayer4', 8, false, 'NO', 0, 0, 121314, 12.12, 94.2, 123, 1235);
 
 insert into "public"."tournaments"
   (name, acronym, team_size)
