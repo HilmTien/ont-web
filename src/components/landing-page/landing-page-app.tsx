@@ -2,10 +2,10 @@ import { auth, signIn } from "@/auth";
 import { createServerClient } from "@/lib/server";
 import Image from "next/image";
 import Link from "next/link";
-import { RegisterButton } from "../tournaments/tournament-registration";
 import Discord from "../icons/discord";
-import Youtube from "../icons/youtube";
 import Twitch from "../icons/twitch";
+import Youtube from "../icons/youtube";
+import { RegisterButton } from "../tournaments/tournament-registration";
 
 export default async function LandingPageApp() {
   const session = await auth();
@@ -71,12 +71,12 @@ export default async function LandingPageApp() {
           </p>
           <ul className="space-y-2 text-xl">
             <li className="flex justify-between">
-              <span className="font-medium">Registeringer</span>
-              <span>1. September - 14. September</span>
+              <span className="font-medium">Registeringsfase</span>
+              <span>1. September - 7. September</span>
             </li>
             <li className="flex justify-between">
-              <span className="font-medium">Registeringer</span>
-              <span>1. September - 14. September</span>
+              <span className="font-medium">Screeningsfase</span>
+              <span>8. September - 14. September</span>
             </li>
             <li className="flex justify-between">
               <span className="font-medium">Gruppespill</span>
@@ -88,27 +88,27 @@ export default async function LandingPageApp() {
             </li>
             <li className="flex justify-between">
               <span className="font-medium">Runoff runde 2</span>
-              <span>29. Oktober - 5. Oktober</span>
+              <span>29. September - 5. Oktober</span>
             </li>
             <li className="flex justify-between">
               <span className="font-medium">Swiss Uke 1 (0-0, 1-0, 0-1)</span>
               <span>6. Oktober - 12. Oktober</span>
             </li>
             <li className="flex justify-between">
-              <span className="font-medium">UKE 1</span>
+              <span className="font-medium">Swiss Uke 2 (2-0, 1-1, 0-2)</span>
               <span>13. Oktober - 19. Oktober</span>
             </li>
             <li className="flex justify-between">
-              <span className="font-medium">UKE 1</span>
+              <span className="font-medium">Swiss Uke 3 (2-1, 1-2, 2-2)</span>
               <span>20. Oktober - 26. Oktober</span>
             </li>
             <li className="flex justify-between">
-              <span className="font-medium">UKE 1</span>
-              <span>20. Oktober - 26. Oktober</span>
+              <span className="font-medium">Sluttspill (QF)</span>
+              <span>27. Oktober - 2. November</span>
             </li>
             <li className="flex justify-between">
-              <span className="font-medium">UKE 1</span>
-              <span>20. Oktober - 26. Oktober</span>
+              <span className="font-medium">Sluttspill (SF + Finaler)</span>
+              <span>3. November - 9. November</span>
             </li>
           </ul>
         </div>
