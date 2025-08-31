@@ -6,31 +6,31 @@ export default function LandingPageApp() {
   return (
     <div className="mx-auto max-w-[75%]">
       <section className="bg-content shadow-container mb-8 flex flex-row items-center justify-between p-10">
-        <div className="p-10">
-          <div className="flex flex-row items-center justify-center">
+        <div className="">
+          <div className="ml-10 flex w-full flex-col items-start justify-center">
             <Image
               src={"/logos/ont/new-logo.png"}
               alt="Logo"
               width={0}
               height={0}
               sizes="100vw"
-              className={"w-35"}
+              className={"w-40"}
             ></Image>
-            <p className="text-4xl font-bold">
+            <p className="text-5xl font-bold">
               osu! Norge Turnering <span className="">5</span>
             </p>
+            <p className="mt-2 text-2xl">
+              Vi fokuserer <span className="underline">fortsatt</span> på høy
+              produksjon.
+            </p>
           </div>
-          <p className="mt-2 text-xl">
-            Vi fokuserer <span className="underline">fortsatt</span> på høy
-            produksjon.
-          </p>
         </div>
 
-        <div className="aspect-video w-full max-w-[40rem] overflow-hidden rounded-2xl border-4 border-gray-400">
+        <div className="border-accent aspect-video h-full w-full max-w-[50%] overflow-hidden rounded-md border-4">
           <iframe
-            src="https://www.youtube.com/embed/rJ4r8YWzS40?si=XJm5D2FrW27J647c"
+            src="https://www.youtube.com/embed/MSeZTBKf5cI?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0"
             title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="autoplay; fullscreen; picture-in-picture"
             allowFullScreen
             className="h-full w-full"
           ></iframe>
@@ -38,7 +38,7 @@ export default function LandingPageApp() {
       </section>
 
       <section className="flex items-end gap-10">
-        <div className="min-w-[430px]">
+        <div className="min-w-[470px]">
           <p className="border-accent mb-4 border-b-2 pb-2 text-2xl font-semibold tracking-[0.3em]">
             TIDSLINJE
           </p>
