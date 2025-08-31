@@ -1,5 +1,6 @@
-import { createServerClient } from "@/lib/server";
+import Content from "@/components/general/content";
 import PlayerCard from "@/components/players/player-card";
+import { createServerClient } from "@/lib/server";
 
 export default async function Page() {
   const supabase = await createServerClient();
@@ -14,17 +15,17 @@ export default async function Page() {
   }
 
   return (
-    <div className="bg-content shadow-container z-1 m-2 mx-auto flex min-h-90 max-w-[75%] flex-col">
+    <Content>
+      <h2 className="font-semibold">Antall spillere: {registrations.length}</h2>
       <ol className="flex flex-wrap justify-center">
         {registrations.map((registration) => (
           <PlayerCard
             key={registration.users.osu_id}
             username={registration.users.username}
-            osu_id={registration.users.osu_id}
-            registered_at={registration.registered_at}
+            osuId={registration.users.osu_id}
           />
         ))}
       </ol>
-    </div>
+    </Content>
   );
 }

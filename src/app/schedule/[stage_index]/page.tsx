@@ -1,6 +1,8 @@
+import Content from "@/components/general/content";
 import { MatchCard } from "@/components/schedule/match-card";
 import { getStageMatches } from "@/lib/schedule/query";
 import { createServerClient } from "@/lib/server";
+import { ScheduleStageSelector } from "@/components/schedule/schedule-stage-selector";
 
 export default async function Page({
   params,
@@ -27,10 +29,13 @@ export default async function Page({
   }
 
   return (
-    <div className="bg-content shadow-container z-1 m-2 mx-auto flex max-w-[75%] flex-col">
+    <Content>
+      <div className="border-accent mx-auto border-b-2">
+        <ScheduleStageSelector stageIndex={stageIndex} />
+      </div>
       {stage.matches.map((match) => (
         <MatchCard match={match} key={match.id}></MatchCard>
       ))}
-    </div>
+    </Content>
   );
 }

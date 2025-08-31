@@ -3,6 +3,7 @@ import { StatisticsView } from "@/components/statistics/statistics-view";
 import { createServerClient } from "@/lib/server";
 import { getStatistics } from "@/lib/statistics/query";
 import { makeStatistics } from "@/lib/statistics/utils";
+import Content from "@/components/general/content";
 
 export default async function Page({
   params,
@@ -29,7 +30,7 @@ export default async function Page({
   const [mapStats, overallStats] = await makeStatistics(statistics);
 
   return (
-    <div className="bg-content shadow-container z-1 m-2 mx-auto flex max-w-[75%] flex-col p-5">
+    <Content>
       <div className="border-accent mx-auto border-b-2">
         <StatisticsStageSelector stageIndex={stageIndex} />
       </div>
@@ -38,6 +39,6 @@ export default async function Page({
         overallStats={overallStats}
         statistics={statistics}
       />
-    </div>
+    </Content>
   );
 }
