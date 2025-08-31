@@ -1,4 +1,4 @@
-import Navbar from "@/components/general/navbar/navbar";
+import { NavbarServer } from "@/components/general/navbar/navbar-server";
 import { metadata as meta } from "@/lib/metadata";
 import { SessionProvider } from "next-auth/react";
 import { Jersey_25, Jersey_25_Charted } from "next/font/google";
@@ -32,7 +32,7 @@ export default function RootLayout({
         <SessionProvider>
           <Tooltip.Provider>
             <div className="fixed top-0 left-0 z-[-1] h-full w-full bg-[url('/background/bg.png')] bg-cover bg-center bg-no-repeat blur-xs brightness-50"></div>
-            <Navbar />
+            <NavbarServer />
             <main className="pt-36">{children}</main>
           </Tooltip.Provider>
         </SessionProvider>

@@ -6,7 +6,11 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import LogIn from "./login";
 
-export default function Navbar() {
+interface NavbarProps {
+  latestStage?: number;
+}
+
+export default function Navbar({ latestStage }: NavbarProps) {
   const [navBg, setNavBg] = React.useState(false);
   const pathname = usePathname();
 
@@ -26,12 +30,12 @@ export default function Navbar() {
   }, []);
 
   const links = [
-    { label: "Info", href: "/info" },
-    { label: "Mappool", href: "/mappools" },
-    { label: "Timeplan", href: "/schedule" },
-    { label: "Spillere", href: "/players" },
-    { label: "Personalet", href: "/staff" },
-    { label: "Statistikk", href: "/statistics" },
+    { label: "Info", href: `/info` },
+    { label: "Mappool", href: `/mappools/${latestStage || ""}` },
+    { label: "Timeplan", href: `/schedule/${latestStage || ""}` },
+    { label: "Spillere", href: `/players` },
+    { label: "Personalet", href: `/staff` },
+    { label: "Statistikk", href: `/statistics/${latestStage || ""}` },
   ];
 
   return (
