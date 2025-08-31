@@ -151,6 +151,30 @@ export const publicCommentatorsRelationshipsSchema = z.tuple([
   }),
 ]);
 
+export const publicErrorsRowSchema = z.object({
+  code: z.string().nullable(),
+  created_at: z.string().nullable(),
+  details: z.string().nullable(),
+  hint: z.string().nullable(),
+  id: z.number(),
+});
+
+export const publicErrorsInsertSchema = z.object({
+  code: z.string().optional().nullable(),
+  created_at: z.string().optional().nullable(),
+  details: z.string().optional().nullable(),
+  hint: z.string().optional().nullable(),
+  id: z.number().optional(),
+});
+
+export const publicErrorsUpdateSchema = z.object({
+  code: z.string().optional().nullable(),
+  created_at: z.string().optional().nullable(),
+  details: z.string().optional().nullable(),
+  hint: z.string().optional().nullable(),
+  id: z.number().optional(),
+});
+
 export const publicMappoolMapsRowSchema = z.object({
   beatmap_id: z.number(),
   id: z.number(),
@@ -683,19 +707,31 @@ export const publicTournamentsUpdateSchema = z.object({
 });
 
 export const publicUsersRowSchema = z.object({
+  badges: z.number().nullable(),
+  country_code: z.string().nullable(),
   id: z.number(),
+  is_restricted: z.boolean(),
   osu_id: z.number(),
+  tournament_badges: z.number().nullable(),
   username: z.string(),
 });
 
 export const publicUsersInsertSchema = z.object({
+  badges: z.number().optional().nullable(),
+  country_code: z.string().optional().nullable(),
   id: z.number().optional(),
+  is_restricted: z.boolean(),
   osu_id: z.number(),
+  tournament_badges: z.number().optional().nullable(),
   username: z.string(),
 });
 
 export const publicUsersUpdateSchema = z.object({
+  badges: z.number().optional().nullable(),
+  country_code: z.string().optional().nullable(),
   id: z.number().optional(),
+  is_restricted: z.boolean().optional(),
   osu_id: z.number().optional(),
+  tournament_badges: z.number().optional().nullable(),
   username: z.string().optional(),
 });

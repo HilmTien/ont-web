@@ -1,14 +1,14 @@
 insert into "public"."users"
-  (username, osu_id)
+  (username, osu_id, is_restricted, country_code, badges, tournament_badges)
 values
-  ('MockHost', 1),
-  ('MockReferee', 2),
-  ('MockCommentator', 3),
-  ('MockStreamer', 4),
-  ('MockPlayer1', 5),
-  ('MockPlayer2', 6),
-  ('MockPlayer3', 7),
-  ('MockPlayer4', 8);
+  ('MockHost', 1, false, 'NO', 0, 0),
+  ('MockReferee', 2, false, 'NO', 0, 0),
+  ('MockCommentator', 3, false, 'NO', 0, 0),
+  ('MockStreamer', 4, false, 'NO', 0, 0),
+  ('MockPlayer1', 5, false, 'NO', 0, 0),
+  ('MockPlayer2', 6, false, 'NO', 0, 0),
+  ('MockPlayer3', 7, false, 'NO', 0, 0),
+  ('MockPlayer4', 8, false, 'NO', 0, 0);
 
 insert into "public"."tournaments"
   (name, acronym, team_size)

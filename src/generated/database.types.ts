@@ -667,18 +667,30 @@ export type Database = {
       }
       users: {
         Row: {
+          badges: number | null
+          country_code: string | null
           id: number
+          is_restricted: boolean
           osu_id: number
+          tournament_badges: number | null
           username: string
         }
         Insert: {
+          badges?: number | null
+          country_code?: string | null
           id?: number
+          is_restricted: boolean
           osu_id: number
+          tournament_badges?: number | null
           username: string
         }
         Update: {
+          badges?: number | null
+          country_code?: string | null
           id?: number
+          is_restricted?: boolean
           osu_id?: number
+          tournament_badges?: number | null
           username?: string
         }
         Relationships: []
