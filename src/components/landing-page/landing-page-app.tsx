@@ -53,7 +53,7 @@ export default async function LandingPageApp() {
           </div>
         </div>
 
-        <div className="border-accent aspect-video h-full w-[25vw] max-w-[50%] overflow-hidden rounded-md border-4">
+        <div className="border-accent aspect-video h-full w-[30vw] max-w-[50%] overflow-hidden rounded-md border-4">
           <iframe
             src="https://www.youtube.com/embed/MSeZTBKf5cI?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0"
             title="YouTube video player"
@@ -69,7 +69,7 @@ export default async function LandingPageApp() {
           <p className="border-accent mb-4 border-b-2 pb-2 text-2xl font-semibold">
             TIDSLINJE
           </p>
-          <ul className="space-y-2 text-xl">
+          <ul className="space-y-1 text-lg">
             <li className="flex justify-between">
               <span className="font-medium">Registeringer</span>
               <span>1. September - 14. September</span>
