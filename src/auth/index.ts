@@ -12,6 +12,15 @@ declare module "next-auth" {
   interface Account {
     access_token: string;
   }
+
+  interface Profile {
+    is_restricted: boolean;
+    badges: {
+      awarded_at: string;
+      description: string;
+    }[];
+    country_code: string;
+  }
 }
 
 import { onUserLogin } from "@/actions/user";
@@ -39,7 +48,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     ...(process.env.NODE_ENV === "development" ? [MockOsu] : []),
   ],
   callbacks: {
-    jwt: async ({ account, token }) => {
+    jwt: async ({ account, token, profile }) => {
       // first time login
       if (account) {
         const osuId = parseInt(account.providerAccountId);
@@ -55,7 +64,35 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           };
         }
 
-        await onUserLogin(token.name, osuId);
+        if (!profile) {
+          await onUserLogin({
+            osu_id: osuId,
+            username: token.name,
+            is_restricted: true,
+          });
+          console.log("Something unexpected happened...");
+          return {
+            ...token,
+            accessToken: account.access_token,
+            expiresAt: account.expires_at!,
+            refreshToken: account.refresh_token!,
+            osuId: osuId,
+          };
+        }
+
+        await onUserLogin({
+          osu_id: osuId,
+          username: token.name,
+          is_restricted: profile.is_restricted,
+          badges: profile.badges.length,
+          tournament_badges: profile.badges.filter((badge) => {
+            const matches = badge.description.match(
+              /winner|winning|corsace|perennial/i,
+            );
+            return matches ? matches.length != 0 : false;
+          }).length,
+          country_code: profile.country_code,
+        });
 
         return {
           ...token,
