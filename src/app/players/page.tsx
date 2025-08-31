@@ -7,13 +7,12 @@ export default async function Page() {
 
   const { data: registrations } = await supabase
     .from("registrations")
-    .select("registered_at, users(username, osu_id)")
+    .select("registered_at, users(username, osu_id, rank)")
     .eq("tournament_id", 1);
 
   if (!registrations) {
     return <div>An error occurred</div>;
   }
-
   return (
     <Content>
       <h2 className="font-semibold">Antall spillere: {registrations.length}</h2>
@@ -23,6 +22,7 @@ export default async function Page() {
             key={registration.users.osu_id}
             username={registration.users.username}
             osuId={registration.users.osu_id}
+            rank={registration.users.rank}
           />
         ))}
       </ol>

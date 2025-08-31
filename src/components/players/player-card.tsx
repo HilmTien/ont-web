@@ -4,9 +4,10 @@ import Link from "next/link";
 interface PlayerCardProps {
   username: string;
   osuId: number;
+  rank: number | null;
 }
 
-export default function PlayerCard({ username, osuId }: PlayerCardProps) {
+export default function PlayerCard({ username, osuId, rank }: PlayerCardProps) {
   return (
     <li className="p-5">
       <div className="bg-card flex min-h-[50px] w-72 flex-row items-center rounded-md p-2 shadow-2xl">
@@ -30,10 +31,10 @@ export default function PlayerCard({ username, osuId }: PlayerCardProps) {
             >
               {username}
             </Link>
-            <p className="text-xs">BWS: 1</p>
+            <p className="text-xs">{`BWS: ${rank}`}</p>
           </div>
 
-          <span className="ml-2 font-semibold">#9999</span>
+          <span className="ml-2 font-semibold">{`#${rank}`}</span>
         </div>
       </div>
     </li>

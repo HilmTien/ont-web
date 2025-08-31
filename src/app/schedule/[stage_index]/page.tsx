@@ -30,7 +30,7 @@ export default async function Page({
 
   return (
     <Content>
-      <div className="border-accent mx-auto border-b-2">
+      <div className="border-accent mx-auto mb-14 border-b-2">
         <ScheduleStageSelector stageIndex={stageIndex} />
       </div>
       {stage.is_public || stage.matches.length === 0

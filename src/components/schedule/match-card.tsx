@@ -23,7 +23,7 @@ export function MatchCard({ match }: MatchCardProps) {
   });
 
   return (
-    <div className="bg-card shadow-2x m-4 mt-14 flex items-center rounded-md text-xl shadow-2xl">
+    <div className="bg-card shadow-2x m-4 flex items-center rounded-md text-xl shadow-2xl">
       <div className="flex h-40 w-40 flex-col items-center justify-center font-semibold">
         <p>{match.tournament_match_id}</p>
         <p>{`${date}. ${month} (${day})`}</p>
