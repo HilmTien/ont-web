@@ -60,12 +60,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     jwt: async ({ account, token, profile }) => {
       // first time login
       if (account) {
-        if (profile) {
-          console.log(profile.statistics_rulesets);
-          console.log(profile.badges!);
-          console.log(profile.is_restricted!);
-          console.log(profile.country_code!);
-        }
         const osuId = parseInt(account.providerAccountId);
 
         if (!token.name) {
