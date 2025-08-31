@@ -10,9 +10,7 @@ interface MatchCardProps {
 export function MatchCard({ match }: MatchCardProps) {
   const dateObj = new Date(match.match_time);
   const date = dateObj.getDate();
-  const month = dateObj
-    .toLocaleString("default", { month: "short" })
-    .toUpperCase();
+  const month = dateObj.toLocaleString("no", { month: "short" }).toUpperCase();
   const day = ["SØN", "MAN", "TIR", "ONS", "TOR", "FRE", "LØR"][
     dateObj.getDay()
   ];
