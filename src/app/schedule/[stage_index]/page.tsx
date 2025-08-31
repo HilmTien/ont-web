@@ -34,9 +34,13 @@ export default async function Page({
         <ScheduleStageSelector stageIndex={stageIndex} />
       </div>
       {stage.is_public || stage.matches.length === 0
-        ? stage.matches.map((match) => (
-            <MatchCard match={match} key={match.id}></MatchCard>
-          ))
+        ? stage.matches
+            .sort(
+              (a, b) =>
+                new Date(a.match_time).getTime() -
+                new Date(b.match_time).getTime(),
+            )
+            .map((match) => <MatchCard match={match} key={match.id} />)
         : ""}
     </Content>
   );
