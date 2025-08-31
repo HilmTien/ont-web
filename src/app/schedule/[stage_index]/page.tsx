@@ -17,18 +17,18 @@ export default async function Page({
 
   const supabase = await createServerClient();
 
-  const { data: matches } = await getStageMatches(supabase, {
+  const { data: stage } = await getStageMatches(supabase, {
     tournamentId: 1,
     stageIndex: stageIndex,
   });
 
-  if (!matches || matches.length == 0) {
+  if (!stage || stage.matches.length == 0) {
     return <>No matches for this stage</>;
   }
 
   return (
     <div className="bg-content shadow-container z-1 m-2 mx-auto flex max-w-[75%] flex-col">
-      {matches.map((match) => (
+      {stage.matches.map((match) => (
         <MatchCard match={match} key={match.id}></MatchCard>
       ))}
     </div>
