@@ -151,6 +151,30 @@ export const publicCommentatorsRelationshipsSchema = z.tuple([
   }),
 ]);
 
+export const publicErrorsRowSchema = z.object({
+  code: z.string().nullable(),
+  created_at: z.string().nullable(),
+  details: z.string().nullable(),
+  hint: z.string().nullable(),
+  id: z.number(),
+});
+
+export const publicErrorsInsertSchema = z.object({
+  code: z.string().optional().nullable(),
+  created_at: z.string().optional().nullable(),
+  details: z.string().optional().nullable(),
+  hint: z.string().optional().nullable(),
+  id: z.number().optional(),
+});
+
+export const publicErrorsUpdateSchema = z.object({
+  code: z.string().optional().nullable(),
+  created_at: z.string().optional().nullable(),
+  details: z.string().optional().nullable(),
+  hint: z.string().optional().nullable(),
+  id: z.number().optional(),
+});
+
 export const publicMappoolMapsRowSchema = z.object({
   beatmap_id: z.number(),
   id: z.number(),
@@ -683,19 +707,46 @@ export const publicTournamentsUpdateSchema = z.object({
 });
 
 export const publicUsersRowSchema = z.object({
+  accuracy: z.number().nullable(),
+  badges: z.number().nullable(),
+  country_code: z.string().nullable(),
   id: z.number(),
+  is_restricted: z.boolean(),
+  maximum_combo: z.number().nullable(),
   osu_id: z.number(),
+  play_count: z.number().nullable(),
+  pp: z.number().nullable(),
+  rank: z.number().nullable(),
+  tournament_badges: z.number().nullable(),
   username: z.string(),
 });
 
 export const publicUsersInsertSchema = z.object({
+  accuracy: z.number().optional().nullable(),
+  badges: z.number().optional().nullable(),
+  country_code: z.string().optional().nullable(),
   id: z.number().optional(),
+  is_restricted: z.boolean(),
+  maximum_combo: z.number().optional().nullable(),
   osu_id: z.number(),
+  play_count: z.number().optional().nullable(),
+  pp: z.number().optional().nullable(),
+  rank: z.number().optional().nullable(),
+  tournament_badges: z.number().optional().nullable(),
   username: z.string(),
 });
 
 export const publicUsersUpdateSchema = z.object({
+  accuracy: z.number().optional().nullable(),
+  badges: z.number().optional().nullable(),
+  country_code: z.string().optional().nullable(),
   id: z.number().optional(),
+  is_restricted: z.boolean().optional(),
+  maximum_combo: z.number().optional().nullable(),
   osu_id: z.number().optional(),
+  play_count: z.number().optional().nullable(),
+  pp: z.number().optional().nullable(),
+  rank: z.number().optional().nullable(),
+  tournament_badges: z.number().optional().nullable(),
   username: z.string().optional(),
 });
