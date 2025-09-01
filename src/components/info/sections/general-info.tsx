@@ -1,4 +1,5 @@
 import { InfoSection } from "@/components/general/info-section";
+import Image from "next/image";
 
 export function GeneralInfo() {
   return (
@@ -104,6 +105,10 @@ export function GeneralInfo() {
           </strong>{" "}
           spillerene spille mot hverandre.
         </li>
+        <li>
+          Gruppespillet spilles som en 1 runders round-robin hvor kun vinneren
+          av grupperen går videre i turneringen.
+        </li>
         <li>Gruppene blir laget som beskrevet i diagrammene.</li>
         <li>
           For hver Swiss runde kan man kun møte motstandere med{" "}
@@ -111,6 +116,19 @@ export function GeneralInfo() {
             <span className="text-accent">lik matchscore</span>
           </strong>{" "}
           (lik Win-Loss).
+        </li>
+        <li>
+          Under swissfasen kan man i utgangspunktet ikke møte samme motstander
+          flere ganger.
+        </li>
+        <li>
+          Dersom en duplikat matchup skjer, vil man bytte motstander med en
+          annen i samme bracket.
+        </li>
+        <li>
+          Dette byttet vil alltid være til fordel mot spilleren som ikke har
+          duplikat matchup, og erstatningsspilleren som velges skal være nærmest
+          mulig i plassering i forhold til problemspilleren
         </li>
         <li>
           Bracketfasen er en{" "}
@@ -125,6 +143,58 @@ export function GeneralInfo() {
         </li>
         <li>Mappool og timeplan blir lagt ut på mandager.</li>
       </ul>
+      <div className="flex flex-wrap gap-x-8">
+        <div className="flex flex-col items-center">
+          <h3 className="text-2xl">Gruppespill format</h3>
+          <Image
+            src={"/stage-info/groups.png"}
+            width={800}
+            height={1000}
+            className="w-70"
+            alt={"Groups format"}
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          <h3 className="text-2xl">Runoff runde 1 format</h3>
+          <Image
+            src={"/stage-info/runoff-1.png"}
+            width={1250}
+            height={1250}
+            className="w-100"
+            alt={"Runoff round 1 format"}
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          <h3 className="text-2xl">Runoff runde 2 format</h3>
+          <Image
+            src={"/stage-info/runoff-2.png"}
+            width={1250}
+            height={1250}
+            className="w-100"
+            alt={"Runoff round 2 format"}
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          <h3 className="text-2xl">Swiss format</h3>
+          <Image
+            src={"/stage-info/swiss.png"}
+            width={2000}
+            height={2000}
+            className="w-150"
+            alt={"Swiss format"}
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          <h3 className="text-2xl">Sluttspill format</h3>
+          <Image
+            src={"/stage-info/playoffs.png"}
+            width={1500}
+            height={1000}
+            className="w-100"
+            alt={"Playoffs format"}
+          />
+        </div>
+      </div>
     </InfoSection>
   );
 }

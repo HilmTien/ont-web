@@ -73,8 +73,12 @@ export function MatchInfo() {
         <li>
           En spiller har vunnet matchen hvis de har vunnet:{" "}
           <strong>
+            <span className="text-accent">4 kart i gruppespillet</span>
+          </strong>
+          ,{" "}
+          <strong>
             <span className="text-accent">
-              5 kart i gruppespillet, runoff-bracketsa og swiss
+              5 kart i runoff-bracketsa og swiss
             </span>
           </strong>
           , eller{" "}
