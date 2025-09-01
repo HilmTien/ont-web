@@ -60,7 +60,7 @@ export default function Navbar({ latestStage }: NavbarProps) {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-accent block w-28 text-center text-lg ${pathname.startsWith(link.href) ? "font-bold" : "font-semibold"}`}
+              className={`text-accent block w-28 text-center text-lg ${pathname.startsWith(link.href.split("/").slice(0, 2).join("/")) ? "font-bold" : "font-semibold"}`}
             >
               {link.label}
             </Link>
