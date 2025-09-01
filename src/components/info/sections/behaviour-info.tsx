@@ -44,7 +44,7 @@ export function BehaviourInfo() {
           <strong>
             <span className="text-accent">krenkende symbolikk</span>
           </strong>
-          . For eksempel er "tegning" med smoke av swastikasymbolet et{" "}
+          . For eksempel er &quot;tegning&quot; med smoke av swastikasymbolet et{" "}
           <strong>
             <span className="text-accent">grovt brudd</span>
           </strong>{" "}
