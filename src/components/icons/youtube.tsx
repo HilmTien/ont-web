@@ -1,6 +1,6 @@
 import { IconProps } from "./icon-props";
 
-export default function Star({ className }: IconProps) {
+export default function Youtube({ className }: IconProps) {
   return (
     <svg
       width="80px"
