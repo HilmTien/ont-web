@@ -32,28 +32,24 @@ export default async function LandingPageApp() {
 
   return (
     <div className="mx-auto max-w-[75%]">
-      <section className="bg-content shadow-container mb-4 flex flex-row items-center justify-between p-10">
-        <div className="">
-          <div className="ml-10 flex w-full flex-col items-start justify-center">
-            <Image
-              src={"/logos/ont/new-logo.png"}
-              alt="Logo"
-              width={0}
-              height={0}
-              sizes="100vw"
-              className={"w-40"}
-            ></Image>
-            <p className="text-5xl font-bold">
-              osu! Norge Turnering <span className="">5</span>
-            </p>
-            <p className="mt-2 text-2xl">
-              Vi fokuserer <span className="underline">fortsatt</span> på høy
-              produksjon.
-            </p>
-          </div>
+      <section className="bg-content shadow-container mb-4 flex flex-col items-center justify-between p-5 xl:flex-row">
+        <div className="mx-auto flex flex-1 flex-col items-start justify-center space-y-4 xl:pl-15">
+          <Image
+            src={"/logos/ont/new-logo.png"}
+            alt="Logo"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-40"
+          />
+          <p className="text-4xl font-bold">osu! Norge Turnering 5</p>
+          <p className="text-2xl">
+            Vi fokuserer <span className="underline">fortsatt</span> på høy
+            produksjon.
+          </p>
         </div>
 
-        <div className="border-accent aspect-video h-full w-[30vw] max-w-[50%] overflow-hidden rounded-md border-4">
+        <div className="border-accent mt-6 aspect-video w-full max-w-full flex-1 overflow-hidden rounded-md border-4 xl:mt-0 xl:max-w-[44%]">
           <iframe
             src="https://www.youtube.com/embed/MSeZTBKf5cI?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0"
             title="YouTube video player"
@@ -64,8 +60,8 @@ export default async function LandingPageApp() {
         </div>
       </section>
 
-      <section className="flex items-center gap-10">
-        <div className="min-w-[30vw]">
+      <section className="flex flex-col items-center gap-10 xl:flex-row">
+        <div className="w-full xl:max-w-[45%]">
           <p className="border-accent mb-2 border-b-2 pb-2 text-2xl font-semibold">
             TIDSLINJE
           </p>
@@ -113,8 +109,8 @@ export default async function LandingPageApp() {
           </ul>
         </div>
 
-        <div className="flex flex-1 flex-col gap-15">
-          <div className="g flex items-center justify-between space-x-4 px-50">
+        <div className="flex w-full min-w-[50%] flex-1 flex-col gap-10 pb-10 xl:pb-0">
+          <div className="flex items-center justify-center gap-20">
             <Link
               href="https://discord.com/invite/zY5dwFEbSx/"
               target="_blank"
