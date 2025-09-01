@@ -4,13 +4,14 @@ import Link from "next/link";
 interface PlayerCardProps {
   username: string;
   osuId: number;
-  registeredAt: string;
+  // registeredAt: string;
   rank: number;
   bws: number;
   accuracy: number;
   pp: number;
   playCount: number;
   maximumCombo: number;
+  tournamentBadges: number;
 }
 
 export default function PlayerCard({
@@ -22,17 +23,18 @@ export default function PlayerCard({
   pp,
   playCount,
   maximumCombo,
-  registeredAt,
+  // registeredAt,
+  tournamentBadges,
 }: PlayerCardProps) {
-  const dateObj = new Date(registeredAt);
+  // const dateObj = new Date(registeredAt);
 
-  const date = dateObj.getDate();
-  const month = dateObj.getMonth() + 1;
-  const time = dateObj.toLocaleTimeString("no", {
-    hour12: false,
-    hour: "numeric",
-    minute: "numeric",
-  });
+  // const date = dateObj.getDate();
+  // const month = dateObj.getMonth() + 1;
+  // const time = dateObj.toLocaleTimeString("no", {
+  //   hour12: false,
+  //   hour: "numeric",
+  //   minute: "numeric",
+  // });
 
   return (
     <li className="p-5">
@@ -67,9 +69,7 @@ export default function PlayerCard({
             <p>PP: {pp}</p>
             <p>Play Count: {playCount}</p>
             <p>Max Combo: {maximumCombo}</p>
-            <p>
-              Reg: {date}/{month} {time}
-            </p>
+            <p>Badges: {tournamentBadges}</p>
           </div>
         </details>
       </div>

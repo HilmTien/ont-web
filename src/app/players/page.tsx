@@ -20,26 +20,42 @@ export default async function Page() {
     <Content>
       <h2 className="font-semibold">Antall spillere: {registrations.length}</h2>
       <ol className="flex flex-wrap justify-center">
-        {registrations.map((registration) => {
-          const bws =
-            (registration.users.rank ?? 0) **
-            (0.5 * 0.9 ** (registration.users.tournament_badges ?? 0) + 0.5);
+        {registrations
+          .map((registration) => {
+            const bws =
+              (registration.users.rank ?? 0) **
+              (0.5 * 0.9 ** (registration.users.tournament_badges ?? 0) + 0.5);
 
-          return (
-            <PlayerCard
-              key={registration.users.osu_id}
-              username={registration.users.username}
-              registeredAt={registration.registered_at}
-              osuId={registration.users.osu_id}
-              rank={registration.users.rank ?? 0}
-              bws={bws}
-              accuracy={registration.users.accuracy ?? 0}
-              pp={registration.users.pp ?? 0}
-              playCount={registration.users.play_count ?? 0}
-              maximumCombo={registration.users.maximum_combo ?? 0}
-            />
-          );
-        })}
+            return {
+              username: registration.users.username,
+              osuId: registration.users.osu_id,
+              rank: registration.users.rank ?? 0,
+              bws: bws,
+              tournamentBadges: registration.users.tournament_badges ?? 0,
+              accuracy: registration.users.accuracy ?? 0,
+              pp: registration.users.pp ?? 0,
+              playCount: registration.users.play_count ?? 0,
+              maximumCombo: registration.users.maximum_combo ?? 0,
+            };
+          })
+          .toSorted((a, b) => a.bws - b.bws)
+          .map((registration) => {
+            return (
+              <PlayerCard
+                key={registration.osuId}
+                username={registration.username}
+                // registeredAt={registration.registeredAt}
+                osuId={registration.osuId}
+                rank={registration.rank ?? 0}
+                bws={registration.bws}
+                tournamentBadges={registration.tournamentBadges ?? 0}
+                accuracy={registration.accuracy ?? 0}
+                pp={registration.pp ?? 0}
+                playCount={registration.playCount ?? 0}
+                maximumCombo={registration.maximumCombo ?? 0}
+              />
+            );
+          })}
       </ol>
     </Content>
   );
