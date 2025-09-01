@@ -57,15 +57,15 @@ export function MatchInfo() {
         </strong>{" "}
         bestemmer hvem som{" "}
         <strong>
-          <span className="text-accent">er lag A og B</span>
-        </strong>
-        .
+          <span className="text-accent">velger først</span>
+        </strong>{" "}
+        (altså er spiller 1 i eksemplet under).
       </li>
       <li>
         Pick og ban order går som følgende:{" "}
-        <pre>
-          1. Lag A Tier 1 2. Lag B Tier 2 3. Lag B Tier 1 4. Lag A Tier 2
-        </pre>
+        <p>1. Spiller 1, Spiller 2, Spiller 1, Spiller 2 // Picks</p>
+        <p>2. Spiller 2, Spiller 1 // Bans</p>
+        <p>3. Spiller 2, Spiller 1 // Picks, gjentar</p>
       </li>
       <li>
         En spiller har vunnet matchen hvis de har vunnet:{" "}
@@ -127,7 +127,7 @@ export function MatchInfo() {
       </li>
       <li>
         Forcedmod reglene er som følgende:{" "}
-        <ul className="list-disc">
+        <ul className="list-disc pl-4">
           <li>Nomod er ikke lov.</li>
           <li>
             De lovlige moddene er:{" "}
@@ -139,25 +139,25 @@ export function MatchInfo() {
             </strong>
             .
           </li>
+          <li>
+            Alle Easy scores vil bli{" "}
+            <strong>
+              <span className="text-accent">multiplisert med 2</span>
+            </strong>{" "}
+            med mindre det blir spesifisert noe annet.
+          </li>
         </ul>
       </li>
       <li>
         Ved uavgjorte kartsituasjoner vil utfallet bestemmes i denne
         rekkefølgen:{" "}
-        <ul className="list-disc">
+        <ul className="list-disc pl-4">
           <li>
             Spilleren som hadde flest mods på mappet vinner. EZ telles ikke her.
           </li>
           <li>Spilleren med færrest 100 count vinner.</li>
           <li>Mappet bestemmes som uavgjort og begge lag tjener 1 poeng.</li>
         </ul>
-      </li>
-      <li>
-        Alle Easy scores vil bli{" "}
-        <strong>
-          <span className="text-accent">multiplisert med 2</span>
-        </strong>{" "}
-        med mindre det blir spesifisert noe annet.
       </li>
       <li>
         På tiebreakeren er{" "}
