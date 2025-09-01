@@ -64,7 +64,8 @@ export async function createRegistration(
     return { error: "Registration failed" };
   }
 
-  revalidatePath(`/tournament/${data.tournament_id}`);
+  revalidatePath("/players");
+  revalidatePath(`/admin/tournaments/${data.tournament_id}/players`);
 
   return newRegistration;
 }
@@ -88,6 +89,7 @@ export async function removeRegistration(
     return { error: "Cannot remove registration" };
   }
 
+  revalidatePath("/players");
   revalidatePath(`/admin/tournament/${tournamentId}`);
 
   return user;

@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "assets.ppy.sh",
       },
+      {
+        protocol: "https",
+        hostname: "a.ppy.sh",
+      },
     ],
   },
 };

@@ -2,6 +2,7 @@ import { MappoolsStageSelector } from "@/components/mappools/mappools-stage-sele
 import { MappoolsView } from "@/components/mappools/mappools-view";
 import { getMappool } from "@/lib/mappools/query";
 import { createServerClient } from "@/lib/server";
+import Content from "@/components/general/content";
 
 export default async function Page({
   params,
@@ -25,19 +26,17 @@ export default async function Page({
     return <>Error fetching mappool data</>;
   }
 
-  if (mappool.is_public) {
-    return (
-      <div className="m-2 flex gap-36">
-        <MappoolsStageSelector />
+  return (
+    <Content>
+      <div className="border-accent mx-auto border-b-2">
+        <MappoolsStageSelector stageIndex={stageIndex} />
+      </div>
+
+      {mappool.is_public ? (
         <MappoolsView data={mappool} />
-      </div>
-    );
-  } else {
-    return (
-      <div className="m-2 flex gap-36">
-        <MappoolsStageSelector />
-        <>Mappool not released yet</>
-      </div>
-    );
-  }
+      ) : (
+        <p className="mx-auto p-8">Mappoolet er ikke ute enda</p>
+      )}
+    </Content>
+  );
 }
