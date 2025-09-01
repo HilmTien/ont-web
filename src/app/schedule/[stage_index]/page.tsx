@@ -33,15 +33,21 @@ export default async function Page({
       <div className="border-accent mx-auto mb-14 border-b-2">
         <ScheduleStageSelector stageIndex={stageIndex} />
       </div>
-      {stage.is_public || stage.matches.length === 0
-        ? stage.matches
+      {stage.is_public ? (
+        stage.matches.length !== 0 ? (
+          stage.matches
             .sort(
               (a, b) =>
                 new Date(a.match_time).getTime() -
                 new Date(b.match_time).getTime(),
             )
             .map((match) => <MatchCard match={match} key={match.id} />)
-        : ""}
+        ) : (
+          <p className="mx-auto pb-8">Denne runden har ingen matches</p>
+        )
+      ) : (
+        <p className="mx-auto pb-4">Denne runden er ikke offentlig enda</p>
+      )}
     </Content>
   );
 }
