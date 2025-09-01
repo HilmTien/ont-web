@@ -16,6 +16,7 @@ export function RegisterButton({
     if (isActionError(response)) {
       console.log(response.error);
     }
+    window.open("https://discord.com/invite/zY5dwFEbSx/", "_blank");
   };
 
   return registered ? (
