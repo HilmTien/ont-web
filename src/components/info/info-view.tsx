@@ -3,11 +3,13 @@ import { BehaviourInfo } from "./sections/behaviour-info";
 import { GeneralInfo } from "./sections/general-info";
 import { MappoolInfo } from "./sections/mappool-info";
 import { MatchInfo } from "./sections/match-info";
+import { PrizesInfo } from "./sections/prizes-info";
 
 export function InfoView() {
   return (
     <div className="flex flex-col gap-4 p-4">
       <GeneralInfo />
+      <PrizesInfo />
       <MatchInfo />
       <MappoolInfo />
       <BehaviourInfo />
