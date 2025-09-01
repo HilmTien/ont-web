@@ -1,9 +1,10 @@
-import NextAuth, { type DefaultSession } from "next-auth";
+import NextAuth, { type User } from "next-auth";
 import Osu from "next-auth/providers/osu";
 
 declare module "next-auth" {
   interface Session {
-    user: DefaultSession["user"];
+    osuId: number;
+    user: User;
     expires: string;
     accessToken: string;
   }
@@ -11,24 +12,56 @@ declare module "next-auth" {
   interface Account {
     access_token: string;
   }
+
+  interface Profile {
+    is_restricted: boolean;
+    badges: {
+      awarded_at: string;
+      description: string;
+    }[];
+    country_code: string;
+    statistics_rulesets: {
+      osu: {
+        global_rank: number;
+        pp: number;
+        hit_accuracy: number;
+        play_count: number;
+        maximum_combo: number;
+      };
+    };
+  }
 }
 
 import { onUserLogin } from "@/actions/user";
 import { JWT } from "next-auth/jwt";
+import { MockOsu } from "./mock-auth";
 declare module "next-auth/jwt" {
   interface JWT {
     accessToken: string;
     expiresAt: number;
     refreshToken: string;
+    osuId: number;
   }
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [Osu],
+  providers: [
+    Osu({
+      authorization: {
+        url: "https://osu.ppy.sh/oauth/authorize",
+        params: {
+          scope: "identify public",
+        },
+      },
+    }),
+    ...(process.env.NODE_ENV === "development" ? [MockOsu] : []),
+  ],
   callbacks: {
-    jwt: async ({ account, token }) => {
+    jwt: async ({ account, token, profile }) => {
       // first time login
       if (account) {
+        const osuId = parseInt(account.providerAccountId);
+
         if (!token.name) {
           console.log("Something unexpected happened...");
           return {
@@ -36,16 +69,51 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             accessToken: account.access_token,
             expiresAt: account.expires_at!,
             refreshToken: account.refresh_token!,
+            osuId: osuId,
           };
         }
 
-        await onUserLogin(token.name, parseInt(account.providerAccountId));
+        if (!profile) {
+          await onUserLogin({
+            osu_id: osuId,
+            username: token.name,
+            is_restricted: true,
+          });
+          console.log("Something unexpected happened...");
+          return {
+            ...token,
+            accessToken: account.access_token,
+            expiresAt: account.expires_at!,
+            refreshToken: account.refresh_token!,
+            osuId: osuId,
+          };
+        }
+
+        await onUserLogin({
+          osu_id: osuId,
+          username: token.name,
+          is_restricted: profile.is_restricted,
+          badges: profile.badges.length,
+          tournament_badges: profile.badges.filter((badge) => {
+            const matches = badge.description.match(
+              /winner|winning|corsace|perennial/i,
+            );
+            return matches ? matches.length != 0 : false;
+          }).length,
+          country_code: profile.country_code,
+          rank: profile.statistics_rulesets.osu.global_rank,
+          accuracy: profile.statistics_rulesets.osu.hit_accuracy,
+          maximum_combo: profile.statistics_rulesets.osu.maximum_combo,
+          play_count: profile.statistics_rulesets.osu.play_count,
+          pp: profile.statistics_rulesets.osu.pp,
+        });
 
         return {
           ...token,
           accessToken: account.access_token,
           expiresAt: account.expires_at!,
           refreshToken: account.refresh_token!,
+          osuId: osuId,
         };
       }
 
@@ -58,8 +126,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
     session: (params) => {
-      params.session.accessToken = params.token.accessToken;
-      return params.session;
+      return {
+        ...params.session,
+        accessToken: params.token.accessToken,
+        osuId: params.token.osuId,
+      };
     },
   },
 });
@@ -100,7 +171,6 @@ async function tryRefreshToken(token: JWT): Promise<JWT | null> {
       refreshToken: newToken.refresh_token,
     };
   } catch {
-    await signOut({ redirect: false });
     return null;
   }
 }

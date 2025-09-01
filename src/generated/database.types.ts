@@ -9,17 +9,53 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admins: {
+        Row: {
+          id: number
+          tournament_id: number
+          user_id: number
+        }
+        Insert: {
+          id?: number
+          tournament_id: number
+          user_id: number
+        }
+        Update: {
+          id?: number
+          tournament_id?: number
+          user_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admins_tournament_id_fkey"
+            columns: ["tournament_id"]
+            isOneToOne: false
+            referencedRelation: "tournaments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "admins_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       beatmaps: {
         Row: {
           ar: number | null
           artist: string
           bpm: number
+          cover: string | null
           cs: number | null
           difficulty_name: string
           drain_time: number
           hp: number | null
           id: number
+          last_updated: string
           mapper: string
+          mapset_host: string
           name: string
           od: number | null
           osu_id: number | null
@@ -29,12 +65,15 @@ export type Database = {
           ar?: number | null
           artist: string
           bpm: number
+          cover?: string | null
           cs?: number | null
           difficulty_name: string
           drain_time: number
           hp?: number | null
           id?: number
+          last_updated: string
           mapper: string
+          mapset_host: string
           name: string
           od?: number | null
           osu_id?: number | null
@@ -44,12 +83,15 @@ export type Database = {
           ar?: number | null
           artist?: string
           bpm?: number
+          cover?: string | null
           cs?: number | null
           difficulty_name?: string
           drain_time?: number
           hp?: number | null
           id?: number
+          last_updated?: string
           mapper?: string
+          mapset_host?: string
           name?: string
           od?: number | null
           osu_id?: number | null
@@ -90,24 +132,51 @@ export type Database = {
           },
         ]
       }
+      errors: {
+        Row: {
+          code: string | null
+          created_at: string | null
+          details: string | null
+          hint: string | null
+          id: number
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string | null
+          details?: string | null
+          hint?: string | null
+          id?: number
+        }
+        Update: {
+          code?: string | null
+          created_at?: string | null
+          details?: string | null
+          hint?: string | null
+          id?: number
+        }
+        Relationships: []
+      }
       mappool_maps: {
         Row: {
           beatmap_id: number
           id: number
           map_index: string
-          mappool_id: number
+          mods: string | null
+          stage_id: number
         }
         Insert: {
           beatmap_id: number
           id?: number
           map_index: string
-          mappool_id: number
+          mods?: string | null
+          stage_id: number
         }
         Update: {
           beatmap_id?: number
           id?: number
           map_index?: string
-          mappool_id?: number
+          mods?: string | null
+          stage_id?: number
         }
         Relationships: [
           {
@@ -118,39 +187,10 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "mappool_maps_mappool_id_fkey"
-            columns: ["mappool_id"]
+            foreignKeyName: "mappool_maps_stage_id_fkey"
+            columns: ["stage_id"]
             isOneToOne: false
-            referencedRelation: "mappools"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      mappools: {
-        Row: {
-          id: number
-          stage_index: number
-          stage_name: string
-          tournament_id: number
-        }
-        Insert: {
-          id?: number
-          stage_index: number
-          stage_name: string
-          tournament_id: number
-        }
-        Update: {
-          id?: number
-          stage_index?: number
-          stage_name?: string
-          tournament_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "mappools_tournament_id_fkey"
-            columns: ["tournament_id"]
-            isOneToOne: false
-            referencedRelation: "tournaments"
+            referencedRelation: "tournament_stages"
             referencedColumns: ["id"]
           },
         ]
@@ -163,13 +203,14 @@ export type Database = {
           match_time: string
           mp_id: number | null
           referee_id: number | null
+          stage_id: number
           streamer_id: number | null
           team1_id: number
           team1_score: number | null
           team2_id: number
           team2_score: number | null
           tournament_id: number
-          tournament_match_id: number
+          tournament_match_id: string
         }
         Insert: {
           commentator1_id?: number | null
@@ -178,13 +219,14 @@ export type Database = {
           match_time: string
           mp_id?: number | null
           referee_id?: number | null
+          stage_id: number
           streamer_id?: number | null
           team1_id: number
           team1_score?: number | null
           team2_id: number
           team2_score?: number | null
           tournament_id: number
-          tournament_match_id: number
+          tournament_match_id: string
         }
         Update: {
           commentator1_id?: number | null
@@ -193,13 +235,14 @@ export type Database = {
           match_time?: string
           mp_id?: number | null
           referee_id?: number | null
+          stage_id?: number
           streamer_id?: number | null
           team1_id?: number
           team1_score?: number | null
           team2_id?: number
           team2_score?: number | null
           tournament_id?: number
-          tournament_match_id?: number
+          tournament_match_id?: string
         }
         Relationships: [
           {
@@ -221,6 +264,13 @@ export type Database = {
             columns: ["referee_id"]
             isOneToOne: false
             referencedRelation: "referees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_stage_id_fkey"
+            columns: ["stage_id"]
+            isOneToOne: false
+            referencedRelation: "tournament_stages"
             referencedColumns: ["id"]
           },
           {
@@ -249,6 +299,84 @@ export type Database = {
             columns: ["tournament_id"]
             isOneToOne: false
             referencedRelation: "tournaments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      qualifier_lobbies: {
+        Row: {
+          id: number
+          lobby_time: string
+          mp_id: number | null
+          referee_id: number | null
+          stage_id: number
+          tournament_match_id: string
+        }
+        Insert: {
+          id?: number
+          lobby_time: string
+          mp_id?: number | null
+          referee_id?: number | null
+          stage_id: number
+          tournament_match_id: string
+        }
+        Update: {
+          id?: number
+          lobby_time?: string
+          mp_id?: number | null
+          referee_id?: number | null
+          stage_id?: number
+          tournament_match_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qualifier_lobbies_referee_id_fkey"
+            columns: ["referee_id"]
+            isOneToOne: false
+            referencedRelation: "referees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "qualifier_lobbies_stage_id_fkey"
+            columns: ["stage_id"]
+            isOneToOne: false
+            referencedRelation: "tournament_stages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      qualifier_signups: {
+        Row: {
+          id: number
+          lobby_id: number
+          signed_up_at: string
+          user_id: number
+        }
+        Insert: {
+          id?: number
+          lobby_id: number
+          signed_up_at?: string
+          user_id: number
+        }
+        Update: {
+          id?: number
+          lobby_id?: number
+          signed_up_at?: string
+          user_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qualifier_signups_lobby_id_fkey"
+            columns: ["lobby_id"]
+            isOneToOne: false
+            referencedRelation: "qualifier_lobbies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "qualifier_signups_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]
@@ -295,7 +423,7 @@ export type Database = {
         }
         Insert: {
           id?: number
-          registered_at: string
+          registered_at?: string
           tournament_id: number
           user_id: number
         }
@@ -481,6 +609,41 @@ export type Database = {
           },
         ]
       }
+      tournament_stages: {
+        Row: {
+          id: number
+          is_public: boolean
+          stage_index: number
+          stage_name: string
+          stage_type: Database["public"]["Enums"]["stage_types"]
+          tournament_id: number
+        }
+        Insert: {
+          id?: number
+          is_public?: boolean
+          stage_index: number
+          stage_name: string
+          stage_type: Database["public"]["Enums"]["stage_types"]
+          tournament_id: number
+        }
+        Update: {
+          id?: number
+          is_public?: boolean
+          stage_index?: number
+          stage_name?: string
+          stage_type?: Database["public"]["Enums"]["stage_types"]
+          tournament_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tournament_stages_tournament_id_fkey"
+            columns: ["tournament_id"]
+            isOneToOne: false
+            referencedRelation: "tournaments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tournaments: {
         Row: {
           acronym: string
@@ -504,18 +667,45 @@ export type Database = {
       }
       users: {
         Row: {
+          accuracy: number | null
+          badges: number | null
+          country_code: string | null
           id: number
+          is_restricted: boolean
+          maximum_combo: number | null
           osu_id: number
+          play_count: number | null
+          pp: number | null
+          rank: number | null
+          tournament_badges: number | null
           username: string
         }
         Insert: {
+          accuracy?: number | null
+          badges?: number | null
+          country_code?: string | null
           id?: number
+          is_restricted: boolean
+          maximum_combo?: number | null
           osu_id: number
+          play_count?: number | null
+          pp?: number | null
+          rank?: number | null
+          tournament_badges?: number | null
           username: string
         }
         Update: {
+          accuracy?: number | null
+          badges?: number | null
+          country_code?: string | null
           id?: number
+          is_restricted?: boolean
+          maximum_combo?: number | null
           osu_id?: number
+          play_count?: number | null
+          pp?: number | null
+          rank?: number | null
+          tournament_badges?: number | null
           username?: string
         }
         Relationships: []
@@ -528,7 +718,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      stage_types: "qualifiers" | "pvp"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -536,27 +726,33 @@ export type Database = {
   }
 }
 
-type PublicSchema = Database[Extract<keyof Database, "public">]
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
 
 export type Tables<
-  PublicTableNameOrOptions extends
-    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-        Database[PublicTableNameOrOptions["schema"]]["Views"])
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
-        PublicSchema["Views"])
-    ? (PublicSchema["Tables"] &
-        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -564,20 +760,24 @@ export type Tables<
     : never
 
 export type TablesInsert<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
         Insert: infer I
       }
       ? I
@@ -585,20 +785,24 @@ export type TablesInsert<
     : never
 
 export type TablesUpdate<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
         Update: infer U
       }
       ? U
@@ -606,30 +810,44 @@ export type TablesUpdate<
     : never
 
 export type Enums<
-  PublicEnumNameOrOptions extends
-    | keyof PublicSchema["Enums"]
-    | { schema: keyof Database },
-  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
-> = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
-    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof PublicSchema["CompositeTypes"]
-    | { schema: keyof Database },
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
-    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
+
+export const Constants = {
+  public: {
+    Enums: {
+      stage_types: ["qualifiers", "pvp"],
+    },
+  },
+} as const
 

@@ -3,6 +3,13 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-disabled: #606060;
+  --color-content: #1a3f4d;
+  --color-navbar: #337d99;
+  --color-accent: #d91c5d;
+  --color-card: #1f4a59;
+  --color-table: #141926;
+  --shadow-container: rgb(0 0 0 / 50%) 0px 0px 20px 4px;
 }
 
 /*
@@ -30,7 +37,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #0d1f26;
     --foreground: #ededed;
   }
 }

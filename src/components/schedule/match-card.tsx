@@ -1,0 +1,84 @@
+import { StageMatchesQueryData } from "@/lib/schedule/query";
+import Image from "next/image";
+import Link from "next/link";
+import { Link as LinkIcon } from "../icons/link";
+
+interface MatchCardProps {
+  match: StageMatchesQueryData["matches"][number];
+}
+
+export function MatchCard({ match }: MatchCardProps) {
+  const dateObj = new Date(match.match_time);
+  const date = dateObj.getDate();
+  const month = dateObj.toLocaleString("no", { month: "short" }).toUpperCase();
+  const day = ["SØN", "MAN", "TIR", "ONS", "TOR", "FRE", "LØR"][
+    dateObj.getDay()
+  ];
+  const time = dateObj.toLocaleTimeString("no", {
+    hour12: false,
+    hour: "numeric",
+    minute: "numeric",
+  });
+
+  const player1 = match.team1.team_players[0]?.users;
+  const player2 = match.team2.team_players[0]?.users;
+
+  return (
+    <div className="bg-card shadow-2x m-4 flex items-center rounded-md text-xl shadow-2xl">
+      <div className="flex h-40 w-40 flex-col items-center justify-center font-semibold">
+        <p>{match.tournament_match_id}</p>
+        <p>{`${date}. ${month} (${day})`}</p>
+        <p className="text-4xl">{time}</p>
+      </div>
+
+      <div className="flex flex-1 items-center justify-between">
+        <div className="flex w-1/3 items-center justify-start gap-5">
+          <Image
+            src={`https://a.ppy.sh/${player1.osu_id}`}
+            alt="Team 1 Logo"
+            width={0}
+            height={0}
+            className="w-40"
+            sizes="100vw"
+          />
+          <span className="font-semibold">{match.team1.name}</span>
+        </div>
+
+        <div className="flex w-28 flex-col items-center justify-center text-5xl font-bold">
+          <p>
+            {match.team1_score || 0} - {match.team2_score || 0}
+          </p>
+        </div>
+
+        <div className="flex w-1/3 items-center justify-end gap-5">
+          <span className="font-semibold">{match.team2.name}</span>
+          <Image
+            src={`https://a.ppy.sh/${player2.osu_id}`}
+            alt="Team 2 Logo"
+            width={0}
+            height={0}
+            className="w-40"
+            sizes="100vw"
+          />
+        </div>
+      </div>
+
+      <div className="flex h-40 w-40 flex-col items-center justify-center gap-1 text-center text-sm">
+        {match.mp_id ? (
+          <Link
+            target="_blank"
+            href={`https://osu.ppy.sh/community/matches/${match.mp_id}`}
+          >
+            <LinkIcon className="size-6 stroke-white" />
+          </Link>
+        ) : (
+          <LinkIcon className="stroke-disabled size-6" />
+        )}
+        <p>{match.referees?.users.username || "No referee"}</p>
+        <p>{match.streamers?.users.username || "No streamer"}</p>
+        <p>{match.commentator1?.users.username || "No commentator"}</p>
+        <p>{match.commentator2?.users.username || "No commentator"}</p>
+      </div>
+    </div>
+  );
+}
