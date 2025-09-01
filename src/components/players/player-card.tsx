@@ -6,6 +6,7 @@ interface PlayerCardProps {
   osuId: number;
   registeredAt: string;
   rank: number;
+  bws: number;
   accuracy: number;
   pp: number;
   playCount: number;
@@ -16,6 +17,7 @@ export default function PlayerCard({
   username,
   osuId,
   rank,
+  bws,
   accuracy,
   pp,
   playCount,
@@ -25,7 +27,7 @@ export default function PlayerCard({
   const dateObj = new Date(registeredAt);
 
   const date = dateObj.getDate();
-  const month = dateObj.getMonth();
+  const month = dateObj.getMonth() + 1;
   const time = dateObj.toLocaleTimeString("no", {
     hour12: false,
     hour: "numeric",
@@ -53,7 +55,7 @@ export default function PlayerCard({
             >
               {username}
             </Link>
-            <span className="ml-2 font-semibold">BWS: 1</span>
+            <span className="ml-2 font-semibold">BWS: {Math.round(bws)}</span>
           </div>
         </div>
 

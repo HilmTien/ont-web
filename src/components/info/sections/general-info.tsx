@@ -61,6 +61,11 @@ export function GeneralInfo() {
         skal gå gjennom kvalifiseringer i denne turneringen.
       </li>
       <li>
+        BWS formelen for denne iterasjonen er nærliggende formelen i o!NT 2 og
+        er gitt ved{" "}
+        <code>BWS = global_rank ^ (0.5 * 0.9^badge_count + 0.5)</code>
+      </li>
+      <li>
         Det er de{" "}
         <strong>
           <span className="text-accent">topp 48</span>
