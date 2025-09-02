@@ -8,6 +8,7 @@ export default function Osu({ className }: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox="25 25 300 300"
+      className={className}
     >
       <style>
         {`
