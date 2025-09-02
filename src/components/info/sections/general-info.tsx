@@ -105,7 +105,7 @@ export function GeneralInfo() {
         <li>
           Spillerene rangert{" "}
           <strong>
-            <span className="text-accent">9 - 16</span>
+            <span className="text-accent">9 - 24</span>
           </strong>{" "}
           etter BWS hopper over{" "}
           <strong>
