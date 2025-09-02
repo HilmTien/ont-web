@@ -3,6 +3,7 @@ import { createServerClient } from "@/lib/server";
 import Image from "next/image";
 import Link from "next/link";
 import Discord from "../icons/discord";
+import Osu from "../icons/osu";
 import Twitch from "../icons/twitch";
 import Youtube from "../icons/youtube";
 import { RegisterButton } from "../tournaments/tournament-registration";
@@ -132,6 +133,14 @@ export default async function LandingPageApp() {
               className=""
             >
               <Youtube></Youtube>
+            </Link>
+
+            <Link
+              href="https://osu.ppy.sh/community/forums/topics/2125135"
+              target="_blank"
+              className=""
+            >
+              <Osu></Osu>
             </Link>
           </div>
           <div className="flex gap-4">
