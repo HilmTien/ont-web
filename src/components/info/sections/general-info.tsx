@@ -24,6 +24,21 @@ export function GeneralInfo() {
           . Alle kan delta.
         </li>
         <li>
+          Alle deltagere er pålagt å være i vår{" "}
+          <strong>
+            <span className="text-accent">Discord server</span>
+          </strong>{" "}
+          med osu! brukernavnet sitt som servernavn! Du kan klikke{" "}
+          <a
+            href="https://discord.com/invite/zY5dwFEbSx/"
+            target="_blank"
+            className="text-accent hover:underline"
+          >
+            her
+          </a>{" "}
+          for å bli med.
+        </li>
+        <li>
           Alle tider og datoer er oppgitt i{" "}
           <strong>
             <span className="text-accent">norsk lokaltid</span>
@@ -90,7 +105,7 @@ export function GeneralInfo() {
         <li>
           Spillerene rangert{" "}
           <strong>
-            <span className="text-accent">9 - 16</span>
+            <span className="text-accent">9 - 24</span>
           </strong>{" "}
           etter BWS hopper over{" "}
           <strong>

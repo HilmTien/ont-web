@@ -10,7 +10,8 @@ export function PrizesInfo() {
       Foreløpig vil fordelingen være slik:
       <ul>
         <li>
-          1. plass - <span className="font-bold text-amber-400">2 500 NOK</span>
+          1. plass - <span className="font-bold text-amber-400">2 500 NOK</span>{" "}
+          + tournament badge (avventer)
         </li>
         <li>
           2. plass - <span className="font-bold text-amber-400">2 250 NOK</span>
