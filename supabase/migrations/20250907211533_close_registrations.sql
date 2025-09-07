@@ -1,0 +1,1 @@
+alter table "public"."tournaments" add column "can_register" boolean not null default true;
