@@ -55,7 +55,7 @@ export async function onUserLogin(
   return updatedUser;
 }
 
-export async function updateUsers(tournamentId: number): ServerActionResponse {
+export async function updateUsers(): ServerActionResponse {
   const session = await auth();
 
   if (!session) {

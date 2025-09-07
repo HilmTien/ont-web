@@ -35,7 +35,7 @@ export default async function Page({
   return (
     <div>
       Tournament info: {JSON.stringify(tournament)}
-      <UpdateUsersButton id={id} />
+      <UpdateUsersButton />
       <TournamentStageForm id={id} />
       <table>
         <tbody>
