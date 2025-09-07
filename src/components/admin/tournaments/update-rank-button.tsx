@@ -1,7 +1,7 @@
 "use client";
 
-import { updateUsers } from "@/actions/user";
+import { updateRanks } from "@/actions/user";
 
-export function UpdateUsersButton() {
-  return <button onClick={updateUsers}>Update ranks</button>;
+export function UpdateRanksButton() {
+  return <button onClick={updateRanks}>Update ranks</button>;
 }
