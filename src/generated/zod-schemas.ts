@@ -687,6 +687,7 @@ export const publicTournamentStagesRelationshipsSchema = z.tuple([
 
 export const publicTournamentsRowSchema = z.object({
   acronym: z.string(),
+  can_register: z.boolean(),
   id: z.number(),
   name: z.string(),
   team_size: z.number().nullable(),
@@ -694,6 +695,7 @@ export const publicTournamentsRowSchema = z.object({
 
 export const publicTournamentsInsertSchema = z.object({
   acronym: z.string(),
+  can_register: z.boolean().optional(),
   id: z.number().optional(),
   name: z.string(),
   team_size: z.number().optional().nullable(),
@@ -701,6 +703,7 @@ export const publicTournamentsInsertSchema = z.object({
 
 export const publicTournamentsUpdateSchema = z.object({
   acronym: z.string().optional(),
+  can_register: z.boolean().optional(),
   id: z.number().optional(),
   name: z.string().optional(),
   team_size: z.number().optional().nullable(),
