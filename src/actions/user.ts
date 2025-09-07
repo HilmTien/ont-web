@@ -5,6 +5,7 @@ import { Tables } from "@/generated/database.types";
 import { PublicUsersInsert } from "@/generated/zod-schema-types";
 import { ServerActionResponse } from "@/lib/error";
 import { createServerClient } from "@/lib/server";
+import { batchArray } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 
 /**
@@ -55,7 +56,7 @@ export async function onUserLogin(
   return updatedUser;
 }
 
-export async function updateUsers(): ServerActionResponse {
+export async function updateRanks(): ServerActionResponse {
   const session = await auth();
 
   if (!session) {
@@ -74,14 +75,15 @@ export async function updateUsers(): ServerActionResponse {
     return { error: "Could not fetch users" };
   }
 
-  for (const user of users) {
-    // Assume these are mock users
-    if (user.osu_id < 1000) {
-      continue;
-    }
+  // also assume id < 1000 => mockuser
+  const batchedUsers = batchArray(
+    users.filter((user) => user.osu_id > 1000),
+    50,
+  );
 
+  for (const batch of batchedUsers) {
     const response = await fetch(
-      `https://osu.ppy.sh/api/v2/users/${user.osu_id}/osu`,
+      `https://osu.ppy.sh/api/v2/users?ids[]=${batch.map((user) => user.osu_id).join("&ids[]=")}`,
       {
         headers: {
           Authorization: `Bearer ${session.accessToken}`,
@@ -94,42 +96,39 @@ export async function updateUsers(): ServerActionResponse {
     }
 
     const data = (await response.json()) as {
-      statistics: {
-        global_rank: number;
-        pp: number;
-        hit_accuracy: number;
-        play_count: number;
-        maximum_combo: number;
-      };
-      badges: { description: string }[];
-      country_code: string;
-      is_restricted: boolean;
+      users: {
+        id: number;
+        statistics_rulesets: {
+          osu: {
+            global_rank: number;
+            pp: number;
+            hit_accuracy: number;
+            play_count: number;
+            maximum_combo: number;
+          };
+        };
+      }[];
     };
 
-    const { data: updatedUser, error: updateError } = await supabase
-      .from("users")
-      .update({
-        is_restricted: data.is_restricted,
-        badges: data.badges.length,
-        tournament_badges: data.badges.filter((badge) => {
-          const matches = badge.description.match(
-            /winner|winning|corsace|perennial/i,
-          );
-          return matches ? matches.length != 0 : false;
-        }).length,
-        country_code: data.country_code,
-        rank: data.statistics.global_rank,
-        accuracy: data.statistics.hit_accuracy,
-        maximum_combo: data.statistics.maximum_combo,
-        play_count: data.statistics.play_count,
-        pp: data.statistics.pp,
-      })
-      .eq("id", user.id)
-      .select();
+    const updates = data.users.map(async (data) => {
+      const { data: updatedUser, error: updateError } = await supabase
+        .from("users")
+        .update({
+          rank: data.statistics_rulesets.osu.global_rank,
+          accuracy: data.statistics_rulesets.osu.hit_accuracy,
+          maximum_combo: data.statistics_rulesets.osu.maximum_combo,
+          play_count: data.statistics_rulesets.osu.play_count,
+          pp: data.statistics_rulesets.osu.pp,
+        })
+        .eq("osu_id", data.id)
+        .select();
 
-    if (!updatedUser) {
-      await supabase.from("errors").insert(updateError);
-    }
+      if (!updatedUser) {
+        await supabase.from("errors").insert(updateError);
+      }
+    });
+
+    await Promise.allSettled(updates);
   }
 
   revalidatePath(`players`);
