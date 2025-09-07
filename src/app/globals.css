@@ -43,6 +43,6 @@
 }
 
 body {
-  color: var(--foreground);
+  color: white;
   background: var(--background);
 }
