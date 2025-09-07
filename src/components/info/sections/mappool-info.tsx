@@ -98,13 +98,13 @@ export function MappoolInfo() {
         <li>
           Foreløpige tallverdier for SR til A1 er følgende:{" "}
           <ul className="list-disc pl-4">
-            <li>Gruppespill: 5.8*</li>
-            <li>Runoff runde 1: 6.2*</li>
+            <li>Gruppespill: 6.0*</li>
+            <li>Runoff runde 1: 6.3*</li>
             <li>Runoff runde 2: 6.6*</li>
-            <li>Swiss Uke 1: 7*</li>
-            <li>Swiss Uke 2: 7.4*</li>
-            <li>Swiss Uke 3: 7.6*</li>
-            <li>Sluttspill: 7.8*</li>
+            <li>Swiss Uke 1: 6.9*</li>
+            <li>Swiss Uke 2: 7.2*</li>
+            <li>Swiss Uke 3: 7.4*</li>
+            <li>Sluttspill: 7.6*</li>
           </ul>
         </li>
       </ul>
