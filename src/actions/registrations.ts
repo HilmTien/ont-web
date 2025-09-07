@@ -11,6 +11,20 @@ export async function createRegistration(
 ): ServerActionResponse<Tables<"registrations">> {
   const supabase = await createServerClient();
 
+  const { data: tournament, error: canRegisterError } = await supabase
+    .from("tournaments")
+    .select("can_register")
+    .eq("id", data.tournament_id)
+    .single();
+
+  if (!tournament) {
+    await supabase.from("errors").insert(canRegisterError);
+
+    return { error: "Tournament not found in database" };
+  }
+
+  if (!tournament.can_register) return { error: "Registrations are not open" };
+
   const session = await auth();
 
   if (!session || !session.osuId) {
@@ -23,9 +37,11 @@ export async function createRegistration(
     .eq("osu_id", session.osuId)
     .single();
 
-  if (!user) {
+  if (userError) {
     await supabase.from("errors").insert(userError);
+  }
 
+  if (!user) {
     return { error: "User not found in database" };
   }
 
