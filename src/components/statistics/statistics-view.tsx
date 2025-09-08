@@ -5,6 +5,7 @@ import { StatisticsQueryData } from "@/lib/statistics/query";
 import { formatSecondsToMMSS } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { Select } from "radix-ui";
 import React from "react";
 import Clock from "../icons/clock";
 import MusicNote from "../icons/music-note";
@@ -91,27 +92,58 @@ export function StatisticsView({
 
   return (
     <div className={!statistics.is_public ? "hidden" : ""}>
-      <div className="mb-5 flex gap-2 pb-2">{mapButtons}</div>
+      <div className="mt-5 hidden gap-2 pb-2 lg:flex">{mapButtons}</div>
+      <Select.Root defaultValue={map} onValueChange={(m) => setMap(m)}>
+        <Select.Trigger className="bg-table my-2 w-16 cursor-pointer rounded-md p-2 lg:hidden">
+          <Select.Value>{map}</Select.Value>
+        </Select.Trigger>
+        <Select.Portal>
+          <Select.Content
+            className="min-w-48 rounded-md"
+            position="popper"
+            sideOffset={5}
+          >
+            <Select.Viewport className="bg-navbar rounded-md p-[5px]">
+              <Select.Item
+                key="overall"
+                value="Overall"
+                className={`bg-navbar cursor-pointer ${map === "Overall" ? "font-semibold" : ""}`}
+              >
+                <Select.ItemText>Overall</Select.ItemText>
+              </Select.Item>
+              {...Object.keys(mapStats).map((mapKey) => (
+                <Select.Item
+                  key={mapKey}
+                  value={mapKey}
+                  className={`bg-navbar cursor-pointer ${map === mapKey ? "font-semibold" : ""}`}
+                >
+                  {mapKey}
+                </Select.Item>
+              ))}
+            </Select.Viewport>
+          </Select.Content>
+        </Select.Portal>
+      </Select.Root>
 
       <div
         className={
           map === "Overall"
             ? "hidden"
-            : "shadow-container bg-card mb-8 flex flex-col justify-between rounded-md md:flex-row"
+            : "shadow-container bg-card mb-8 flex flex-col justify-between rounded-md lg:flex-row"
         }
       >
-        <div className="flex max-w-[50%] flex-col justify-between px-5">
+        <div className="flex flex-col justify-between px-5 lg:max-w-[50%]">
           <div>
-            <div className="mt-10">
-              <p className="text-[1.5rem] font-bold">
+            <div className="mt-5 lg:mt-10">
+              <p className="text-lg font-bold lg:text-[1.5rem]">
                 {`${mapData.artist} - ${mapData.songName} [${mapData.difficulty}]`}{" "}
               </p>
-              <p className="mt-2 text-xl">{mapData.mapper}</p>
+              <p className="text-md mt-2">{mapData.mapper}</p>
             </div>
           </div>
-          <div className="flex flex-row gap-12 text-lg">
+          <div className="flex flex-col text-lg lg:flex-row lg:gap-12">
             <div className="flex gap-7 pb-2">
-              <div className="flex flex-row gap-2 text-lg">
+              <div className="flex flex-row gap-2 text-sm lg:text-lg">
                 <p className="flex items-center gap-1">
                   <Star className="stroke-accent" /> {mapData.starRating}
                 </p>
@@ -124,7 +156,7 @@ export function StatisticsView({
                 </p>
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 text-sm text-nowrap lg:text-lg">
               <p>
                 <span className="text-accent font-semibold">CS</span>{" "}
                 {mapData.cs}
@@ -143,11 +175,11 @@ export function StatisticsView({
               </p>
             </div>
 
-            <p>{mapData.mods}</p>
+            <p className="text-sm lg:text-lg">{mapData.mods}</p>
           </div>
         </div>
 
-        <div className="flex max-w-[50%]">
+        <div className="flex lg:max-w-[50%]">
           <Link target="_blank" href={`https://osu.ppy.sh/b/${mapData.osuId}`}>
             <Image
               src={mapData.cover}
@@ -155,7 +187,7 @@ export function StatisticsView({
               width="0"
               height="0"
               sizes="100vw"
-              className="w-full rounded-r-md"
+              className="w-[150%] items-center lg:w-full lg:rounded-r-md"
             ></Image>
           </Link>
         </div>

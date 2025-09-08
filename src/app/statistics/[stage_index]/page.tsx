@@ -1,9 +1,9 @@
+import Content from "@/components/general/content";
 import { StatisticsStageSelector } from "@/components/statistics/statistics-stage-selector";
 import { StatisticsView } from "@/components/statistics/statistics-view";
 import { createServerClient } from "@/lib/server";
 import { getStatistics } from "@/lib/statistics/query";
 import { makeStatistics } from "@/lib/statistics/utils";
-import Content from "@/components/general/content";
 
 export default async function Page({
   params,
@@ -31,9 +31,8 @@ export default async function Page({
 
   return (
     <Content>
-      <div className="border-accent mx-auto border-b-2">
-        <StatisticsStageSelector stageIndex={stageIndex} />
-      </div>
+      <StatisticsStageSelector stageIndex={stageIndex} />
+
       <StatisticsView
         mapStats={mapStats}
         overallStats={overallStats}
