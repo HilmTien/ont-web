@@ -33,7 +33,7 @@ export async function MappoolsStageSelector({
       <div className="border-accent mx-auto hidden gap-5 border-b-2 text-lg lg:flex">
         {stageButtons}
       </div>
-      <div className="">
+      <div className="lg:hidden">
         <SelectMenu stages={stages} stageIndex={stageIndex} page="mappools" />
       </div>
     </>
