@@ -647,18 +647,21 @@ export type Database = {
       tournaments: {
         Row: {
           acronym: string
+          can_register: boolean
           id: number
           name: string
           team_size: number | null
         }
         Insert: {
           acronym: string
+          can_register?: boolean
           id?: number
           name: string
           team_size?: number | null
         }
         Update: {
           acronym?: string
+          can_register?: boolean
           id?: number
           name?: string
           team_size?: number | null
