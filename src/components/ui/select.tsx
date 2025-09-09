@@ -1,7 +1,7 @@
 "use client";
 
 import { StagesData } from "@/lib/stages";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Select } from "radix-ui";
 
 interface SelectMenuProps {
@@ -15,8 +15,16 @@ export default function SelectMenu({
   stageIndex,
   page,
 }: SelectMenuProps) {
+  const router = useRouter();
+
   return (
-    <Select.Root defaultValue={stages[stageIndex - 1].stage_name}>
+    <Select.Root
+      defaultValue={stages[stageIndex - 1].stage_name}
+      onValueChange={(stage) => {
+        const index = stages.findIndex((s) => s.stage_name === stage);
+        router.push(`/${page}/${index + 1}`);
+      }}
+    >
       <Select.Trigger className="bg-navbar cursor-pointer rounded-md p-2">
         <Select.Value>{stages[stageIndex - 1].stage_name}</Select.Value>
       </Select.Trigger>
@@ -31,9 +39,9 @@ export default function SelectMenu({
               <Select.Item
                 key={i}
                 value={stage.stage_name}
-                className={`cursor-pointer ${stageIndex === i + 1 ? "font-semibold" : ""}`}
+                className={`hover:bg-card cursor-pointer rounded-md py-[2px] pl-1 ${stageIndex === i + 1 ? "font-semibold" : ""}`}
               >
-                <Link href={`/${page}/${i + 1}`}>{stage.stage_name}</Link>
+                <Select.ItemText>{stage.stage_name}</Select.ItemText>
               </Select.Item>
             ))}
           </Select.Viewport>
