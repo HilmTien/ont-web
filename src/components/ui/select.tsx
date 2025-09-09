@@ -34,7 +34,7 @@ export default function SelectMenu({
           position="popper"
           sideOffset={5}
         >
-          <Select.Viewport className="p-[5px]">
+          <Select.Viewport className="shadow-container p-[5px]">
             {stages.map((stage, i) => (
               <Select.Item
                 key={i}

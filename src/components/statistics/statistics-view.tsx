@@ -94,7 +94,7 @@ export function StatisticsView({
     <div className={!statistics.is_public ? "hidden" : ""}>
       <div className="mt-5 hidden gap-2 pb-2 lg:flex">{mapButtons}</div>
       <Select.Root defaultValue={map} onValueChange={(m) => setMap(m)}>
-        <Select.Trigger className="bg-table my-2 w-16 cursor-pointer rounded-md p-2 lg:hidden">
+        <Select.Trigger className="my-2 w-16 cursor-pointer rounded-md bg-gray-900 p-2 lg:hidden">
           <Select.Value>{map}</Select.Value>
         </Select.Trigger>
         <Select.Portal>
@@ -103,11 +103,11 @@ export function StatisticsView({
             position="popper"
             sideOffset={5}
           >
-            <Select.Viewport className="bg-navbar rounded-md p-[5px]">
+            <Select.Viewport className="shadow-container rounded-md bg-gray-900 p-[5px]">
               <Select.Item
                 key="overall"
                 value="Overall"
-                className={`bg-navbar cursor-pointer ${map === "Overall" ? "font-semibold" : ""}`}
+                className={`hover:bg-accent cursor-pointer rounded-md bg-gray-900 py-[2px] pl-1 ${map === "Overall" ? "font-semibold" : ""}`}
               >
                 <Select.ItemText>Overall</Select.ItemText>
               </Select.Item>
@@ -115,7 +115,7 @@ export function StatisticsView({
                 <Select.Item
                   key={mapKey}
                   value={mapKey}
-                  className={`bg-navbar cursor-pointer ${map === mapKey ? "font-semibold" : ""}`}
+                  className={`hover:bg-accent cursor-pointer rounded-md bg-gray-900 py-[2px] pl-1 ${map === mapKey ? "font-semibold" : ""}`}
                 >
                   {mapKey}
                 </Select.Item>
@@ -135,13 +135,13 @@ export function StatisticsView({
         <div className="flex flex-col justify-between px-5 lg:max-w-[50%]">
           <div>
             <div className="mt-5 lg:mt-10">
-              <p className="text-lg font-bold lg:text-[1.5rem]">
+              <p className="overflow-hidden text-lg font-bold text-ellipsis lg:text-[1.5rem]">
                 {`${mapData.artist} - ${mapData.songName} [${mapData.difficulty}]`}{" "}
               </p>
               <p className="text-md mt-2">{mapData.mapper}</p>
             </div>
           </div>
-          <div className="flex flex-col text-lg lg:flex-row lg:gap-12">
+          <div className="mb-2 flex flex-col text-lg lg:flex-row lg:gap-12">
             <div className="flex gap-7 pb-2">
               <div className="flex flex-row gap-2 text-sm lg:text-lg">
                 <p className="flex items-center gap-1">
@@ -179,7 +179,7 @@ export function StatisticsView({
           </div>
         </div>
 
-        <div className="flex lg:max-w-[50%]">
+        <div className="lg:max-w-[50%]">
           <Link target="_blank" href={`https://osu.ppy.sh/b/${mapData.osuId}`}>
             <Image
               src={mapData.cover}
