@@ -13,6 +13,20 @@ export default async function LandingPageApp() {
 
   const supabase = await createServerClient();
 
+  let canRegister: boolean;
+
+  const { data: tournament } = await supabase
+    .from("tournaments")
+    .select("can_register")
+    .eq("id", 1)
+    .single();
+
+  if (tournament) {
+    canRegister = tournament.can_register;
+  } else {
+    canRegister = false;
+  }
+
   let registered: boolean;
 
   if (session) {
@@ -150,11 +164,17 @@ export default async function LandingPageApp() {
             >
               Mappool
             </Link>
-            {session ? (
-              <RegisterButton tournamentId={1} registered={registered} />
+            {canRegister ? (
+              session ? (
+                <RegisterButton tournamentId={1} registered={registered} />
+              ) : (
+                <div className="bg-disabled flex-1 py-3 text-center text-xl shadow-2xl">
+                  Logg inn for å melde på
+                </div>
+              )
             ) : (
               <div className="bg-disabled flex h-12 w-80 items-center justify-center text-center text-sm shadow-2xl sm:text-xl">
-                Logg inn for å melde på
+                Registreringer er stengt
               </div>
             )}
           </div>
