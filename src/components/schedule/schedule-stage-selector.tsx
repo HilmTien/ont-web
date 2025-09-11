@@ -1,5 +1,6 @@
 import { createServerClient } from "@/lib/server";
 import Link from "next/link";
+import SelectMenu from "../ui/select";
 
 interface ScheduleStageSelectorProps {
   stageIndex: number;
@@ -30,5 +31,14 @@ export async function ScheduleStageSelector({
     </Link>
   ));
 
-  return <div className="mx-auto flex gap-5 text-lg">{stageButtons}</div>;
+  return (
+    <>
+      <div className="border-accent mx-auto hidden gap-5 border-b-2 text-lg lg:flex">
+        {stageButtons}
+      </div>
+      <div className="lg:hidden">
+        <SelectMenu stages={stages} stageIndex={stageIndex} page="schedule" />
+      </div>
+    </>
+  );
 }

@@ -30,9 +30,7 @@ export default async function Page({
 
   return (
     <Content>
-      <div className="border-accent mx-auto mb-14 border-b-2">
-        <ScheduleStageSelector stageIndex={stageIndex} />
-      </div>
+      <ScheduleStageSelector stageIndex={stageIndex} />
       {stage.is_public ? (
         stage.matches.length !== 0 ? (
           stage.matches
@@ -46,7 +44,7 @@ export default async function Page({
           <p className="mx-auto pb-8">Denne runden har ingen matches</p>
         )
       ) : (
-        <p className="mx-auto pb-4">Denne runden er ikke offentlig enda</p>
+        <p className="mx-auto pt-4">Denne runden er ikke offentlig enda</p>
       )}
     </Content>
   );

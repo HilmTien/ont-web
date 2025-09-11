@@ -1,5 +1,7 @@
 import { createServerClient } from "@/lib/server";
+import { getStagesSelector } from "@/lib/stages";
 import Link from "next/link";
+import SelectMenu from "../ui/select";
 
 interface MappoolsStageSelectorProps {
   stageIndex: number;
@@ -10,11 +12,7 @@ export async function MappoolsStageSelector({
 }: MappoolsStageSelectorProps) {
   const supabase = await createServerClient();
 
-  const { data: stages } = await supabase
-    .from("tournament_stages")
-    .select("stage_name")
-    .eq("tournament_id", 1)
-    .order("stage_index");
+  const { data: stages } = await getStagesSelector(supabase);
 
   if (!stages) {
     return <>Error no stages</>;
@@ -30,5 +28,14 @@ export async function MappoolsStageSelector({
     </Link>
   ));
 
-  return <div className="mx-auto flex gap-5 text-lg">{stageButtons}</div>;
+  return (
+    <>
+      <div className="border-accent mx-auto hidden gap-5 border-b-2 text-lg lg:flex">
+        {stageButtons}
+      </div>
+      <div className="lg:hidden">
+        <SelectMenu stages={stages} stageIndex={stageIndex} page="mappools" />
+      </div>
+    </>
+  );
 }
