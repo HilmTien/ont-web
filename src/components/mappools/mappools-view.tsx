@@ -32,7 +32,7 @@ export function MappoolsView({ data }: MappoolsViewProps) {
     const mapCard = (
       <div
         key={map.map_index}
-        className="shadow-container bg-card flex h-80 w-60 flex-col rounded-md sm:h-[380px] sm:w-[500px]"
+        className="shadow-container bg-card flex h-67 w-60 flex-col rounded-md sm:h-84 sm:w-[500px]"
       >
         <div className="mb-2 flex place-items-baseline justify-between px-5 pt-5">
           <h1 className="text-lg sm:text-2xl">{map.map_index}</h1>
@@ -49,7 +49,7 @@ export function MappoolsView({ data }: MappoolsViewProps) {
           />
         </Link>
         <div className="px-5">
-          <h1 className="text-md pt-2 font-semibold sm:text-xl">
+          <h1 className="text-md truncate pt-2 font-semibold sm:text-xl">
             {beatmap.name} [{beatmap.difficulty_name}]
           </h1>
           <h2 className="text-sm sm:text-lg">{beatmap.artist}</h2>
