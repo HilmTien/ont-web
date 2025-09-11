@@ -37,7 +37,7 @@ export function MatchCard({ match }: MatchCardProps) {
             alt="Team 1 Logo"
             width={0}
             height={0}
-            className="w-10 md:w-14 xl:w-20"
+            className="w-10 rounded-md md:w-14 xl:w-20"
             sizes="100vw"
           />
           <span className="text-sm font-semibold 2xl:text-lg">
@@ -60,7 +60,7 @@ export function MatchCard({ match }: MatchCardProps) {
             alt="Team 2 Logo"
             width={0}
             height={0}
-            className="w-10 md:w-14 xl:w-20"
+            className="w-10 rounded-md md:w-14 xl:w-20"
             sizes="100vw"
           />
         </div>
