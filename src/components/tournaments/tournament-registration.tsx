@@ -21,14 +21,16 @@ export function RegisterButton({
 
   return registered ? (
     <div
-      className={"bg-disabled ml-10 flex-1 py-3 text-center text-xl shadow-2xl"}
+      className={
+        "bg-disabled ml-10 flex h-12 w-80 items-center justify-center text-center text-sm shadow-2xl sm:text-xl"
+      }
     >
       Du er registrert!
     </div>
   ) : (
     <button
       className={
-        "bg-accent ml-10 flex-1 py-3 text-center text-xl shadow-2xl hover:cursor-pointer"
+        "bg-accent ml-10 flex h-12 w-80 items-center justify-center text-sm shadow-2xl hover:cursor-pointer sm:text-xl"
       }
       onClick={signUp}
     >
