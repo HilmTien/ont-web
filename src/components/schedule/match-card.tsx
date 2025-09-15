@@ -40,9 +40,10 @@ export function MatchCard({ match }: MatchCardProps) {
             className="w-10 rounded-md md:w-14 xl:w-20"
             sizes="100vw"
           />
-          <span className="text-sm font-semibold 2xl:text-lg">
+          <p className="flex flex-col text-sm font-semibold 2xl:text-lg">
             {match.team1.name}
-          </span>
+            <span>#{player1.rank}</span>
+          </p>
         </div>
 
         <div className="mx-3 flex items-center justify-center text-2xl font-bold xl:text-3xl 2xl:text-5xl">
@@ -52,9 +53,10 @@ export function MatchCard({ match }: MatchCardProps) {
         </div>
 
         <div className="flex flex-1 items-center justify-end gap-2 sm:gap-5">
-          <span className="text-sm font-semibold 2xl:text-lg">
+          <p className="flex flex-col text-right text-sm font-semibold 2xl:text-lg">
             {match.team2.name}
-          </span>
+            <span>#{player2.rank}</span>
+          </p>
           <Image
             src={`https://a.ppy.sh/${player2.osu_id}`}
             alt="Team 2 Logo"
