@@ -14,6 +14,7 @@ interface MappoolsViewProps {
 export function MappoolsView({ data }: MappoolsViewProps) {
   const mappoolA: React.ReactElement[] = [];
   const mappoolB: React.ReactElement[] = [];
+  const mappoolTB: React.ReactElement[] = [];
 
   const mappoolMaps = data.mappool_maps.sort((a, b) =>
     a.map_index.localeCompare(b.map_index, undefined, {
@@ -94,12 +95,18 @@ export function MappoolsView({ data }: MappoolsViewProps) {
     if (map.map_index[0] === "B") {
       mappoolB.push(mapCard);
     }
+    if (map.map_index === "TB") {
+      mappoolTB.push(mapCard);
+    }
   });
 
   return (
-    <div className="mt-14 flex flex-wrap justify-center gap-20">
-      <div className="flex flex-col gap-5">{mappoolA}</div>
-      <div className="flex flex-col gap-5">{mappoolB}</div>
-    </div>
+    <>
+      <div className="mt-14 flex flex-wrap justify-center gap-20">
+        <div className="flex flex-col gap-5">{mappoolA}</div>
+        <div className="flex flex-col gap-5">{mappoolB}</div>
+      </div>
+      <div className="mx-auto mt-20">{mappoolTB}</div>
+    </>
   );
 }
