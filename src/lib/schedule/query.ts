@@ -105,7 +105,8 @@ export async function getStageMatches(
             users(
               id,
               username,
-              osu_id
+              osu_id,
+              rank
             )
           )
         ),
@@ -117,7 +118,8 @@ export async function getStageMatches(
             users(
               id,
               username,
-              osu_id
+              osu_id,
+              rank
             )
           )
         ),
