@@ -1,6 +1,8 @@
 import { DeleteStageButton } from "@/components/admin/tournaments/delete-stage-button";
 import { TournamentStageForm } from "@/components/admin/tournaments/tournament-stage-form";
+import { UpdateRanksButton } from "@/components/admin/tournaments/update-rank-button";
 import { createServerClient } from "@/lib/server";
+import Link from "next/link";
 
 export default async function Page({
   params,
@@ -33,6 +35,7 @@ export default async function Page({
   return (
     <div>
       Tournament info: {JSON.stringify(tournament)}
+      <UpdateRanksButton />
       <TournamentStageForm id={id} />
       <table>
         <tbody>
@@ -50,6 +53,11 @@ export default async function Page({
             ))}
         </tbody>
       </table>
+      <div className="flex flex-col">
+        <Link href={`./${id}/mappools`}>Edit Mappool</Link>
+        <Link href={`./${id}/schedule`}>Edit Matches</Link>
+        <Link href={`./${id}/players`}>Edit Players</Link>
+      </div>
     </div>
   );
 }

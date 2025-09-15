@@ -8,186 +8,183 @@ import { z } from "zod";
 import * as generated from "./zod-schemas";
 export type PublicStageTypes = z.infer<typeof generated.publicStageTypesSchema>;
 export type Json = z.infer<typeof generated.jsonSchema>;
-export type PublicAdminsRowSchema = z.infer<
-  typeof generated.publicAdminsRowSchemaSchema
+export type PublicAdminsRow = z.infer<typeof generated.publicAdminsRowSchema>;
+export type PublicAdminsInsert = z.infer<
+  typeof generated.publicAdminsInsertSchema
 >;
-export type PublicAdminsInsertSchema = z.infer<
-  typeof generated.publicAdminsInsertSchemaSchema
+export type PublicAdminsUpdate = z.infer<
+  typeof generated.publicAdminsUpdateSchema
 >;
-export type PublicAdminsUpdateSchema = z.infer<
-  typeof generated.publicAdminsUpdateSchemaSchema
+export type PublicAdminsRelationships = z.infer<
+  typeof generated.publicAdminsRelationshipsSchema
 >;
-export type PublicAdminsRelationshipsSchema = z.infer<
-  typeof generated.publicAdminsRelationshipsSchemaSchema
+export type PublicBeatmapsRow = z.infer<
+  typeof generated.publicBeatmapsRowSchema
 >;
-export type PublicBeatmapsRowSchema = z.infer<
-  typeof generated.publicBeatmapsRowSchemaSchema
+export type PublicBeatmapsInsert = z.infer<
+  typeof generated.publicBeatmapsInsertSchema
 >;
-export type PublicBeatmapsInsertSchema = z.infer<
-  typeof generated.publicBeatmapsInsertSchemaSchema
+export type PublicBeatmapsUpdate = z.infer<
+  typeof generated.publicBeatmapsUpdateSchema
 >;
-export type PublicBeatmapsUpdateSchema = z.infer<
-  typeof generated.publicBeatmapsUpdateSchemaSchema
+export type PublicCommentatorsRow = z.infer<
+  typeof generated.publicCommentatorsRowSchema
 >;
-export type PublicCommentatorsRowSchema = z.infer<
-  typeof generated.publicCommentatorsRowSchemaSchema
+export type PublicCommentatorsInsert = z.infer<
+  typeof generated.publicCommentatorsInsertSchema
 >;
-export type PublicCommentatorsInsertSchema = z.infer<
-  typeof generated.publicCommentatorsInsertSchemaSchema
+export type PublicCommentatorsUpdate = z.infer<
+  typeof generated.publicCommentatorsUpdateSchema
 >;
-export type PublicCommentatorsUpdateSchema = z.infer<
-  typeof generated.publicCommentatorsUpdateSchemaSchema
+export type PublicCommentatorsRelationships = z.infer<
+  typeof generated.publicCommentatorsRelationshipsSchema
 >;
-export type PublicCommentatorsRelationshipsSchema = z.infer<
-  typeof generated.publicCommentatorsRelationshipsSchemaSchema
+export type PublicErrorsRow = z.infer<typeof generated.publicErrorsRowSchema>;
+export type PublicErrorsInsert = z.infer<
+  typeof generated.publicErrorsInsertSchema
 >;
-export type PublicMappoolMapsRowSchema = z.infer<
-  typeof generated.publicMappoolMapsRowSchemaSchema
+export type PublicErrorsUpdate = z.infer<
+  typeof generated.publicErrorsUpdateSchema
 >;
-export type PublicMappoolMapsInsertSchema = z.infer<
-  typeof generated.publicMappoolMapsInsertSchemaSchema
+export type PublicMappoolMapsRow = z.infer<
+  typeof generated.publicMappoolMapsRowSchema
 >;
-export type PublicMappoolMapsUpdateSchema = z.infer<
-  typeof generated.publicMappoolMapsUpdateSchemaSchema
+export type PublicMappoolMapsInsert = z.infer<
+  typeof generated.publicMappoolMapsInsertSchema
 >;
-export type PublicMappoolMapsRelationshipsSchema = z.infer<
-  typeof generated.publicMappoolMapsRelationshipsSchemaSchema
+export type PublicMappoolMapsUpdate = z.infer<
+  typeof generated.publicMappoolMapsUpdateSchema
 >;
-export type PublicMatchesRowSchema = z.infer<
-  typeof generated.publicMatchesRowSchemaSchema
+export type PublicMappoolMapsRelationships = z.infer<
+  typeof generated.publicMappoolMapsRelationshipsSchema
 >;
-export type PublicMatchesInsertSchema = z.infer<
-  typeof generated.publicMatchesInsertSchemaSchema
+export type PublicMatchesRow = z.infer<typeof generated.publicMatchesRowSchema>;
+export type PublicMatchesInsert = z.infer<
+  typeof generated.publicMatchesInsertSchema
 >;
-export type PublicMatchesUpdateSchema = z.infer<
-  typeof generated.publicMatchesUpdateSchemaSchema
+export type PublicMatchesUpdate = z.infer<
+  typeof generated.publicMatchesUpdateSchema
 >;
-export type PublicMatchesRelationshipsSchema = z.infer<
-  typeof generated.publicMatchesRelationshipsSchemaSchema
+export type PublicMatchesRelationships = z.infer<
+  typeof generated.publicMatchesRelationshipsSchema
 >;
-export type PublicQualifierLobbiesRowSchema = z.infer<
-  typeof generated.publicQualifierLobbiesRowSchemaSchema
+export type PublicQualifierLobbiesRow = z.infer<
+  typeof generated.publicQualifierLobbiesRowSchema
 >;
-export type PublicQualifierLobbiesInsertSchema = z.infer<
-  typeof generated.publicQualifierLobbiesInsertSchemaSchema
+export type PublicQualifierLobbiesInsert = z.infer<
+  typeof generated.publicQualifierLobbiesInsertSchema
 >;
-export type PublicQualifierLobbiesUpdateSchema = z.infer<
-  typeof generated.publicQualifierLobbiesUpdateSchemaSchema
+export type PublicQualifierLobbiesUpdate = z.infer<
+  typeof generated.publicQualifierLobbiesUpdateSchema
 >;
-export type PublicQualifierLobbiesRelationshipsSchema = z.infer<
-  typeof generated.publicQualifierLobbiesRelationshipsSchemaSchema
+export type PublicQualifierLobbiesRelationships = z.infer<
+  typeof generated.publicQualifierLobbiesRelationshipsSchema
 >;
-export type PublicQualifierSignupsRowSchema = z.infer<
-  typeof generated.publicQualifierSignupsRowSchemaSchema
+export type PublicQualifierSignupsRow = z.infer<
+  typeof generated.publicQualifierSignupsRowSchema
 >;
-export type PublicQualifierSignupsInsertSchema = z.infer<
-  typeof generated.publicQualifierSignupsInsertSchemaSchema
+export type PublicQualifierSignupsInsert = z.infer<
+  typeof generated.publicQualifierSignupsInsertSchema
 >;
-export type PublicQualifierSignupsUpdateSchema = z.infer<
-  typeof generated.publicQualifierSignupsUpdateSchemaSchema
+export type PublicQualifierSignupsUpdate = z.infer<
+  typeof generated.publicQualifierSignupsUpdateSchema
 >;
-export type PublicQualifierSignupsRelationshipsSchema = z.infer<
-  typeof generated.publicQualifierSignupsRelationshipsSchemaSchema
+export type PublicQualifierSignupsRelationships = z.infer<
+  typeof generated.publicQualifierSignupsRelationshipsSchema
 >;
-export type PublicRefereesRowSchema = z.infer<
-  typeof generated.publicRefereesRowSchemaSchema
+export type PublicRefereesRow = z.infer<
+  typeof generated.publicRefereesRowSchema
 >;
-export type PublicRefereesInsertSchema = z.infer<
-  typeof generated.publicRefereesInsertSchemaSchema
+export type PublicRefereesInsert = z.infer<
+  typeof generated.publicRefereesInsertSchema
 >;
-export type PublicRefereesUpdateSchema = z.infer<
-  typeof generated.publicRefereesUpdateSchemaSchema
+export type PublicRefereesUpdate = z.infer<
+  typeof generated.publicRefereesUpdateSchema
 >;
-export type PublicRefereesRelationshipsSchema = z.infer<
-  typeof generated.publicRefereesRelationshipsSchemaSchema
+export type PublicRefereesRelationships = z.infer<
+  typeof generated.publicRefereesRelationshipsSchema
 >;
-export type PublicRegistrationsRowSchema = z.infer<
-  typeof generated.publicRegistrationsRowSchemaSchema
+export type PublicRegistrationsRow = z.infer<
+  typeof generated.publicRegistrationsRowSchema
 >;
-export type PublicRegistrationsInsertSchema = z.infer<
-  typeof generated.publicRegistrationsInsertSchemaSchema
+export type PublicRegistrationsInsert = z.infer<
+  typeof generated.publicRegistrationsInsertSchema
 >;
-export type PublicRegistrationsUpdateSchema = z.infer<
-  typeof generated.publicRegistrationsUpdateSchemaSchema
+export type PublicRegistrationsUpdate = z.infer<
+  typeof generated.publicRegistrationsUpdateSchema
 >;
-export type PublicRegistrationsRelationshipsSchema = z.infer<
-  typeof generated.publicRegistrationsRelationshipsSchemaSchema
+export type PublicRegistrationsRelationships = z.infer<
+  typeof generated.publicRegistrationsRelationshipsSchema
 >;
-export type PublicScoresRowSchema = z.infer<
-  typeof generated.publicScoresRowSchemaSchema
+export type PublicScoresRow = z.infer<typeof generated.publicScoresRowSchema>;
+export type PublicScoresInsert = z.infer<
+  typeof generated.publicScoresInsertSchema
 >;
-export type PublicScoresInsertSchema = z.infer<
-  typeof generated.publicScoresInsertSchemaSchema
+export type PublicScoresUpdate = z.infer<
+  typeof generated.publicScoresUpdateSchema
 >;
-export type PublicScoresUpdateSchema = z.infer<
-  typeof generated.publicScoresUpdateSchemaSchema
+export type PublicScoresRelationships = z.infer<
+  typeof generated.publicScoresRelationshipsSchema
 >;
-export type PublicScoresRelationshipsSchema = z.infer<
-  typeof generated.publicScoresRelationshipsSchemaSchema
+export type PublicStreamersRow = z.infer<
+  typeof generated.publicStreamersRowSchema
 >;
-export type PublicStreamersRowSchema = z.infer<
-  typeof generated.publicStreamersRowSchemaSchema
+export type PublicStreamersInsert = z.infer<
+  typeof generated.publicStreamersInsertSchema
 >;
-export type PublicStreamersInsertSchema = z.infer<
-  typeof generated.publicStreamersInsertSchemaSchema
+export type PublicStreamersUpdate = z.infer<
+  typeof generated.publicStreamersUpdateSchema
 >;
-export type PublicStreamersUpdateSchema = z.infer<
-  typeof generated.publicStreamersUpdateSchemaSchema
+export type PublicStreamersRelationships = z.infer<
+  typeof generated.publicStreamersRelationshipsSchema
 >;
-export type PublicStreamersRelationshipsSchema = z.infer<
-  typeof generated.publicStreamersRelationshipsSchemaSchema
+export type PublicTeamPlayersRow = z.infer<
+  typeof generated.publicTeamPlayersRowSchema
 >;
-export type PublicTeamPlayersRowSchema = z.infer<
-  typeof generated.publicTeamPlayersRowSchemaSchema
+export type PublicTeamPlayersInsert = z.infer<
+  typeof generated.publicTeamPlayersInsertSchema
 >;
-export type PublicTeamPlayersInsertSchema = z.infer<
-  typeof generated.publicTeamPlayersInsertSchemaSchema
+export type PublicTeamPlayersUpdate = z.infer<
+  typeof generated.publicTeamPlayersUpdateSchema
 >;
-export type PublicTeamPlayersUpdateSchema = z.infer<
-  typeof generated.publicTeamPlayersUpdateSchemaSchema
+export type PublicTeamPlayersRelationships = z.infer<
+  typeof generated.publicTeamPlayersRelationshipsSchema
 >;
-export type PublicTeamPlayersRelationshipsSchema = z.infer<
-  typeof generated.publicTeamPlayersRelationshipsSchemaSchema
+export type PublicTeamsRow = z.infer<typeof generated.publicTeamsRowSchema>;
+export type PublicTeamsInsert = z.infer<
+  typeof generated.publicTeamsInsertSchema
 >;
-export type PublicTeamsRowSchema = z.infer<
-  typeof generated.publicTeamsRowSchemaSchema
+export type PublicTeamsUpdate = z.infer<
+  typeof generated.publicTeamsUpdateSchema
 >;
-export type PublicTeamsInsertSchema = z.infer<
-  typeof generated.publicTeamsInsertSchemaSchema
+export type PublicTeamsRelationships = z.infer<
+  typeof generated.publicTeamsRelationshipsSchema
 >;
-export type PublicTeamsUpdateSchema = z.infer<
-  typeof generated.publicTeamsUpdateSchemaSchema
+export type PublicTournamentStagesRow = z.infer<
+  typeof generated.publicTournamentStagesRowSchema
 >;
-export type PublicTeamsRelationshipsSchema = z.infer<
-  typeof generated.publicTeamsRelationshipsSchemaSchema
+export type PublicTournamentStagesInsert = z.infer<
+  typeof generated.publicTournamentStagesInsertSchema
 >;
-export type PublicTournamentStagesRowSchema = z.infer<
-  typeof generated.publicTournamentStagesRowSchemaSchema
+export type PublicTournamentStagesUpdate = z.infer<
+  typeof generated.publicTournamentStagesUpdateSchema
 >;
-export type PublicTournamentStagesInsertSchema = z.infer<
-  typeof generated.publicTournamentStagesInsertSchemaSchema
+export type PublicTournamentStagesRelationships = z.infer<
+  typeof generated.publicTournamentStagesRelationshipsSchema
 >;
-export type PublicTournamentStagesUpdateSchema = z.infer<
-  typeof generated.publicTournamentStagesUpdateSchemaSchema
+export type PublicTournamentsRow = z.infer<
+  typeof generated.publicTournamentsRowSchema
 >;
-export type PublicTournamentStagesRelationshipsSchema = z.infer<
-  typeof generated.publicTournamentStagesRelationshipsSchemaSchema
+export type PublicTournamentsInsert = z.infer<
+  typeof generated.publicTournamentsInsertSchema
 >;
-export type PublicTournamentsRowSchema = z.infer<
-  typeof generated.publicTournamentsRowSchemaSchema
+export type PublicTournamentsUpdate = z.infer<
+  typeof generated.publicTournamentsUpdateSchema
 >;
-export type PublicTournamentsInsertSchema = z.infer<
-  typeof generated.publicTournamentsInsertSchemaSchema
+export type PublicUsersRow = z.infer<typeof generated.publicUsersRowSchema>;
+export type PublicUsersInsert = z.infer<
+  typeof generated.publicUsersInsertSchema
 >;
-export type PublicTournamentsUpdateSchema = z.infer<
-  typeof generated.publicTournamentsUpdateSchemaSchema
->;
-export type PublicUsersRowSchema = z.infer<
-  typeof generated.publicUsersRowSchemaSchema
->;
-export type PublicUsersInsertSchema = z.infer<
-  typeof generated.publicUsersInsertSchemaSchema
->;
-export type PublicUsersUpdateSchema = z.infer<
-  typeof generated.publicUsersUpdateSchemaSchema
+export type PublicUsersUpdate = z.infer<
+  typeof generated.publicUsersUpdateSchema
 >;

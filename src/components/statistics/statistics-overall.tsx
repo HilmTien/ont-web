@@ -97,46 +97,53 @@ export function StatisticsOverall({ stats }: StatisticsOverallProps) {
   }
 
   return (
-    <table>
-      <thead>
-        <tr>
-          {headers.map((h, i) => (
-            <th
-              className="cursor-pointer px-5"
-              key={i}
-              onClick={() => sortHeader(i)}
-            >
-              {h}
-              {header === i ? (asc ? " ^" : " v") : null}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {table.map((plr, i) => (
-          <tr key={plr.osuId}>
-            <td className="text-center">{i + 1}</td>
-            {headers.map((h) => {
-              const key = keys.find(
-                (col): col is keyof OverallStatisticsEntry =>
-                  columns[col].header === h,
-              );
-              if (!key) return null;
-
-              const value = plr[key];
-              const column = columns[key] as Column<typeof value>;
-
-              const roundedValue = column.format ? column.format(value) : value;
-
-              return (
-                <td key={h} className="text-center">
-                  {roundedValue}
-                </td>
-              );
-            })}
+    <div className="overflow-auto">
+      <table className="bg-table w-full border-collapse text-white">
+        <thead>
+          <tr className="border-content border-b">
+            {headers.map((h, i) => (
+              <th
+                className="border-content cursor-pointer border px-5 py-2 text-center hover:bg-gray-800"
+                key={i}
+                onClick={() => sortHeader(i)}
+              >
+                {h}
+                {header === i ? (asc ? " ^" : " v") : null}
+              </th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {table.map((plr, i) => (
+            <tr key={plr.osuId}>
+              <td className="border-content border text-center">{i + 1}</td>
+              {headers.map((h) => {
+                const key = keys.find(
+                  (col): col is keyof OverallStatisticsEntry =>
+                    columns[col].header === h,
+                );
+                if (!key) return null;
+
+                const value = plr[key];
+                const column = columns[key] as Column<typeof value>;
+
+                const roundedValue = column.format
+                  ? column.format(value)
+                  : value;
+
+                return (
+                  <td
+                    key={h}
+                    className="border-content border px-5 py-2 text-center"
+                  >
+                    {roundedValue}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

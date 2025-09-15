@@ -132,6 +132,30 @@ export type Database = {
           },
         ]
       }
+      errors: {
+        Row: {
+          code: string | null
+          created_at: string | null
+          details: string | null
+          hint: string | null
+          id: number
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string | null
+          details?: string | null
+          hint?: string | null
+          id?: number
+        }
+        Update: {
+          code?: string | null
+          created_at?: string | null
+          details?: string | null
+          hint?: string | null
+          id?: number
+        }
+        Relationships: []
+      }
       mappool_maps: {
         Row: {
           beatmap_id: number
@@ -623,18 +647,21 @@ export type Database = {
       tournaments: {
         Row: {
           acronym: string
+          can_register: boolean
           id: number
           name: string
           team_size: number | null
         }
         Insert: {
           acronym: string
+          can_register?: boolean
           id?: number
           name: string
           team_size?: number | null
         }
         Update: {
           acronym?: string
+          can_register?: boolean
           id?: number
           name?: string
           team_size?: number | null
@@ -643,18 +670,45 @@ export type Database = {
       }
       users: {
         Row: {
+          accuracy: number | null
+          badges: number | null
+          country_code: string | null
           id: number
+          is_restricted: boolean
+          maximum_combo: number | null
           osu_id: number
+          play_count: number | null
+          pp: number | null
+          rank: number | null
+          tournament_badges: number | null
           username: string
         }
         Insert: {
+          accuracy?: number | null
+          badges?: number | null
+          country_code?: string | null
           id?: number
+          is_restricted: boolean
+          maximum_combo?: number | null
           osu_id: number
+          play_count?: number | null
+          pp?: number | null
+          rank?: number | null
+          tournament_badges?: number | null
           username: string
         }
         Update: {
+          accuracy?: number | null
+          badges?: number | null
+          country_code?: string | null
           id?: number
+          is_restricted?: boolean
+          maximum_combo?: number | null
           osu_id?: number
+          play_count?: number | null
+          pp?: number | null
+          rank?: number | null
+          tournament_badges?: number | null
           username?: string
         }
         Relationships: []

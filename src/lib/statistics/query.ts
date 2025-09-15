@@ -11,30 +11,32 @@ export async function getStatistics(
   params: QueryParams,
 ) {
   return supabase
-    .from("tournaments")
+    .from("tournament_stages")
     .select(
       `
-        tournament_stages(
-          is_public,
-          mappool_maps(
-            map_index,
-            beatmaps(
-              *
+        tournaments(
+          id
+        ),
+        is_public,
+        mappool_maps(
+          map_index,
+          mods,
+          beatmaps(
+            *
+          ),
+          scores(
+            team_players(
+              users(
+                *
+              )
             ),
-            scores(
-              team_players(
-                users(
-                  *
-                )
-              ),
-              score
-            )
+            score
           )
         )
-        `,
+      `,
     )
-    .eq("id", params.id)
-    .eq("tournament_stages.stage_index", params.stageIndex)
+    .eq("tournaments.id", params.id)
+    .eq("stage_index", params.stageIndex)
     .single();
 }
 
