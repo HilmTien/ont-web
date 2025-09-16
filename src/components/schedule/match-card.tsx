@@ -31,7 +31,7 @@ export function MatchCard({ match }: MatchCardProps) {
         <p className="text-sm lg:text-2xl xl:text-4xl">{time}</p>
       </div>
       <div className="flex flex-col sm:flex-row sm:items-center md:flex-1">
-        <div className="flex flex-1 items-center justify-start gap-2 sm:gap-5">
+        <div className="flex flex-1 items-center justify-center gap-2 sm:justify-start sm:gap-5">
           <Image
             src={`https://a.ppy.sh/${player1.osu_id}`}
             alt="Team 1 Logo"
@@ -46,14 +46,14 @@ export function MatchCard({ match }: MatchCardProps) {
           </p>
         </div>
 
-        <div className="mx-3 flex items-center justify-center text-2xl font-bold xl:text-3xl 2xl:text-5xl">
+        <div className="mx-3 my-3 flex items-center justify-center text-2xl font-bold sm:my-0 xl:text-3xl 2xl:text-5xl">
           <p>
             {match.team1_score || 0} - {match.team2_score || 0}
           </p>
         </div>
 
-        <div className="flex flex-1 items-center justify-end gap-2 sm:gap-5">
-          <p className="flex flex-col text-right text-sm font-semibold 2xl:text-lg">
+        <div className="flex flex-1 flex-row-reverse items-center justify-center gap-2 sm:flex-row sm:justify-end sm:gap-5">
+          <p className="flex flex-col text-left text-sm font-semibold sm:text-right 2xl:text-lg">
             {match.team2.name}
             <span>#{player2.rank}</span>
           </p>
