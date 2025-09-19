@@ -10,18 +10,19 @@ interface MatchCardProps {
 export function MatchCard({ match }: MatchCardProps) {
   const dateObj = new Date(match.match_time);
   const date = dateObj.getDate();
-  const month = dateObj.toLocaleString("no", { month: "short" }).toUpperCase();
+  const month = dateObj.toLocaleString("no-NO", { month: "short" }).toUpperCase();
   const day = ["SØN", "MAN", "TIR", "ONS", "TOR", "FRE", "LØR"][
     dateObj.getDay()
   ];
-  const time = dateObj.toLocaleTimeString("no", {
+  const time = dateObj.toLocaleTimeString("no-NO", {
     hour12: false,
     hour: "numeric",
     minute: "numeric",
+    timeZone: "Europe/Oslo",
   });
 
-  const player1 = match.team1.team_players[0]?.users;
-  const player2 = match.team2.team_players[0]?.users;
+  const player1 = match.team1?.team_players[0]?.users;
+  const player2 = match.team2?.team_players[0]?.users;
 
   return (
     <div className="bg-card shadow-2x m-4 flex flex-col rounded-md text-xl shadow-2xl lg:flex-row lg:items-center">
@@ -33,7 +34,7 @@ export function MatchCard({ match }: MatchCardProps) {
       <div className="flex flex-col sm:flex-row sm:items-center md:flex-1">
         <div className="flex flex-1 items-center justify-start gap-2 sm:gap-5">
           <Image
-            src={`https://a.ppy.sh/${player1.osu_id}`}
+            src={player1 ? `https://a.ppy.sh/${player1.osu_id}` : "/profile-pics/avatar-guest.png"}
             alt="Team 1 Logo"
             width={0}
             height={0}
@@ -41,8 +42,8 @@ export function MatchCard({ match }: MatchCardProps) {
             sizes="100vw"
           />
           <p className="flex flex-col text-sm font-semibold 2xl:text-lg">
-            {match.team1.name}
-            <span>#{player1.rank}</span>
+            {match.team1?.name || match.team1_label}
+            {player1 && <span>#{player1.rank}</span>}
           </p>
         </div>
 
@@ -54,11 +55,11 @@ export function MatchCard({ match }: MatchCardProps) {
 
         <div className="flex flex-1 items-center justify-end gap-2 sm:gap-5">
           <p className="flex flex-col text-right text-sm font-semibold 2xl:text-lg">
-            {match.team2.name}
-            <span>#{player2.rank}</span>
+            {match.team2?.name || match.team2_label}
+            {player2 && <span>#{player2.rank}</span>}
           </p>
           <Image
-            src={`https://a.ppy.sh/${player2.osu_id}`}
+            src={player2 ? `https://a.ppy.sh/${player2.osu_id}` : "/profile-pics/avatar-guest.png"}
             alt="Team 2 Logo"
             width={0}
             height={0}

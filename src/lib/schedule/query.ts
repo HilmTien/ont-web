@@ -95,6 +95,8 @@ export async function getStageMatches(
         match_time,
         team1_score,
         team2_score,
+        team1_label,
+        team2_label,
         mp_id,
         tournament_match_id,
 
