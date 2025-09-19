@@ -71,7 +71,9 @@ insert into "public"."teams"
   (name, tournament_id)
 values
   ('Team 1', (select id from "public"."tournaments" where acronym = 'MOT')),
-  ('Team 2', (select id from "public"."tournaments" where acronym = 'MOT'));
+  ('Team 2', (select id from "public"."tournaments" where acronym = 'MOT')),
+  ('Team 3', (select id from "public"."tournaments" where acronym = 'MOT')),
+  ('Team 4', (select id from "public"."tournaments" where acronym = 'MOT'));
 
 insert into "public"."team_players"
   (team_id, user_id)
@@ -81,15 +83,15 @@ values
     (select id from "public"."users" where username = 'MockPlayer1')
   ),
   (
-    (select id from "public"."teams" where name = 'Team 1'),
+    (select id from "public"."teams" where name = 'Team 2'),
     (select id from "public"."users" where username = 'MockPlayer2')
   ),
     (
-    (select id from "public"."teams" where name = 'Team 2'),
+    (select id from "public"."teams" where name = 'Team 3'),
     (select id from "public"."users" where username = 'MockPlayer3')
   ),
     (
-    (select id from "public"."teams" where name = 'Team 2'),
+    (select id from "public"."teams" where name = 'Team 4'),
     (select id from "public"."users" where username = 'MockPlayer4')
   );
 
@@ -128,6 +130,26 @@ values
     (select id from "public"."teams" where name = 'Team 2'),
     '1',
     (select id from "public"."tournament_stages" where stage_name = 'Week 1')
+  ),
+  (
+    (select id from "public"."tournaments" where acronym = 'MOT'),
+    '2025-12-31 13:00:00+00',
+    (select id from "public"."teams" where name = 'Team 3'),
+    (select id from "public"."teams" where name = 'Team 4'),
+    '2',
+    (select id from "public"."tournament_stages" where stage_name = 'Week 1')
+  );
+
+insert into "public"."matches"
+  (tournament_id, match_time, tournament_match_id, stage_id, team1_label, team2_label)
+values
+  (
+    (select id from "public"."tournaments" where acronym = 'MOT'),
+    '2025-12-31 14:00:00+00',
+    '3',
+    (select id from "public"."tournament_stages" where stage_name = 'Week 1'),
+    'Winner of Match 1',
+    'Winner of Match 2'
   );
 
 insert into "public"."beatmaps"

@@ -157,7 +157,7 @@ export default async function LandingPageApp() {
               <Osu className="size-14 sm:size-20" />
             </Link>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 justify-center">
             <Link
               href="/mappools"
               className="bg-accent ml-10 flex h-12 w-80 items-center justify-center text-sm shadow-2xl sm:text-xl"
