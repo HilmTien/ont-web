@@ -1,3 +1,4 @@
+import { ConvertPlayersToTeamsButton } from "@/components/admin/tournaments/convert-players-to-teams-button";
 import { DeleteStageButton } from "@/components/admin/tournaments/delete-stage-button";
 import { TournamentStageForm } from "@/components/admin/tournaments/tournament-stage-form";
 import { UpdateRanksButton } from "@/components/admin/tournaments/update-rank-button";
@@ -35,7 +36,10 @@ export default async function Page({
   return (
     <div>
       Tournament info: {JSON.stringify(tournament)}
-      <UpdateRanksButton />
+      <div className="flex gap-4">
+        <UpdateRanksButton />
+        <ConvertPlayersToTeamsButton tournamentId={id} />
+      </div>
       <TournamentStageForm id={id} />
       <table>
         <tbody>
