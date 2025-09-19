@@ -1,6 +1,7 @@
 "use server";
 
 import { Tables } from "@/generated/database.types";
+import { Mods } from "@/lib/beatmaps/utils";
 import { isActionError, ServerActionResponse } from "@/lib/error";
 import { createServerClient } from "@/lib/server";
 import { revalidatePath } from "next/cache";
@@ -59,7 +60,13 @@ export async function addMappoolMap(
   let beatmapId = beatmap?.id;
 
   if (!beatmapId) {
-    const newBeatmap = await addBeatmap(data.osuId);
+    let mods = Mods.NM;
+
+    if (data.mods.includes("EZ")) mods |= Mods.EZ;
+    if (data.mods.includes("HR")) mods |= Mods.HR;
+    if (data.mods.includes("DT")) mods |= Mods.DT;
+
+    const newBeatmap = await addBeatmap(data.osuId, mods);
 
     if (isActionError(newBeatmap)) {
       return { error: `Beatmap could not be added: ${newBeatmap.error}` };
