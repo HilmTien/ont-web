@@ -163,10 +163,10 @@ values
 insert into "public"."mappool_maps"
 (id, beatmap_id, map_index, mods, stage_id)
 values
-(1, 1, 'A1', 'Nomod', 1),
-(2, 2, 'A2', 'Nomod', 1),
-(4, 3, 'B1', 'Nomod', 1),
-(5, 4, 'A3', 'Hardrock', 1);
+(1, 1, 'A1', 'NM', 1),
+(2, 2, 'A2', 'NM', 1),
+(4, 3, 'B1', 'NM', 1),
+(5, 4, 'A3', 'HR', 1);
 
 insert into "public"."scores"
 (id, tournament_id, team_player_id, mappool_map_id, score, mods, end_time, accuracy, "100s", "50s", misses, mode)
