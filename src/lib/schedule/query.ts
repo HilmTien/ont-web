@@ -95,6 +95,8 @@ export async function getStageMatches(
         match_time,
         team1_score,
         team2_score,
+        team1_label,
+        team2_label,
         mp_id,
         tournament_match_id,
 
@@ -105,7 +107,8 @@ export async function getStageMatches(
             users(
               id,
               username,
-              osu_id
+              osu_id,
+              rank
             )
           )
         ),
@@ -117,7 +120,8 @@ export async function getStageMatches(
             users(
               id,
               username,
-              osu_id
+              osu_id,
+              rank
             )
           )
         ),

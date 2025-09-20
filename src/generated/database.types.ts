@@ -205,9 +205,11 @@ export type Database = {
           referee_id: number | null
           stage_id: number
           streamer_id: number | null
-          team1_id: number
+          team1_id: number | null
+          team1_label: string | null
           team1_score: number | null
-          team2_id: number
+          team2_id: number | null
+          team2_label: string | null
           team2_score: number | null
           tournament_id: number
           tournament_match_id: string
@@ -221,9 +223,11 @@ export type Database = {
           referee_id?: number | null
           stage_id: number
           streamer_id?: number | null
-          team1_id: number
+          team1_id?: number | null
+          team1_label?: string | null
           team1_score?: number | null
-          team2_id: number
+          team2_id?: number | null
+          team2_label?: string | null
           team2_score?: number | null
           tournament_id: number
           tournament_match_id: string
@@ -237,9 +241,11 @@ export type Database = {
           referee_id?: number | null
           stage_id?: number
           streamer_id?: number | null
-          team1_id?: number
+          team1_id?: number | null
+          team1_label?: string | null
           team1_score?: number | null
-          team2_id?: number
+          team2_id?: number | null
+          team2_label?: string | null
           team2_score?: number | null
           tournament_id?: number
           tournament_match_id?: string

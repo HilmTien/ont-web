@@ -71,7 +71,9 @@ insert into "public"."teams"
   (name, tournament_id)
 values
   ('Team 1', (select id from "public"."tournaments" where acronym = 'MOT')),
-  ('Team 2', (select id from "public"."tournaments" where acronym = 'MOT'));
+  ('Team 2', (select id from "public"."tournaments" where acronym = 'MOT')),
+  ('Team 3', (select id from "public"."tournaments" where acronym = 'MOT')),
+  ('Team 4', (select id from "public"."tournaments" where acronym = 'MOT'));
 
 insert into "public"."team_players"
   (team_id, user_id)
@@ -81,15 +83,15 @@ values
     (select id from "public"."users" where username = 'MockPlayer1')
   ),
   (
-    (select id from "public"."teams" where name = 'Team 1'),
+    (select id from "public"."teams" where name = 'Team 2'),
     (select id from "public"."users" where username = 'MockPlayer2')
   ),
     (
-    (select id from "public"."teams" where name = 'Team 2'),
+    (select id from "public"."teams" where name = 'Team 3'),
     (select id from "public"."users" where username = 'MockPlayer3')
   ),
     (
-    (select id from "public"."teams" where name = 'Team 2'),
+    (select id from "public"."teams" where name = 'Team 4'),
     (select id from "public"."users" where username = 'MockPlayer4')
   );
 
@@ -128,6 +130,26 @@ values
     (select id from "public"."teams" where name = 'Team 2'),
     '1',
     (select id from "public"."tournament_stages" where stage_name = 'Week 1')
+  ),
+  (
+    (select id from "public"."tournaments" where acronym = 'MOT'),
+    '2025-12-31 13:00:00+00',
+    (select id from "public"."teams" where name = 'Team 3'),
+    (select id from "public"."teams" where name = 'Team 4'),
+    '2',
+    (select id from "public"."tournament_stages" where stage_name = 'Week 1')
+  );
+
+insert into "public"."matches"
+  (tournament_id, match_time, tournament_match_id, stage_id, team1_label, team2_label)
+values
+  (
+    (select id from "public"."tournaments" where acronym = 'MOT'),
+    '2025-12-31 14:00:00+00',
+    '3',
+    (select id from "public"."tournament_stages" where stage_name = 'Week 1'),
+    'Winner of Match 1',
+    'Winner of Match 2'
   );
 
 insert into "public"."beatmaps"
@@ -141,10 +163,10 @@ values
 insert into "public"."mappool_maps"
 (id, beatmap_id, map_index, mods, stage_id)
 values
-(1, 1, 'A1', 'Nomod', 1),
-(2, 2, 'A2', 'Nomod', 1),
-(4, 3, 'B1', 'Nomod', 1),
-(5, 4, 'A3', 'Hardrock', 1);
+(1, 1, 'A1', 'NM', 1),
+(2, 2, 'A2', 'NM', 1),
+(4, 3, 'B1', 'NM', 1),
+(5, 4, 'A3', 'HR', 1);
 
 insert into "public"."scores"
 (id, tournament_id, team_player_id, mappool_map_id, score, mods, end_time, accuracy, "100s", "50s", misses, mode)

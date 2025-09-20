@@ -77,10 +77,10 @@ export default async function LandingPageApp() {
 
       <section className="flex flex-col items-center gap-10 xl:flex-row">
         <div className="w-full xl:max-w-[45%]">
-          <p className="border-accent mb-2 border-b-2 pb-2 text-2xl font-semibold">
+          <p className="border-accent mb-2 border-b-2 pb-2 text-xl font-semibold sm:text-2xl">
             TIDSLINJE
           </p>
-          <ul className="space-y-1 text-lg">
+          <ul className="space-y-1 text-xs sm:text-lg">
             <li className="flex justify-between">
               <span className="font-medium">Registeringsfase</span>
               <span>1. September - 7. September</span>
@@ -124,21 +124,21 @@ export default async function LandingPageApp() {
           </ul>
         </div>
 
-        <div className="flex w-full min-w-[50%] flex-1 flex-col gap-10 pb-10 xl:pb-0">
-          <div className="flex items-center justify-center gap-20">
+        <div className="flex w-full min-w-[50%] flex-col gap-10 pb-10 xl:pb-0">
+          <div className="flex items-center justify-center gap-5 sm:gap-20">
             <Link
               href="https://discord.com/invite/zY5dwFEbSx/"
               target="_blank"
               className=""
             >
-              <Discord></Discord>
+              <Discord className="size-14 sm:size-20" />
             </Link>
             <Link
               href="https://twitch.tv/osunorge"
               target="_blank"
               className=""
             >
-              <Twitch></Twitch>
+              <Twitch className="size-14 sm:size-20" />
             </Link>
 
             <Link
@@ -146,7 +146,7 @@ export default async function LandingPageApp() {
               target="_blank"
               className=""
             >
-              <Youtube></Youtube>
+              <Youtube className="size-14 sm:size-20" />
             </Link>
 
             <Link
@@ -154,13 +154,13 @@ export default async function LandingPageApp() {
               target="_blank"
               className=""
             >
-              <Osu></Osu>
+              <Osu className="size-14 sm:size-20" />
             </Link>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 justify-center">
             <Link
               href="/mappools"
-              className="bg-accent flex-1 py-3 text-center text-xl shadow-2xl"
+              className="bg-accent ml-10 flex h-12 w-80 items-center justify-center text-sm shadow-2xl sm:text-xl"
             >
               Mappool
             </Link>
@@ -173,7 +173,7 @@ export default async function LandingPageApp() {
                 </div>
               )
             ) : (
-              <div className="bg-disabled flex-1 py-3 text-center text-xl shadow-2xl">
+              <div className="bg-disabled flex h-12 w-80 items-center justify-center text-center text-sm shadow-2xl sm:text-xl">
                 Registreringer er stengt
               </div>
             )}

@@ -1,19 +1,20 @@
 "use server";
 
 import { Tables } from "@/generated/database.types";
-import { findBeatmap } from "@/lib/beatmaps/utils";
+import { findBeatmap, Mods } from "@/lib/beatmaps/utils";
 import { ServerActionResponse } from "@/lib/error";
 import { createServerClient } from "@/lib/server";
 
 export async function addBeatmap(
   id: number,
+  mods: Mods,
 ): ServerActionResponse<Tables<"beatmaps">> {
   const supabase = await createServerClient();
 
   let submittedBeatmap;
 
   try {
-    submittedBeatmap = await findBeatmap(id);
+    submittedBeatmap = await findBeatmap(id, mods);
   } catch (err) {
     if (err instanceof Error) {
       return { error: err.message };

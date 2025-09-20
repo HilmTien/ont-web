@@ -1,8 +1,8 @@
+import Content from "@/components/general/content";
 import { MappoolsStageSelector } from "@/components/mappools/mappools-stage-selector";
 import { MappoolsView } from "@/components/mappools/mappools-view";
 import { getMappool } from "@/lib/mappools/query";
 import { createServerClient } from "@/lib/server";
-import Content from "@/components/general/content";
 
 export default async function Page({
   params,
@@ -28,9 +28,7 @@ export default async function Page({
 
   return (
     <Content>
-      <div className="border-accent mx-auto border-b-2">
-        <MappoolsStageSelector stageIndex={stageIndex} />
-      </div>
+      <MappoolsStageSelector stageIndex={stageIndex} />
 
       {mappool.is_public ? (
         <MappoolsView data={mappool} />
