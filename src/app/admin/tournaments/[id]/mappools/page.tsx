@@ -3,6 +3,7 @@ import { MappoolsForm } from "@/components/admin/tournaments/mappools/mappools-f
 import { TogglePublicButton } from "@/components/admin/tournaments/mappools/toggle-public-button";
 import { getTournament } from "@/lib/admin/tournaments/mappools/query";
 import { createServerClient } from "@/lib/server";
+import { formatSecondsToMMSS, round } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -53,12 +54,52 @@ export default async function Page({
                 stageId={stage.id}
               />
             </td>
+            <td className="flex gap-4">
+              <p>Total maps: {stage.mappool_maps.length}</p>
+              <p>
+                Average star rating:{" "}
+                {stage.mappool_maps.length > 0
+                  ? round(
+                      stage.mappool_maps.reduce(
+                        (sum, map) => sum + map.beatmaps.star_rating,
+                        0,
+                      ) / stage.mappool_maps.length,
+                    )
+                  : "N/A"}
+                ★
+              </p>
+              <p>
+                Average length:{" "}
+                {stage.mappool_maps.length > 0
+                  ? formatSecondsToMMSS(
+                      round(
+                        stage.mappool_maps.reduce(
+                          (sum, map) => sum + map.beatmaps.drain_time,
+                          0,
+                        ) / stage.mappool_maps.length,
+                        0,
+                      ),
+                    )
+                  : "N/A"}
+              </p>
+            </td>
             {stage.mappool_maps.map((map) => (
               <td key={map.id} className="my-1">
-                <p>
-                  {map.id} - {map.map_index} - {map.beatmaps.osu_id} -{" "}
-                  {map.mods}
-                </p>
+                <div className="flex w-full gap-6">
+                  <p>
+                    {map.id} - {map.map_index} - {map.beatmaps.osu_id} -{" "}
+                    {map.mods}
+                  </p>
+                  <div className="flex gap-2">
+                    <p>{map.beatmaps.star_rating}★</p>
+                    <p>CS{map.beatmaps.cs}</p>
+                    <p>AR{map.beatmaps.ar}</p>
+                    <p>OD{map.beatmaps.od}</p>
+                    <p>HP{map.beatmaps.hp}</p>
+                    <p>{map.beatmaps.bpm} BPM</p>
+                    <p>{formatSecondsToMMSS(map.beatmaps.drain_time)}</p>
+                  </div>
+                </div>
                 <div className="grid grid-cols-3">
                   <div className="flex flex-col">
                     <p>
