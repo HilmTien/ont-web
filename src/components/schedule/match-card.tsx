@@ -9,13 +9,23 @@ interface MatchCardProps {
 
 export function MatchCard({ match }: MatchCardProps) {
   const dateObj = new Date(match.match_time);
-  const date = dateObj.getDate();
+  const date = dateObj.toLocaleString("no-NO", {
+    day: "2-digit",
+    timeZone: "Europe/Oslo",
+  });
   const month = dateObj
-    .toLocaleString("no-NO", { month: "short" })
+    .toLocaleString("no-NO", {
+      month: "short",
+      timeZone: "Europe/Oslo",
+    })
     .toUpperCase();
-  const day = ["SØN", "MAN", "TIR", "ONS", "TOR", "FRE", "LØR"][
-    dateObj.getDay()
-  ];
+  const day = dateObj
+    .toLocaleString("no-NO", {
+      weekday: "short",
+      timeZone: "Europe/Oslo",
+    })
+    .toUpperCase()
+    .replaceAll(".", "");
   const time = dateObj.toLocaleTimeString("no-NO", {
     hour12: false,
     hour: "numeric",
@@ -61,7 +71,7 @@ export function MatchCard({ match }: MatchCardProps) {
       <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
         <div className="flex flex-row items-center gap-5 text-sm font-semibold lg:h-20 lg:w-30 lg:flex-col lg:justify-center lg:gap-0 xl:h-30 xl:w-40 xl:text-lg">
           <p>{match.tournament_match_id}</p>
-          <p>{`${date}. ${month} (${day})`}</p>
+          <p>{`${date} ${month} (${day})`}</p>
           <p className="text-sm lg:text-2xl xl:text-4xl">{time}</p>
           {match.mp_id ? (
             <Link
