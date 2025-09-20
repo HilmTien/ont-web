@@ -90,7 +90,6 @@ export function MatchCard({ match }: MatchCardProps) {
               <Link
                 href={`https://osu.ppy.sh/users/${player1.osu_id}`}
                 target="_blank"
-                className="sr-only"
               >
                 {avatar1}
               </Link>
@@ -116,7 +115,6 @@ export function MatchCard({ match }: MatchCardProps) {
               <Link
                 href={`https://osu.ppy.sh/users/${player2.osu_id}`}
                 target="_blank"
-                className="sr-only"
               >
                 {avatar2}
               </Link>
