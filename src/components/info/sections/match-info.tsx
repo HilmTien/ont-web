@@ -27,6 +27,27 @@ export function MatchInfo() {
           !
         </li>
         <li>
+          Det vil bli brukt timers på{" "}
+          <strong>
+            <span className="text-accent">90 sekunder</span>
+          </strong>{" "}
+          mellom hvert map og etter picks.{" "}
+        </li>
+        <li>
+          Velger man ikke et map innen timeren er ute vil man{" "}
+          <strong>
+            <span className="text-accent">miste pick-retten</span>
+          </strong>{" "}
+          og ikke reversere pick-rekkefølgen. Det vil si at en spiller får valgt
+          3 maps på rad.{" "}
+        </li>
+        <li>
+          Readyer man ikke opp innen timeren er ute vil reffen få retten til å{" "}
+          <strong>
+            <span className="text-accent">starte mappet uansett.</span>
+          </strong>{" "}
+        </li>
+        <li>
           Selfref og asynkronte matches er{" "}
           <strong>
             <span className="text-accent">IKKE</span>
