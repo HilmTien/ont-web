@@ -256,14 +256,14 @@ ${bannedMapIds
             command={
               !selectedMatch.team1?.team_players[0].users?.osu_id
                 ? "-"
-                : `!mp invite ${selectedMatch.team1.team_players[0].users.osu_id}`
+                : `!mp invite ${selectedMatch.team1.team_players[0].users.username.replaceAll(" ", "_")}`
             }
           />
           <CommandWithCopy
             command={
               !selectedMatch.team2?.team_players[0].users?.osu_id
                 ? "-"
-                : `!mp invite ${selectedMatch.team2.team_players[0].users.osu_id}`
+                : `!mp invite ${selectedMatch.team2.team_players[0].users.username.replaceAll(" ", "_")}`
             }
           />
         </div>
