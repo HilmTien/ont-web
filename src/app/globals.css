@@ -46,3 +46,8 @@ body {
   color: white;
   background: var(--background);
 }
+
+select {
+  background-color: var(--color-table);
+  border: none
+}

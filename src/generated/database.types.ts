@@ -617,6 +617,7 @@ export type Database = {
       }
       tournament_stages: {
         Row: {
+          best_of: number | null
           id: number
           is_public: boolean
           stage_index: number
@@ -625,6 +626,7 @@ export type Database = {
           tournament_id: number
         }
         Insert: {
+          best_of?: number | null
           id?: number
           is_public?: boolean
           stage_index: number
@@ -633,6 +635,7 @@ export type Database = {
           tournament_id: number
         }
         Update: {
+          best_of?: number | null
           id?: number
           is_public?: boolean
           stage_index?: number

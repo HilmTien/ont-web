@@ -1,0 +1,1 @@
+alter table "public"."tournament_stages" add column "best_of" smallint;

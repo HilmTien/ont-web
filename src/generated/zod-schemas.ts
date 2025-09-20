@@ -655,6 +655,7 @@ export const publicTeamsRelationshipsSchema = z.tuple([
 ]);
 
 export const publicTournamentStagesRowSchema = z.object({
+  best_of: z.number().nullable(),
   id: z.number(),
   is_public: z.boolean(),
   stage_index: z.number(),
@@ -664,6 +665,7 @@ export const publicTournamentStagesRowSchema = z.object({
 });
 
 export const publicTournamentStagesInsertSchema = z.object({
+  best_of: z.number().optional().nullable(),
   id: z.number().optional(),
   is_public: z.boolean().optional(),
   stage_index: z.number(),
@@ -673,6 +675,7 @@ export const publicTournamentStagesInsertSchema = z.object({
 });
 
 export const publicTournamentStagesUpdateSchema = z.object({
+  best_of: z.number().optional().nullable(),
   id: z.number().optional(),
   is_public: z.boolean().optional(),
   stage_index: z.number().optional(),

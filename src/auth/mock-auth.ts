@@ -1,5 +1,4 @@
 import { createServerClient } from "@/lib/server";
-import { getURL } from "@/lib/utils";
 import Credentials from "next-auth/providers/credentials";
 
 export const MockOsu = Credentials({
@@ -25,7 +24,7 @@ export const MockOsu = Credentials({
     return {
       id: user.osu_id.toString(),
       name: user.username,
-      image: getURL("/profile-pics/avatar-guest.png").href,
+      image: "/profile-pics/avatar-guest.png",
     };
   },
 });
