@@ -6,7 +6,7 @@ interface ContentProps {
 
 export default function Content({ children }: ContentProps) {
   return (
-    <div className="bg-content shadow-container z-1 m-2 mx-auto flex flex-col p-5 sm:max-w-[75%]">
+    <div className="bg-content shadow-container z-1 m-2 mx-auto flex flex-col p-5 sm:max-w-[80%]">
       {children}
     </div>
   );
