@@ -124,6 +124,16 @@ export function GeneralInfo() {
           Gruppespillet spilles som en 1 runders round-robin hvor kun vinneren
           av grupperen går videre i turneringen.
         </li>
+        <li>
+          I tilfellet av en tie i gruppespillet, vil følgende tiebreakers
+          brukes:
+          <ul className="ml-6 list-decimal">
+            <li>Høyest antall maps vunnet</li>
+            <li>Lavest antall maps tapt</li>
+            <li>Innbyrdes oppgjør</li>
+            <li>Høyest seed</li>
+          </ul>
+        </li>
         <li>Gruppene blir laget som beskrevet i diagrammene.</li>
         <li>
           For hver Swiss runde kan man kun møte motstandere med{" "}
