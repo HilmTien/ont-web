@@ -25,7 +25,7 @@ export function MatchCard({ match }: MatchCardProps) {
 
   const player1 = match.team1?.team_players[0]?.users;
   const player2 = match.team2?.team_players[0]?.users;
-
+  
   const avatar1 = (
     <Image
       src={
