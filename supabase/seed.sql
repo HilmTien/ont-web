@@ -96,19 +96,21 @@ values
   );
 
 insert into "public"."tournament_stages"
-  (tournament_id, stage_name, stage_index, stage_type)
+  (tournament_id, stage_name, stage_index, stage_type, best_of)
 values
   (
     (select id from "public"."tournaments" where acronym = 'MOT'),
     'Qualifiers',
     1,
-    'qualifiers'
+    'qualifiers',
+    null
   ),
   (
     (select id from "public"."tournaments" where acronym = 'MOT'),
     'Week 1',
     2,
-    'pvp'
+    'pvp',
+    3
   );
 
 insert into "public"."qualifier_lobbies"
@@ -161,29 +163,33 @@ values
   (4, 'CROSS OVER', 'HyuN feat. LyuU', 'Defectum''s Oni', 'Defectum', 135, 4.83, 2, 10, 6, 5.5, 200, 4110878, 'Nozdormu', 'https://assets.ppy.sh/beatmaps/1972391/covers/cover.jpg?1698894362', '2023-11-02 03:05:48+00');
 
 insert into "public"."mappool_maps"
-(id, beatmap_id, map_index, mods, stage_id)
+  (id, beatmap_id, map_index, mods, stage_id)
 values
-(1, 1, 'A1', 'NM', 1),
-(2, 2, 'A2', 'NM', 1),
-(4, 3, 'B1', 'NM', 1),
-(5, 4, 'A3', 'HR', 1);
+  (1, 1, 'A1', 'NM', 1),
+  (2, 2, 'A2', 'NM', 1),
+  (3, 3, 'B1', 'NM', 1),
+  (4, 4, 'A3', 'HR', 1),
+  (5, 1, 'B1', 'HD', 2),
+  (6, 2, 'B2', 'FM', 2),
+  (7, 3, 'B3', 'NM', 2),
+  (8, 4, 'A1', 'NM', 2);
 
 insert into "public"."scores"
-(id, tournament_id, team_player_id, mappool_map_id, score, mods, end_time, accuracy, "100s", "50s", misses, mode)
+  (id, tournament_id, team_player_id, mappool_map_id, score, mods, end_time, accuracy, "100s", "50s", misses, mode)
 values
-(1, 1, 1, 1, 924600, 0, '2025-06-24 19:57:58+00', 98.76, null, null, null, 0),
-(2, 1, 2, 1, 1000000, 0, '2025-06-24 19:59:14+00', 100.00, null, null, null, 0),
-(3, 1, 3, 1, 989340, 0, '2025-06-24 20:00:47+00', 99.30, null, null, null, 0),
-(4, 1, 4, 1, 935260, 0, '2025-06-24 20:01:44+00', 98.89, null, null, null, 0),
-(5, 1, 1, 2, 893025, 0, '2025-06-24 19:57:58+00', 96.4, null, null, null, 0),
-(6, 1, 2, 2, 919254, 0, '2025-06-24 19:59:14+00', 98.3, null, null, null, 0),
-(7, 1, 3, 2, 967896, 0, '2025-06-24 20:00:47+00', 99.4, null, null, null, 0),
-(8, 1, 4, 2, 876545, 0, '2025-06-24 20:01:44+00', 96.1, null, null, null, 0),
-(9, 1, 1, 4, 607995, 0, '2025-06-24 19:57:58+00', 93.3, null, null, null, 0),
-(10, 1, 2, 4, 607995, 0, '2025-06-24 19:59:14+00', 93.3, null, null, null, 0),
-(11, 1, 3, 4, 768923, 0, '2025-06-24 20:00:47+00', 95.4, null, null, null, 0),
-(12, 1, 4, 4, 984588, 0, '2025-06-24 20:01:44+00', 99.7, null, null, null, 0),
-(13, 1, 1, 5, 1060000, 0, '2025-06-24 19:57:58+00', 100, null, null, null, 0),
-(14, 1, 2, 5, 990567, 0, '2025-06-24 19:59:14+00', 98.9, null, null, null, 0),
-(15, 1, 3, 5, 967032, 0, '2025-06-24 20:00:47+00', 98.4, null, null, null, 0),
-(16, 1, 4, 5, 1012404, 0, '2025-06-24 20:01:44+00', 99.4, null, null, null, 0);
+  (1, 1, 1, 1, 924600, 0, '2025-06-24 19:57:58+00', 98.76, null, null, null, 0),
+  (2, 1, 2, 1, 1000000, 0, '2025-06-24 19:59:14+00', 100.00, null, null, null, 0),
+  (3, 1, 3, 1, 989340, 0, '2025-06-24 20:00:47+00', 99.30, null, null, null, 0),
+  (4, 1, 4, 1, 935260, 0, '2025-06-24 20:01:44+00', 98.89, null, null, null, 0),
+  (5, 1, 1, 2, 893025, 0, '2025-06-24 19:57:58+00', 96.4, null, null, null, 0),
+  (6, 1, 2, 2, 919254, 0, '2025-06-24 19:59:14+00', 98.3, null, null, null, 0),
+  (7, 1, 3, 2, 967896, 0, '2025-06-24 20:00:47+00', 99.4, null, null, null, 0),
+  (8, 1, 4, 2, 876545, 0, '2025-06-24 20:01:44+00', 96.1, null, null, null, 0),
+  (9, 1, 1, 4, 607995, 0, '2025-06-24 19:57:58+00', 93.3, null, null, null, 0),
+  (10, 1, 2, 4, 607995, 0, '2025-06-24 19:59:14+00', 93.3, null, null, null, 0),
+  (11, 1, 3, 4, 768923, 0, '2025-06-24 20:00:47+00', 95.4, null, null, null, 0),
+  (12, 1, 4, 4, 984588, 0, '2025-06-24 20:01:44+00', 99.7, null, null, null, 0),
+  (13, 1, 1, 5, 1060000, 0, '2025-06-24 19:57:58+00', 100, null, null, null, 0),
+  (14, 1, 2, 5, 990567, 0, '2025-06-24 19:59:14+00', 98.9, null, null, null, 0),
+  (15, 1, 3, 5, 967032, 0, '2025-06-24 20:00:47+00', 98.4, null, null, null, 0),
+  (16, 1, 4, 5, 1012404, 0, '2025-06-24 20:01:44+00', 99.4, null, null, null, 0);
