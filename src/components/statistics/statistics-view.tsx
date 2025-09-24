@@ -195,7 +195,7 @@ export function StatisticsView({
       {map === "Overall" ? (
         <StatisticsOverall stats={overallStats} />
       ) : (
-        <StatisticsMap map={map} mapStats={mapStats} />
+        <StatisticsMap map={map} mapStats={mapStats} mods={mapData.mods} />
       )}
     </div>
   );

@@ -141,6 +141,7 @@ export async function makeStatistics(
         percentMax: 0,
         percentDifference: 1,
         zScore: 0,
+        mods: plrScore.mods,
       } as MapStatsEntry;
     });
 
@@ -154,4 +155,24 @@ export async function makeStatistics(
   const overallStats = createOverallStats(mapStats, playerStats);
 
   return [mapStats, overallStats];
+}
+
+export enum Mods {
+  NM = 0,
+  NF = 1,
+  EZ = 1 << 1,
+  HD = 1 << 3,
+  HR = 1 << 4,
+  DT = 1 << 6,
+  FL = 1 << 10,
+}
+
+export function intToMods(value: number): string[] {
+  if (value === 0) {
+    return ["NM"];
+  }
+
+  return (Object.keys(Mods) as (keyof typeof Mods)[])
+    .filter((key) => typeof Mods[key] === "number" && Mods[key] !== 0)
+    .filter((key) => (value & Mods[key]) !== 0);
 }

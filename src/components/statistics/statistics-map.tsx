@@ -1,9 +1,11 @@
 import { MapStatistics, MapStatsEntry } from "@/lib/statistics/interfaces";
+import { intToMods } from "@/lib/statistics/utils";
 import React from "react";
 
 interface StatisticsMapProps {
   map: string;
   mapStats: MapStatistics;
+  mods: string | null;
 }
 
 type Keys = keyof MapStatsEntry;
@@ -17,7 +19,7 @@ type Columns = {
   [K in Keys]: Column<MapStatsEntry[K]>;
 };
 
-export function StatisticsMap({ map, mapStats }: StatisticsMapProps) {
+export function StatisticsMap({ map, mapStats, mods }: StatisticsMapProps) {
   const [header, setHeader] = React.useState(2);
   const [asc, setAsc] = React.useState(true);
 
@@ -30,6 +32,10 @@ export function StatisticsMap({ map, mapStats }: StatisticsMapProps) {
     "Percent Difference",
     "Score",
   ];
+
+  if (mods === "FM") {
+    headers.push("Mods");
+  }
 
   const columns: Columns = {
     name: { header: "Spiller" },
@@ -48,6 +54,7 @@ export function StatisticsMap({ map, mapStats }: StatisticsMapProps) {
     },
     score: { header: "Score" },
     osuId: { header: "User ID" },
+    mods: { header: "Mods", format: (val) => intToMods(val - 1).join("") },
   };
 
   function sortHeader(index: number) {
