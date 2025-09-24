@@ -108,7 +108,7 @@ export function StatisticsMap({ map, mapStats }: StatisticsMapProps) {
         </thead>
         <tbody>
           {table.map((plr, i) => (
-            <tr key={plr.osuId}>
+            <tr key={i}>
               <td className="border-content border text-center">{i + 1}</td>
               {headers.map((h) => {
                 const key = keys.find(
