@@ -1,4 +1,4 @@
-interface GetMatchResponse {
+export interface GetMatchResponse {
   match: {
     id: number;
     start_time: string;
@@ -53,7 +53,7 @@ interface User {
   };
 }
 
-interface Score {
+export interface Score {
   accuracy: number;
   beatmap_id: number;
   build_id?: number;

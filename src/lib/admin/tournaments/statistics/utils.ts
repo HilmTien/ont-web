@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { ServerActionResponse } from "@/lib/error";
+import { GetMatchResponse } from "@/lib/osu-api-interfaces/get-match";
 
 export async function getMatch(
   id: number,

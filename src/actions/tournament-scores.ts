@@ -3,6 +3,7 @@
 import { StagesScoresData } from "@/lib/admin/tournaments/statistics/query";
 import { getMatch, modsToInt } from "@/lib/admin/tournaments/statistics/utils";
 import { isActionError } from "@/lib/error";
+import { Score } from "@/lib/osu-api-interfaces/get-match";
 import { createServerClient } from "@/lib/server";
 import { round } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
