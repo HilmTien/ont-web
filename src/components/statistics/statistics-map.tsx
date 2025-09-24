@@ -5,6 +5,7 @@ import React from "react";
 interface StatisticsMapProps {
   map: string;
   mapStats: MapStatistics;
+  bestMapStats: MapStatistics;
   mods: string | null;
 }
 
@@ -19,9 +20,15 @@ type Columns = {
   [K in Keys]: Column<MapStatsEntry[K]>;
 };
 
-export function StatisticsMap({ map, mapStats, mods }: StatisticsMapProps) {
+export function StatisticsMap({
+  map,
+  mapStats,
+  bestMapStats,
+  mods,
+}: StatisticsMapProps) {
   const [header, setHeader] = React.useState(2);
   const [asc, setAsc] = React.useState(true);
+  const [best, setBest] = React.useState(true);
 
   const headers = [
     "Rang",
@@ -73,7 +80,7 @@ export function StatisticsMap({ map, mapStats, mods }: StatisticsMapProps) {
     }
   }
 
-  const table = mapStats[map];
+  const table = best ? bestMapStats[map] : mapStats[map];
 
   const headerName = headers[header];
   const keys = Object.keys(columns) as Array<keyof MapStatsEntry>;
@@ -98,6 +105,14 @@ export function StatisticsMap({ map, mapStats, mods }: StatisticsMapProps) {
 
   return (
     <div className="overflow-auto">
+      <div className="mb-2 flex gap-2">
+        <input
+          type="checkbox"
+          checked={best}
+          onChange={() => setBest(!best)}
+        ></input>
+        <p>Vis kun beste scores</p>
+      </div>
       <table className="bg-table w-full border-collapse text-white">
         <thead>
           <tr className="border-content border-b">
