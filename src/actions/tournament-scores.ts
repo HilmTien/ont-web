@@ -98,7 +98,6 @@ export async function deleteScores(stageId: number) {
   }
 
   const mappoolMapIds = mappoolMaps.map((mappoolMap) => mappoolMap.id);
-  console.log(mappoolMapIds);
 
   const { data: deletedScores, error: deletedScoresError } = await supabase
     .from("scores")
