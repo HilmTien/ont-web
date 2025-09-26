@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import Content from "@/components/general/content";
-import { RefereeHelper } from "@/components/referee/referee-helper";
+import { RefereeHelperStateProvider } from "@/components/referee/v2/referee-helper-state";
+import { RefereeHelperV2 } from "@/components/referee/v2/referee-helper-v2";
 import { getPublicStages } from "@/lib/referee/query";
 import { createServerClient } from "@/lib/server";
 
@@ -27,12 +28,23 @@ export default async function Page() {
     tournamentId: 1,
   });
 
+  const res = await fetch("https://osu.ppy.sh/api/v2/matches/119331887", {
+    headers: {
+      Authorization: `Bearer ${session.accessToken}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+
   return (
     <Content>
       <p>Referee dashboard</p>
 
       {stages && stages.length > 0 ? (
-        <RefereeHelper stages={stages} />
+        // <RefereeHelper stages={stages} />
+        <RefereeHelperStateProvider>
+          <RefereeHelperV2 stages={stages} />
+        </RefereeHelperStateProvider>
       ) : (
         "Could not load mappools"
       )}
