@@ -28,14 +28,6 @@ export default async function Page() {
     tournamentId: 1,
   });
 
-  const res = await fetch("https://osu.ppy.sh/api/v2/matches/119331887", {
-    headers: {
-      Authorization: `Bearer ${session.accessToken}`,
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  });
-
   return (
     <Content>
       <p>Referee dashboard</p>

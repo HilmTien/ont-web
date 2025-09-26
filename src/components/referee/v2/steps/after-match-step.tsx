@@ -15,6 +15,9 @@ export function AfterMatchStep() {
   const state = React.useContext(RefereeHelperStateContext);
   const dispatch = React.useContext(RefereeHelperDispatchContext);
 
+  const [isFinished, setIsFinished] = React.useState(false);
+  const router = useRouter();
+
   if (
     !state.matchState ||
     !state.selectedStage ||
@@ -24,8 +27,6 @@ export function AfterMatchStep() {
     dispatch({ type: "SET_STEP", step: 0 });
     return;
   }
-
-  const [isFinished, setIsFinished] = React.useState(false);
 
   const team1Name =
     state.selectedMatch.team1?.name ?? state.selectedMatch.team1_label ?? "";
@@ -105,8 +106,6 @@ ${state.selections
             className="disabled:bg-disabled bg-accent rounded p-2 text-white hover:cursor-pointer disabled:cursor-default"
             onClick={() => {
               dispatch({ type: "RESET" });
-              const router = useRouter();
-
               router.refresh();
             }}
           >

@@ -20,13 +20,13 @@ export function RefereeHelperV2({ stages }: RefereeHelperV2Props) {
   const dispatch = React.useContext(RefereeHelperDispatchContext);
 
   React.useEffect(() => {
-    let initialState = localStorage.getItem("referee-helper-v2");
+    const initialState = localStorage.getItem("referee-helper-v2");
     if (initialState !== null) {
       const data = JSON.parse(initialState);
       dispatch({ type: "SET_STATE", state: data });
     }
     dispatch({ type: "SET_STAGES", stages });
-  }, [dispatch]);
+  }, [dispatch, stages]);
 
   React.useEffect(() => {
     const saveToLocalStorage = () => {
