@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import Content from "@/components/general/content";
-import { RefereeHelper } from "@/components/referee/referee-helper";
+import { RefereeHelperStateProvider } from "@/components/referee/v2/referee-helper-state";
+import { RefereeHelperV2 } from "@/components/referee/v2/referee-helper-v2";
 import { getPublicStages } from "@/lib/referee/query";
 import { createServerClient } from "@/lib/server";
 
@@ -32,7 +33,10 @@ export default async function Page() {
       <p>Referee dashboard</p>
 
       {stages && stages.length > 0 ? (
-        <RefereeHelper stages={stages} />
+        // <RefereeHelper stages={stages} />
+        <RefereeHelperStateProvider>
+          <RefereeHelperV2 stages={stages} />
+        </RefereeHelperStateProvider>
       ) : (
         "Could not load mappools"
       )}
