@@ -8,7 +8,7 @@ interface DeleteMapButtonProps {
 
 export function DeleteMapButton({ id }: DeleteMapButtonProps) {
   return (
-    <button className="cursor-pointer" onClick={() => deleteMappoolMap(id)}>
+    <button className="w-8 cursor-pointer" onClick={() => deleteMappoolMap(id)}>
       Delete
     </button>
   );

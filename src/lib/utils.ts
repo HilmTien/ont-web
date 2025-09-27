@@ -40,3 +40,39 @@ export function batchArray<T>(arr: T[], size: number): T[][] {
 export function round(value: number, decimals: number = 2) {
   return Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }
+
+export function clamp(x: number, min: number, max: number) {
+  return Math.min(Math.max(x, min), max);
+}
+
+export function omitKey<T extends object, K extends keyof T>(
+  obj: T,
+  key: K,
+): Omit<T, K> {
+  const { ...rest } = obj;
+  delete rest[key];
+  return rest;
+}
+
+export function omitKeys<T extends object, K extends keyof T>(
+  obj: T,
+  keys: K[],
+): Omit<T, K> {
+  const rest = { ...obj };
+  for (const key of keys) {
+    delete rest[key];
+  }
+  return rest;
+}
+
+export function countValues<T extends string | number>(
+  record: Record<string, T>,
+): Record<T, number> {
+  return Object.values(record).reduce(
+    (acc, value) => {
+      acc[value] = (acc[value] || 0) + 1;
+      return acc;
+    },
+    {} as Record<T, number>,
+  );
+}

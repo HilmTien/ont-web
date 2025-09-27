@@ -120,8 +120,9 @@ function createPlayerStats(mapStats: MapStatistics) {
 
 export async function makeStatistics(
   statistics: StatisticsQueryData,
-): Promise<[MapStatistics, OverallStatistics]> {
+): Promise<[MapStatistics, MapStatistics, OverallStatistics]> {
   const mapStats: MapStatistics = {};
+  const bestMapStats: MapStatistics = {};
 
   const mappoolMaps = statistics.mappool_maps.sort((a, b) =>
     a.map_index.localeCompare(b.map_index, undefined, {
@@ -141,6 +142,7 @@ export async function makeStatistics(
         percentMax: 0,
         percentDifference: 1,
         zScore: 0,
+        mods: plrScore.mods,
       } as MapStatsEntry;
     });
 
@@ -149,9 +151,65 @@ export async function makeStatistics(
     mapStats[map.map_index] = mapScore;
   });
 
-  const playerStats = createPlayerStats(mapStats);
+  mappoolMaps.forEach((map) => {
+    const bestMapScore: MapStatsEntry[] = [];
 
-  const overallStats = createOverallStats(mapStats, playerStats);
+    map.scores.map((plrScore) => {
+      const user = plrScore.team_players.users;
 
-  return [mapStats, overallStats];
+      const newScore = {
+        name: user.username,
+        osuId: user.osu_id,
+        score: plrScore.score,
+        mapPlacement: 0,
+        percentMax: 0,
+        percentDifference: 1,
+        zScore: 0,
+        mods: plrScore.mods,
+      } as MapStatsEntry;
+
+      const userScore = bestMapScore.find(
+        (score) => score.osuId === user.osu_id,
+      );
+      if (userScore) {
+        if (newScore.score > userScore.score) {
+          const scoreIndex = bestMapScore.findIndex(
+            (score) => score.osuId === user.osu_id,
+          );
+          bestMapScore[scoreIndex] = newScore;
+        }
+      } else {
+        bestMapScore.push(newScore);
+      }
+    });
+
+    applyStatistics(bestMapScore);
+    bestMapStats[map.map_index] = bestMapScore;
+  });
+
+  const playerStats = createPlayerStats(bestMapStats);
+
+  const overallStats = createOverallStats(bestMapStats, playerStats);
+
+  return [mapStats, bestMapStats, overallStats];
+}
+
+export enum Mods {
+  NM = 0,
+  NF = 1,
+  EZ = 1 << 1,
+  HD = 1 << 3,
+  HR = 1 << 4,
+  DT = 1 << 6,
+  FL = 1 << 10,
+}
+
+export function intToMods(value: number): string[] {
+  if (value === 0) {
+    return ["NM"];
+  }
+
+  return (Object.keys(Mods) as (keyof typeof Mods)[])
+    .filter((key) => typeof Mods[key] === "number" && Mods[key] !== 0)
+    .filter((key) => (value & Mods[key]) !== 0);
 }

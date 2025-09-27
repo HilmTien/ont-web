@@ -28,6 +28,7 @@ export async function createMatch(
   }
 
   revalidatePath(`/admin/tournaments/${match.tournament_id}/schedule`);
+  revalidatePath(`/schedule/[stage_index]`);
 
   return insertedMatch;
 }
@@ -51,6 +52,8 @@ export async function editMatch(
     return { error: "Could not insert match" };
   }
 
+  revalidatePath(`/schedule/[stage_index]`);
+
   return updatedMatch;
 }
 
@@ -73,6 +76,7 @@ export async function deleteMatch(
   }
 
   revalidatePath(`/admin/tournaments/${match.tournament_id}/schedule`);
+  revalidatePath(`/schedule/[stage_index]`);
 
   return deletedMatch;
 }

@@ -39,6 +39,18 @@ export function MatchForm({
   return (
     <form onSubmit={form.handleSubmit(createMatch)}>
       <select
+        id="stage"
+        {...form.register("stage_id", {
+          setValueAs: (v) => (v === "" ? null : parseInt(v)),
+        })}
+      >
+        {stages.map((stage) => (
+          <option value={stage.id} key={stage.id}>
+            {stage.stage_name}
+          </option>
+        ))}
+      </select>
+      <select
         id="referee"
         {...form.register("referee_id", {
           setValueAs: (v) => (v === "" ? null : parseInt(v)),
@@ -90,6 +102,8 @@ export function MatchForm({
           </option>
         ))}
       </select>
+      <input {...form.register("team1_label")} />
+      <input {...form.register("team2_label")} />
       <input type="datetime-local" {...form.register("match_time")}></input>
       <select
         id="teams-1"
@@ -97,6 +111,7 @@ export function MatchForm({
           setValueAs: (v) => (v === "" ? null : parseInt(v)),
         })}
       >
+        <option value="">-</option>
         {teams.map((team) => (
           <option value={team.id} key={team.id}>
             {team.name}
@@ -109,21 +124,10 @@ export function MatchForm({
           setValueAs: (v) => (v === "" ? null : parseInt(v)),
         })}
       >
+        <option value="">-</option>
         {teams.map((team) => (
           <option value={team.id} key={team.id}>
             {team.name}
-          </option>
-        ))}
-      </select>
-      <select
-        id="stage"
-        {...form.register("stage_id", {
-          setValueAs: (v) => (v === "" ? null : parseInt(v)),
-        })}
-      >
-        {stages.map((stage) => (
-          <option value={stage.id} key={stage.id}>
-            {stage.stage_name}
           </option>
         ))}
       </select>

@@ -88,12 +88,15 @@ export function EditMatchForm({ staff, teams, stages, match }: MatchFormProps) {
         ))}
       </select>
       <input {...form.register("match_time")}></input>
+      <input {...form.register("team1_label")}></input>
+      <input {...form.register("team2_label")}></input>
       <select
         id="teams-1"
         {...form.register("team1_id", {
           setValueAs: (v) => (v === "" ? null : parseInt(v)),
         })}
       >
+        <option value={""}>None</option>
         {teams.map((team) => (
           <option value={team.id} key={team.id}>
             {team.name}
@@ -111,6 +114,7 @@ export function EditMatchForm({ staff, teams, stages, match }: MatchFormProps) {
           setValueAs: (v) => (v === "" ? null : parseInt(v)),
         })}
       >
+        <option value={""}>None</option>
         {teams.map((team) => (
           <option value={team.id} key={team.id}>
             {team.name}
