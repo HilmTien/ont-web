@@ -74,7 +74,6 @@ export function RefereeHelper({ stages }: RefereeHelperProps) {
 
   // Update selectedMatchId when stage changes
   // (to avoid stale match selection)
-  // eslint-disable-next-line
   if (
     selectedStage &&
     selectedStage.matches?.length &&

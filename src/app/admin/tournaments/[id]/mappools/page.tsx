@@ -82,6 +82,11 @@ export default async function Page({
                     )
                   : "N/A"}
               </p>
+              <p>
+                {stage.mappool_maps
+                  .map((map) => map.beatmaps.osu_id)
+                  .join(", ")}
+              </p>
             </td>
             {stage.mappool_maps.map((map) => (
               <td key={map.id} className="my-1">
