@@ -61,7 +61,6 @@ export default async function Page({
         <Link href={`./${id}/mappools`}>Edit Mappool</Link>
         <Link href={`./${id}/schedule`}>Edit Matches</Link>
         <Link href={`./${id}/players`}>Edit Players</Link>
-        <Link href={`./${id}/statistics`}>Edit Statistics</Link>
       </div>
     </div>
   );

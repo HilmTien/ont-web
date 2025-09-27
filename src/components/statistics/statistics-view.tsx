@@ -15,7 +15,6 @@ import { StatisticsOverall } from "./statistics-overall";
 
 interface StatisticsViewProps {
   mapStats: MapStatistics;
-  bestMapStats: MapStatistics;
   overallStats: OverallStatistics;
   statistics: StatisticsQueryData;
 }
@@ -39,7 +38,6 @@ const defaultMapData = {
 
 export function StatisticsView({
   mapStats,
-  bestMapStats,
   overallStats,
   statistics,
 }: StatisticsViewProps) {
@@ -197,12 +195,7 @@ export function StatisticsView({
       {map === "Overall" ? (
         <StatisticsOverall stats={overallStats} />
       ) : (
-        <StatisticsMap
-          map={map}
-          mapStats={mapStats}
-          bestMapStats={bestMapStats}
-          mods={mapData.mods}
-        />
+        <StatisticsMap map={map} mapStats={mapStats} />
       )}
     </div>
   );

@@ -1,12 +1,9 @@
 import { MapStatistics, MapStatsEntry } from "@/lib/statistics/interfaces";
-import { intToMods } from "@/lib/statistics/utils";
 import React from "react";
 
 interface StatisticsMapProps {
   map: string;
   mapStats: MapStatistics;
-  bestMapStats: MapStatistics;
-  mods: string | null;
 }
 
 type Keys = keyof MapStatsEntry;
@@ -20,15 +17,9 @@ type Columns = {
   [K in Keys]: Column<MapStatsEntry[K]>;
 };
 
-export function StatisticsMap({
-  map,
-  mapStats,
-  bestMapStats,
-  mods,
-}: StatisticsMapProps) {
+export function StatisticsMap({ map, mapStats }: StatisticsMapProps) {
   const [header, setHeader] = React.useState(2);
   const [asc, setAsc] = React.useState(true);
-  const [best, setBest] = React.useState(true);
 
   const headers = [
     "Rang",
@@ -39,10 +30,6 @@ export function StatisticsMap({
     "Percent Difference",
     "Score",
   ];
-
-  if (mods === "FM") {
-    headers.push("Mods");
-  }
 
   const columns: Columns = {
     name: { header: "Spiller" },
@@ -61,7 +48,6 @@ export function StatisticsMap({
     },
     score: { header: "Score" },
     osuId: { header: "User ID" },
-    mods: { header: "Mods", format: (val) => intToMods(val - 1).join("") },
   };
 
   function sortHeader(index: number) {
@@ -80,7 +66,7 @@ export function StatisticsMap({
     }
   }
 
-  const table = best ? bestMapStats[map] : mapStats[map];
+  const table = mapStats[map];
 
   const headerName = headers[header];
   const keys = Object.keys(columns) as Array<keyof MapStatsEntry>;
@@ -105,14 +91,6 @@ export function StatisticsMap({
 
   return (
     <div className="overflow-auto">
-      <div className="mb-2 flex gap-2">
-        <input
-          type="checkbox"
-          checked={best}
-          onChange={() => setBest(!best)}
-        ></input>
-        <p>Vis kun beste scores</p>
-      </div>
       <table className="bg-table w-full border-collapse text-white">
         <thead>
           <tr className="border-content border-b">
@@ -130,7 +108,7 @@ export function StatisticsMap({
         </thead>
         <tbody>
           {table.map((plr, i) => (
-            <tr key={i}>
+            <tr key={plr.osuId}>
               <td className="border-content border text-center">{i + 1}</td>
               {headers.map((h) => {
                 const key = keys.find(

@@ -53,7 +53,7 @@ interface User {
   };
 }
 
-export interface Score {
+interface Score {
   accuracy: number;
   beatmap_id: number;
   build_id?: number;
