@@ -30,7 +30,8 @@ export async function getStatistics(
                 *
               )
             ),
-            score
+            score,
+            mods
           )
         )
       `,

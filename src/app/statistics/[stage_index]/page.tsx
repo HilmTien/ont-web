@@ -27,7 +27,8 @@ export default async function Page({
     return <>Error fetching statistics data</>;
   }
 
-  const [mapStats, overallStats] = await makeStatistics(statistics);
+  const [mapStats, bestMapStats, overallStats] =
+    await makeStatistics(statistics);
 
   return (
     <Content>
@@ -35,6 +36,7 @@ export default async function Page({
 
       <StatisticsView
         mapStats={mapStats}
+        bestMapStats={bestMapStats}
         overallStats={overallStats}
         statistics={statistics}
       />

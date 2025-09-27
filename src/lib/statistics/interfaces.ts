@@ -13,6 +13,7 @@ export interface MapStatistics {
 
 export interface MapStatsEntry extends StatsEntry {
   osuId: number;
+  mods: number;
 }
 
 export interface PlayerStatistics {
