@@ -125,9 +125,9 @@ export default async function Page({
                           : map.beatmaps.cover
                       }
                       alt="Beatmap Image"
-                      width={0}
-                      height={0}
-                      sizes="100vw"
+                      width={900}
+                      height={250}
+                      unoptimized
                       className="ml-5 w-56"
                     ></Image>
                   </Link>

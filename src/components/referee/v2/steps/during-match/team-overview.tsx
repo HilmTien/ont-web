@@ -87,8 +87,9 @@ export function TeamOverview() {
               <Image
                 src={avatarHref}
                 alt={`Team ${team} avatar`}
-                width={128}
-                height={128}
+                width={256}
+                height={256}
+                unoptimized
                 className="size-16 rounded-md"
               />
               <div

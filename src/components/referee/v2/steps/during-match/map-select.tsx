@@ -32,6 +32,7 @@ export function MapSelect({
           alt={`${map.map_index} map cover`}
           width={900}
           height={250}
+          unoptimized
           className={`${selector !== undefined ? "blur-xs" : ""}`}
           priority={true}
           draggable={false}

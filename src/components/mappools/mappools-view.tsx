@@ -43,9 +43,9 @@ export function MappoolsView({ data }: MappoolsViewProps) {
           <Image
             src={beatmap.cover}
             alt="Beatmap Image"
-            width={0}
-            height={0}
-            sizes="100vw"
+            width={900}
+            height={250}
+            unoptimized
             className="w-full"
           />
         </Link>
