@@ -44,10 +44,10 @@ export function MatchCard({ match }: MatchCardProps) {
           : "/profile-pics/avatar-guest.png"
       }
       alt="Team 1 Logo"
-      width={0}
-      height={0}
+      width={256}
+      height={256}
+      unoptimized
       className="w-10 rounded-md md:w-14 xl:w-20"
-      sizes="100vw"
     />
   );
 
@@ -59,8 +59,9 @@ export function MatchCard({ match }: MatchCardProps) {
           : "/profile-pics/avatar-guest.png"
       }
       alt="Team 2 Logo"
-      width={0}
-      height={0}
+      width={256}
+      height={256}
+      unoptimized
       className="w-10 rounded-md md:w-14 xl:w-20"
       sizes="100vw"
     />

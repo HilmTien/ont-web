@@ -54,8 +54,8 @@ export default function Navbar({ latestStage }: NavbarProps) {
           <Image
             src={"/logos/ont/new-logo.png"}
             alt="Logo"
-            width={0}
-            height={0}
+            width={3362}
+            height={2377}
             sizes="100vw"
             className={`transition-all ${navBg ? "w-24" : "w-36"}`}
           ></Image>
