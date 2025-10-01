@@ -43,9 +43,9 @@ export default function PlayerCard({
           <Image
             src={`https://a.ppy.sh/${osuId}`}
             alt="Logo"
-            width={0}
-            height={0}
-            sizes="100vw"
+            width={256}
+            height={256}
+            unoptimized
             className="w-14 rounded-md"
           />
 

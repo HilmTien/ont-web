@@ -33,7 +33,7 @@ export function MappoolsView({ data }: MappoolsViewProps) {
     const mapCard = (
       <div
         key={map.map_index}
-        className="shadow-container bg-card flex h-67 w-72 flex-col rounded-md sm:h-84 sm:w-[500px]"
+        className="shadow-container bg-card flex h-67 w-72 flex-col rounded-md sm:h-84 sm:w-[520px]"
       >
         <div className="mb-2 flex place-items-baseline justify-between px-5 pt-5">
           <h1 className="text-lg sm:text-2xl">{map.map_index}</h1>
@@ -43,14 +43,17 @@ export function MappoolsView({ data }: MappoolsViewProps) {
           <Image
             src={beatmap.cover}
             alt="Beatmap Image"
-            width={0}
-            height={0}
-            sizes="100vw"
+            width={900}
+            height={250}
+            unoptimized
             className="w-full"
           />
         </Link>
         <div className="px-5">
-          <h1 className="text-md truncate pt-2 font-semibold sm:text-xl">
+          <h1
+            title={`${beatmap.name} [${beatmap.difficulty_name}]`}
+            className="text-md truncate pt-2 font-semibold sm:text-xl"
+          >
             {beatmap.name} [{beatmap.difficulty_name}]
           </h1>
           <h2 className="text-sm sm:text-lg">{beatmap.artist}</h2>
@@ -58,7 +61,7 @@ export function MappoolsView({ data }: MappoolsViewProps) {
             Mappet av {beatmap.mapper}
           </p>
         </div>
-        <div className="mt-auto flex flex-col gap-2 px-5 pb-2 sm:flex-row sm:gap-7">
+        <div className="mt-auto flex flex-col justify-between gap-2 px-5 pb-2 sm:flex-row">
           <div className="flex flex-row gap-2 text-sm sm:text-lg">
             <p className="flex items-center gap-1">
               <Star className="stroke-accent" /> {beatmap.star_rating}

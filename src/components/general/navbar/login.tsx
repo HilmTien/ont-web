@@ -26,9 +26,9 @@ export default function LogIn({ navBg, isMobile }: LogInProps) {
                       : "/profile-pics/avatar-guest.png"
                   }
                   alt="Profile Picture"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
+                  width={256}
+                  height={256}
+                  unoptimized
                   className={`rounded-[50%] transition-all ${navBg ? "w-12" : "w-15"}`}
                 ></Image>
                 <p className="hover:text-accent font-semibold">
@@ -65,9 +65,9 @@ export default function LogIn({ navBg, isMobile }: LogInProps) {
                       : "/profile-pics/avatar-guest.png"
                   }
                   alt="Profile Picture"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
+                  width={256}
+                  height={256}
+                  unoptimized
                   className={`rounded-[50%] transition-all ${navBg ? "w-12" : "w-15"}`}
                 ></Image>
               </button>
@@ -104,9 +104,9 @@ export default function LogIn({ navBg, isMobile }: LogInProps) {
             <Image
               src={"/profile-pics/avatar-guest.png"}
               alt="Profile Picture"
-              width={0}
-              height={0}
-              sizes="100vw"
+              width={256}
+              height={256}
+              unoptimized
               className={`rounded-[50%] transition-all ${navBg ? "w-12" : "w-15"}`}
             ></Image>
             <p className="hover:text-accent font-semibold">Logg inn</p>
@@ -121,9 +121,9 @@ export default function LogIn({ navBg, isMobile }: LogInProps) {
                 <Image
                   src={"/profile-pics/avatar-guest.png"}
                   alt="Profile Picture"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
+                  width={256}
+                  height={256}
+                  unoptimized
                   className={`rounded-[50%] transition-all ${navBg ? "w-12" : "w-15"}`}
                 ></Image>
               </button>
@@ -136,9 +136,9 @@ export default function LogIn({ navBg, isMobile }: LogInProps) {
         <Image
           src={"/profile-pics/avatar-guest.png"}
           alt="Profile Picture"
-          width={0}
-          height={0}
-          sizes="100vw"
+          width={256}
+          height={256}
+          unoptimized
           className={`flex rounded-[50%] transition-all ${navBg ? "w-12" : "w-15"}`}
         ></Image>
       )}

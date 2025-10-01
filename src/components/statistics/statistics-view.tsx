@@ -186,9 +186,9 @@ export function StatisticsView({
             <Image
               src={mapData.cover}
               alt="Beatmap Image"
-              width="0"
-              height="0"
-              sizes="100vw"
+              width={900}
+              height={250}
+              unoptimized
               className="w-[150%] items-center lg:w-full lg:rounded-r-md"
             ></Image>
           </Link>
