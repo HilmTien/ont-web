@@ -29,7 +29,7 @@ export function SetupMatchStep() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-auto flex-col gap-4">
       <h2 className="text-2xl font-bold">Setup Referee Helper</h2>
       <label className="mb-2 text-xl">
         <span className="mr-2">Stage:</span>
