@@ -29,7 +29,7 @@ export function SetupMatchStep() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-auto flex-col gap-4">
       <h2 className="text-2xl font-bold">Setup Referee Helper</h2>
       <label className="mb-2 text-xl">
         <span className="mr-2">Stage:</span>
@@ -68,14 +68,20 @@ export function SetupMatchStep() {
             className="rounded border p-2"
           >
             <option value={""}>-</option>
-            {state.selectedStage.matches.map((match) => {
-              return (
-                <option
-                  key={match.id}
-                  value={match.id}
-                >{`(${match.tournament_match_id}) ${match.team1?.name || match.team1_label} vs ${match.team2?.name || match.team2_label}`}</option>
-              );
-            })}
+            {state.selectedStage.matches
+              .toSorted(
+                (a, b) =>
+                  new Date(a.match_time).getTime() -
+                  new Date(b.match_time).getTime(),
+              )
+              .map((match) => {
+                return (
+                  <option
+                    key={match.id}
+                    value={match.id}
+                  >{`(${match.tournament_match_id}) ${match.team1?.name || match.team1_label} vs ${match.team2?.name || match.team2_label}`}</option>
+                );
+              })}
           </select>
         </label>
       )}

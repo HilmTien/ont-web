@@ -28,6 +28,7 @@ export async function getPublicStages(
       matches(
         id,
         tournament_match_id,
+        match_time,
         team1_label,
         team2_label,
         team1:teams!team1_id(
