@@ -17,7 +17,7 @@ interface RefereeHelperState {
   futureRedoSelections: PublicStagesData[number]["mappool_maps"];
   stages: PublicStagesData;
   step: number;
-  tiebreakerId: number | null;
+  tiebreaker: PublicStagesData[number]["mappool_maps"][number] | null;
   // team1Score: number;
   // team2Score: number;
   mapWinners: Record<
@@ -44,7 +44,7 @@ const initialRefereeHelperState: RefereeHelperState = {
   futureRedoSelections: [],
   stages: [],
   step: 0,
-  tiebreakerId: null,
+  tiebreaker: null,
   // team1Score: 0,
   // team2Score: 0,
   mapWinners: {},
@@ -120,8 +120,8 @@ function reducer(state: RefereeHelperState, action: RefereeHelperAction) {
         ...state,
         selections: state.selections.slice(0, -1),
         futureRedoSelections: [...state.futureRedoSelections, undo],
-        mapWinners: state.tiebreakerId
-          ? omitKeys(state.mapWinners, [undo.id, state.tiebreakerId])
+        mapWinners: state.tiebreaker?.id
+          ? omitKeys(state.mapWinners, [undo.id, state.tiebreaker.id])
           : omitKey(state.mapWinners, undo.id),
         futureRedoMapWinners: {
           ...state.futureRedoMapWinners,
@@ -170,9 +170,9 @@ function reducer(state: RefereeHelperState, action: RefereeHelperAction) {
         selectedStage: selectedStage,
         selectedMatchId: null,
         mpId: null,
-        tiebreakerId:
-          selectedStage?.mappool_maps.find((map) => map.map_index === "TB")
-            ?.id ?? null,
+        tiebreaker:
+          selectedStage?.mappool_maps.find((map) => map.map_index === "TB") ??
+          null,
       };
     }
     case "SET_MATCH_ID":
@@ -202,11 +202,11 @@ function reducer(state: RefereeHelperState, action: RefereeHelperAction) {
         };
       }
 
-      if (state.tiebreakerId && state.tiebreakerId !== action.mapId) {
+      if (state.tiebreaker?.id && state.tiebreaker.id !== action.mapId) {
         return {
           ...state,
           mapWinners: {
-            ...omitKey(state.mapWinners, state.tiebreakerId),
+            ...omitKey(state.mapWinners, state.tiebreaker.id),
             [action.mapId]: action.winner,
           },
         };
