@@ -1,8 +1,12 @@
 import { CommandWithCopy } from "@/components/ui/command-with-copy";
 import { Separator } from "@/components/ui/separator";
 import { PublicStagesData } from "@/lib/referee/query";
-import { getModCommand, getSelector, getSelectType } from "@/lib/referee/utils";
-import { countValues } from "@/lib/utils";
+import {
+  getModCommand,
+  getPoints,
+  getSelector,
+  getSelectType,
+} from "@/lib/referee/utils";
 import React from "react";
 import { BackButton } from "../../back-button";
 import {
@@ -66,7 +70,7 @@ export function DuringMatchStep() {
     map.map_index.includes("TB"),
   );
 
-  const teamPoints = countValues(state.mapWinners);
+  const teamPoints = getPoints(state.mapWinners);
 
   const team1Won =
     teamPoints.red >=
@@ -89,7 +93,7 @@ export function DuringMatchStep() {
       Math.floor((state.selectedStage.best_of ?? Number.POSITIVE_INFINITY) / 2);
 
   const isPointPickMismatched =
-    (teamPoints.red ?? 0) + (teamPoints.blue ?? 0) !==
+    (teamPoints.red ?? 0) + (teamPoints.blue ?? 0) - teamPoints.ties !==
     (state.selections.length > 4
       ? Math.max(state.selections.length - 2, 4)
       : state.selections.length);
@@ -101,7 +105,7 @@ export function DuringMatchStep() {
         `${state.selectedStage.best_of ? `Best of ${state.selectedStage.best_of}, ` : ""}` +
         `${team1Won ? `${team1Name} vant!` : team2Won ? `${team2Name} vant!` : arePicksFinished ? `tiebreakeren blir spilt!` : `${getSelector(state.selections.length, state.firstPick) === "red" ? team1Name : team2Name} du har 90 sekunder på å ${getSelectType(state.selections.length) === "pick" ? "picke" : "banne"} et map!`}`;
 
-  const onWin = (winner: "red" | "blue", mapId: number) => {
+  const onWin = (winner: "red" | "blue" | "tie", mapId: number) => {
     dispatch({ type: "SET_MAP_WINNER", mapId: mapId, winner: winner });
   };
 

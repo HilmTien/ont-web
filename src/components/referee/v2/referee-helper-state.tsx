@@ -22,11 +22,11 @@ interface RefereeHelperState {
   // team2Score: number;
   mapWinners: Record<
     PublicStagesData[number]["mappool_maps"][number]["id"],
-    "red" | "blue"
+    "red" | "blue" | "tie"
   >;
   futureRedoMapWinners: Record<
     PublicStagesData[number]["mappool_maps"][number]["id"],
-    "red" | "blue"
+    "red" | "blue" | "tie"
   >;
   matchState: GetMatchResponse | null;
   mpId: number | null;
@@ -73,7 +73,7 @@ type RefereeHelperAction =
   // | { type: "DECREMENT_TEAM1_SCORE" }
   // | { type: "INCREMENT_TEAM2_SCORE" }
   // | { type: "DECREMENT_TEAM2_SCORE" }
-  | { type: "SET_MAP_WINNER"; mapId: number; winner: "red" | "blue" }
+  | { type: "SET_MAP_WINNER"; mapId: number; winner: "red" | "blue" | "tie" }
   | { type: "RESET_SELECTIONS" }
   | { type: "RESET" };
 

@@ -6,8 +6,8 @@ interface MapSelectProps {
   map: PublicStagesData[number]["mappool_maps"][number];
   selector?: "red" | "blue" | "tiebreaker";
   selectType: "pick" | "ban" | "tiebreaker";
-  winner?: "red" | "blue";
-  onWin: (winner: "red" | "blue", mapId: number) => void;
+  winner?: "red" | "blue" | "tie";
+  onWin: (winner: "red" | "blue" | "tie", mapId: number) => void;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
@@ -57,6 +57,12 @@ export function MapSelect({
             className={`${winner === "red" ? "bg-red" : "bg-table"} ${selector === "red" ? "outline-red" : selector === "blue" ? "outline-blue" : "outline-white"} flex h-full items-center justify-center font-semibold outline-2`}
           >
             RED WIN
+          </button>
+          <button
+            onClick={() => onWin("tie", map.id)}
+            className={`${winner === "tie" ? "bg-white text-black" : "bg-table text-white"} ${selector === "red" ? "outline-red" : selector === "blue" ? "outline-blue" : "outline-white"} flex h-full items-center justify-center font-semibold outline-2`}
+          >
+            TIE
           </button>
           <button
             onClick={() => onWin("blue", map.id)}

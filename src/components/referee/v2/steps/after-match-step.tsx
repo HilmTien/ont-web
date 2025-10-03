@@ -1,8 +1,7 @@
 import { updateResult } from "@/actions/referee";
 import { CommandWithCopy } from "@/components/ui/command-with-copy";
 import { isActionError } from "@/lib/error";
-import { getSelector, getSelectType } from "@/lib/referee/utils";
-import { countValues } from "@/lib/utils";
+import { getPoints, getSelector, getSelectType } from "@/lib/referee/utils";
 import React from "react";
 import { BackButton } from "../back-button";
 import {
@@ -31,7 +30,7 @@ export function AfterMatchStep() {
   const team2Name =
     state.selectedMatch.team2?.name ?? state.selectedMatch.team2_label ?? "";
 
-  const teamPoints = countValues(state.mapWinners);
+  const teamPoints = getPoints(state.mapWinners);
   const bestOf = state.selectedStage.best_of ?? Number.POSITIVE_INFINITY;
 
   const team1Won = teamPoints.red >= Math.ceil(bestOf / 2);
