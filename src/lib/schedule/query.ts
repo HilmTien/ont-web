@@ -90,6 +90,7 @@ export async function getStageMatches(
     .select(
       `
       is_public,
+      bracket_type,
       matches(
         id,
         match_time,

@@ -1,6 +1,6 @@
 import Content from "@/components/general/content";
-import { MatchCard } from "@/components/schedule/match-card";
 import { ScheduleStageSelector } from "@/components/schedule/schedule-stage-selector";
+import ScheduleView from "@/components/schedule/schedule-view";
 import { getStageMatches } from "@/lib/schedule/query";
 import { createServerClient } from "@/lib/server";
 
@@ -31,21 +31,7 @@ export default async function Page({
   return (
     <Content>
       <ScheduleStageSelector stageIndex={stageIndex} />
-      {stage.is_public ? (
-        stage.matches.length !== 0 ? (
-          stage.matches
-            .sort(
-              (a, b) =>
-                new Date(a.match_time).getTime() -
-                new Date(b.match_time).getTime(),
-            )
-            .map((match) => <MatchCard match={match} key={match.id} />)
-        ) : (
-          <p className="mx-auto pb-8">Denne runden har ingen matches</p>
-        )
-      ) : (
-        <p className="mx-auto pt-4">Denne runden er ikke offentlig enda</p>
-      )}
+      <ScheduleView stage={stage} />
     </Content>
   );
 }
