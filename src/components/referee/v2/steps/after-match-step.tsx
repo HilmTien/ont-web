@@ -37,7 +37,8 @@ export function AfterMatchStep() {
   const team1Won = teamPoints.red >= Math.ceil(bestOf / 2);
   const team2Won = teamPoints.blue >= Math.ceil(bestOf / 2);
 
-  const discordResultText = `**${state.selectedStage.stage_name}:** Match ${state.selectedMatch.tournament_match_id}
+  const discordResultText =
+    `**${state.selectedStage.stage_name}:** Match ${state.selectedMatch.tournament_match_id}
 ${team1Won ? "**:first_place: " : ""}:red_square: ${team1Name} | ${teamPoints.red ?? 0}${team1Won ? "**" : ""} - ${team2Won ? "**" : ""}${teamPoints.blue ?? 0} | ${team2Name} :blue_square:${team2Won ? "** :first_place:" : ""}
 MP Link: <https://osu.ppy.sh/community/matches/${state.mpId}>
 
@@ -58,7 +59,7 @@ ${
     ? `**[TB](<https://osu.ppy.sh/b/${state.tiebreaker.beatmaps.osu_id}>)** (${state.tiebreaker.mods}), :${state.mapWinners[state.tiebreaker.id]}_square: vant!`
     : ""
 }
-`;
+`.trim();
 
   return (
     <div className="flex flex-auto flex-col gap-4">
