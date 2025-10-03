@@ -58,12 +58,14 @@ export function MapSelect({
           >
             RED WIN
           </button>
-          <button
-            onClick={() => onWin("tie", map.id)}
-            className={`${winner === "tie" ? "bg-white text-black" : "bg-table text-white"} ${selector === "red" ? "outline-red" : selector === "blue" ? "outline-blue" : "outline-white"} flex h-full items-center justify-center font-semibold outline-2`}
-          >
-            TIE
-          </button>
+          {selectType !== "tiebreaker" && (
+            <button
+              onClick={() => onWin("tie", map.id)}
+              className={`${winner === "tie" ? "bg-white text-black" : "bg-table text-white"} ${selector === "red" ? "outline-red" : selector === "blue" ? "outline-blue" : "outline-white"} flex h-full items-center justify-center font-semibold outline-2`}
+            >
+              TIE
+            </button>
+          )}
           <button
             onClick={() => onWin("blue", map.id)}
             className={`${winner === "blue" ? "bg-blue" : "bg-table"} ${selector === "red" ? "outline-red" : selector === "blue" ? "outline-blue" : "outline-white"} flex h-full items-center justify-center font-semibold outline-2`}
