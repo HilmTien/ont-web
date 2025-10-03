@@ -77,9 +77,10 @@ export function MatchCard({ match }: MatchCardProps) {
           {match.mp_id ? (
             <Link
               target="_blank"
+              className="ml-auto"
               href={`https://osu.ppy.sh/community/matches/${match.mp_id}`}
             >
-              <LinkIcon className="ml-auto size-6 min-w-6 stroke-white lg:hidden" />
+              <LinkIcon className="size-6 min-w-6 stroke-white lg:hidden" />
             </Link>
           ) : (
             <LinkIcon className="stroke-disabled ml-auto size-6 min-w-6 lg:hidden" />
