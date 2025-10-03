@@ -280,7 +280,7 @@ function reducer(state: RefereeHelperState, action: RefereeHelperAction) {
     //   };
     // }
     case "RESET":
-      return initialRefereeHelperState;
+      return { ...initialRefereeHelperState, stages: state.stages };
   }
 }
 

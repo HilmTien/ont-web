@@ -3,7 +3,6 @@ import { CommandWithCopy } from "@/components/ui/command-with-copy";
 import { isActionError } from "@/lib/error";
 import { getSelector, getSelectType } from "@/lib/referee/utils";
 import { countValues } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { BackButton } from "../back-button";
 import {
@@ -16,7 +15,6 @@ export function AfterMatchStep() {
   const dispatch = React.useContext(RefereeHelperDispatchContext);
 
   const [isFinished, setIsFinished] = React.useState(false);
-  const router = useRouter();
 
   if (
     !state.matchState ||
@@ -57,7 +55,7 @@ ${state.selections
 `;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-auto flex-col gap-4">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">Match results</h2>
         <BackButton />
@@ -106,7 +104,6 @@ ${state.selections
             className="disabled:bg-disabled bg-accent rounded p-2 text-white hover:cursor-pointer disabled:cursor-default"
             onClick={() => {
               dispatch({ type: "RESET" });
-              router.refresh();
             }}
           >
             Reset referee helper
