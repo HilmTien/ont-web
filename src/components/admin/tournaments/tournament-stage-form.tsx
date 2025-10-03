@@ -19,6 +19,7 @@ export function TournamentStageForm({ id }: TournamentStageFormProps) {
       stage_name: "My Stage",
       stage_index: 1,
       stage_type: "pvp",
+      bracket_type: null,
     },
   });
 
@@ -43,6 +44,11 @@ export function TournamentStageForm({ id }: TournamentStageFormProps) {
           setValueAs: (v) => (v === "" ? null : parseInt(v)),
         })}
       />
+      <input
+        {...form.register("bracket_type", {
+          setValueAs: (v) => (v === "" ? null : v),
+        })}
+      ></input>
       <input type="submit" />
     </form>
   );

@@ -53,6 +53,7 @@ export default async function Page({
                 <td>{stage.stage_name}</td>
                 <td>{stage.stage_index}</td>
                 <td>{stage.stage_type}</td>
+                <td>{stage.bracket_type}</td>
               </tr>
             ))}
         </tbody>
