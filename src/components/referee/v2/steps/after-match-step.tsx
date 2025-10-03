@@ -32,13 +32,10 @@ export function AfterMatchStep() {
     state.selectedMatch.team2?.name ?? state.selectedMatch.team2_label ?? "";
 
   const teamPoints = countValues(state.mapWinners);
+  const bestOf = state.selectedStage.best_of ?? Number.POSITIVE_INFINITY;
 
-  const team1Won =
-    teamPoints.red >=
-    Math.ceil((state.selectedStage.best_of ?? Number.POSITIVE_INFINITY) / 2);
-  const team2Won =
-    teamPoints.blue >=
-    Math.ceil((state.selectedStage.best_of ?? Number.POSITIVE_INFINITY) / 2);
+  const team1Won = teamPoints.red >= Math.ceil(bestOf / 2);
+  const team2Won = teamPoints.blue >= Math.ceil(bestOf / 2);
 
   const discordResultText = `**${state.selectedStage.stage_name}:** Match ${state.selectedMatch.tournament_match_id}
 ${team1Won ? "**:first_place: " : ""}:red_square: ${team1Name} | ${teamPoints.red ?? 0}${team1Won ? "**" : ""} - ${team2Won ? "**" : ""}${teamPoints.blue ?? 0} | ${team2Name} :blue_square:${team2Won ? "** :first_place:" : ""}
@@ -52,6 +49,15 @@ ${state.selections
     return `${i === 4 ? "\n" : i === 6 ? "\n" : ""}:${getSelector(i, state.firstPick)}_square: ${selectType === "pick" ? "picket" : "bannet"} **[${selection.map_index}](<https://osu.ppy.sh/b/${selection.beatmaps.osu_id}>)** (${selection.mods})${selectType === "pick" ? `, :${state.mapWinners[selection.id]}_square: vant!` : ""}`;
   })
   .join("\n")}
+
+${
+  state.selections.filter((_, i) => getSelectType(i) === "pick").length ===
+    bestOf - 1 &&
+  Math.abs(teamPoints.red - teamPoints.blue) === 1 &&
+  state.tiebreaker
+    ? `**[TB](<https://osu.ppy.sh/b/${state.tiebreaker.beatmaps.osu_id}>)** (${state.tiebreaker.mods}), :${state.mapWinners[state.tiebreaker.id]}_square: vant!`
+    : ""
+}
 `;
 
   return (
