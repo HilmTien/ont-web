@@ -114,7 +114,7 @@ export function DuringMatchStep() {
         `${team1Won ? `${team1Name} vant!` : team2Won ? `${team2Name} vant!` : arePicksFinished ? `tiebreakeren blir spilt!` : `${getSelector(state.selections.length, state.firstPick) === "red" ? team1Name : team2Name} du har 90 sekunder på å ${getSelectType(state.selections.length) === "pick" ? "picke" : "banne"} et map!`}`;
 
   return (
-    <div className="flex max-w-5xl min-w-4xl flex-col gap-4">
+    <div className="flex max-w-4xl min-w-4xl flex-col gap-4">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">Referee Helper</h2>
         <div className="flex gap-4">
