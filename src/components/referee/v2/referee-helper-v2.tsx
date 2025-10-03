@@ -44,7 +44,7 @@ export function RefereeHelperV2({ stages }: RefereeHelperV2Props) {
   }, [state]);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex lg:justify-center">
       {state.step === 0 && <SetupMatchStep />}
       {state.step === 1 && <SetupLobbyStep />}
       {state.step === 2 && <DuringMatchStep />}
