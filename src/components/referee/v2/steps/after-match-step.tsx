@@ -45,16 +45,20 @@ MP Link: <https://osu.ppy.sh/community/matches/${state.mpId}>
 ${state.selections
   .map((selection, i) => {
     const selectType = getSelectType(i);
-
-    return `${i === 4 ? "\n" : i === 6 ? "\n" : ""}:${getSelector(i, state.firstPick)}_square: ${selectType === "pick" ? "picket" : "bannet"} **[${selection.map_index}](<https://osu.ppy.sh/b/${selection.beatmaps.osu_id}>)** (${selection.mods})${selectType === "pick" ? `, :${state.mapWinners[selection.id]}_square: vant!` : ""}`;
+    const mapWinner =
+      state.mapWinners[selection.id] === "tie"
+        ? "white_large"
+        : state.mapWinners[selection.id];
+    const result =
+      state.mapWinners[selection.id] === "tie" ? "uavgjort" : "vant";
+    return `${i === 4 ? "\n" : i === 6 ? "\n" : ""}:${getSelector(i, state.firstPick)}_square: ${selectType === "pick" ? "picket" : "bannet"} **[${selection.map_index}](<https://osu.ppy.sh/b/${selection.beatmaps.osu_id}>)** (${selection.mods})${selectType === "pick" ? `, :${mapWinner}_square: ${result}!` : ""}`;
   })
   .join("\n")}
 
 ${
-  state.selections.filter((_, i) => getSelectType(i) === "pick").length ===
-    bestOf - 1 &&
   Math.abs(teamPoints.red - teamPoints.blue) === 1 &&
-  state.tiebreaker
+  state.tiebreaker &&
+  state.mapWinners[state.tiebreaker.id]
     ? `**[TB](<https://osu.ppy.sh/b/${state.tiebreaker.beatmaps.osu_id}>)** (${state.tiebreaker.mods}), :${state.mapWinners[state.tiebreaker.id]}_square: vant!`
     : ""
 }
