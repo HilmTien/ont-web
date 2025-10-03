@@ -75,14 +75,6 @@ export function DuringMatchStep() {
     teamPoints.blue >=
     Math.ceil((state.selectedStage.best_of ?? Number.POSITIVE_INFINITY) / 2);
 
-  const onMapSelect = (
-    map: PublicStagesData[number]["mappool_maps"][number],
-  ) => {
-    if (team1Won || team2Won || isPointPickMismatched) return;
-
-    dispatch({ type: "PUSH_SELECTION", selection: map });
-  };
-
   const currentPick =
     state.selections.length < 7
       ? state.selections.at(Math.min(3, state.selections.length - 1))
@@ -96,10 +88,6 @@ export function DuringMatchStep() {
     teamPoints.blue >=
       Math.floor((state.selectedStage.best_of ?? Number.POSITIVE_INFINITY) / 2);
 
-  const onWin = (winner: "red" | "blue", mapId: number) => {
-    dispatch({ type: "SET_MAP_WINNER", mapId: mapId, winner: winner });
-  };
-
   const isPointPickMismatched =
     (teamPoints.red ?? 0) + (teamPoints.blue ?? 0) !==
     (state.selections.length > 4
@@ -112,6 +100,18 @@ export function DuringMatchStep() {
       : `${team1Name} | ${teamPoints.red ?? 0} - ${teamPoints.blue ?? 0} | ${team2Name} // ` +
         `${state.selectedStage.best_of ? `Best of ${state.selectedStage.best_of}, ` : ""}` +
         `${team1Won ? `${team1Name} vant!` : team2Won ? `${team2Name} vant!` : arePicksFinished ? `tiebreakeren blir spilt!` : `${getSelector(state.selections.length, state.firstPick) === "red" ? team1Name : team2Name} du har 90 sekunder på å ${getSelectType(state.selections.length) === "pick" ? "picke" : "banne"} et map!`}`;
+
+  const onWin = (winner: "red" | "blue", mapId: number) => {
+    dispatch({ type: "SET_MAP_WINNER", mapId: mapId, winner: winner });
+  };
+
+  const onMapSelect = (
+    map: PublicStagesData[number]["mappool_maps"][number],
+  ) => {
+    if (team1Won || team2Won || isPointPickMismatched) return;
+
+    dispatch({ type: "PUSH_SELECTION", selection: map });
+  };
 
   return (
     <div className="flex max-w-4xl min-w-4xl flex-col gap-4">
