@@ -68,14 +68,20 @@ export function SetupMatchStep() {
             className="rounded border p-2"
           >
             <option value={""}>-</option>
-            {state.selectedStage.matches.map((match) => {
-              return (
-                <option
-                  key={match.id}
-                  value={match.id}
-                >{`(${match.tournament_match_id}) ${match.team1?.name || match.team1_label} vs ${match.team2?.name || match.team2_label}`}</option>
-              );
-            })}
+            {state.selectedStage.matches
+              .toSorted(
+                (a, b) =>
+                  new Date(a.match_time).getTime() -
+                  new Date(b.match_time).getTime(),
+              )
+              .map((match) => {
+                return (
+                  <option
+                    key={match.id}
+                    value={match.id}
+                  >{`(${match.tournament_match_id}) ${match.team1?.name || match.team1_label} vs ${match.team2?.name || match.team2_label}`}</option>
+                );
+              })}
           </select>
         </label>
       )}
