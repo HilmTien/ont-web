@@ -112,7 +112,8 @@ export function DuringMatchStep() {
   const onMapSelect = (
     map: PublicStagesData[number]["mappool_maps"][number],
   ) => {
-    if (team1Won || team2Won || isPointPickMismatched) return;
+    if (team1Won || team2Won || isPointPickMismatched || arePicksFinished)
+      return;
 
     dispatch({ type: "PUSH_SELECTION", selection: map });
   };
