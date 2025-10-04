@@ -112,8 +112,27 @@ export function MatchCard({ match }: MatchCardProps) {
               {player1 && <span>#{player1.rank}</span>}
             </p>
           </div>
-          <div className="mx-3 flex items-center justify-center text-2xl font-bold xl:text-3xl 2xl:text-5xl">
-            <p>
+          <div className="mx-3 flex flex-col items-center justify-center">
+            {dateObj.getTime() - new Date().getTime() < 0 &&
+            !match.team1_score &&
+            !match.team2_score ? (
+              match.stream_link ? (
+                <Link
+                  className="bg-red rounded-md px-2 py-1 text-xs font-semibold 2xl:text-sm"
+                  href={match.stream_link}
+                  target="_blank"
+                >
+                  DIREKTE
+                </Link>
+              ) : (
+                <p className="2xl:text- text-xs font-semibold 2xl:text-sm">
+                  PÅGÅR
+                </p>
+              )
+            ) : (
+              ""
+            )}
+            <p className="text-2xl font-bold xl:text-3xl 2xl:text-5xl">
               {match.team1_score
                 ? match.team1_score === -1
                   ? "FF"

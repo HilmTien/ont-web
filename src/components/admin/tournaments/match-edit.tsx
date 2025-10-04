@@ -145,6 +145,7 @@ export function EditMatchForm({ staff, teams, stages, match }: MatchFormProps) {
         })}
       />
       <input {...form.register("vod_link")} />
+      <input {...form.register("stream_link")} />
       <input type="submit" />
     </form>
   );

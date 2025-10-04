@@ -204,6 +204,7 @@ export type Database = {
           mp_id: number | null
           referee_id: number | null
           stage_id: number
+          stream_link: string | null
           streamer_id: number | null
           team1_id: number | null
           team1_label: string | null
@@ -223,6 +224,7 @@ export type Database = {
           mp_id?: number | null
           referee_id?: number | null
           stage_id: number
+          stream_link?: string | null
           streamer_id?: number | null
           team1_id?: number | null
           team1_label?: string | null
@@ -242,6 +244,7 @@ export type Database = {
           mp_id?: number | null
           referee_id?: number | null
           stage_id?: number
+          stream_link?: string | null
           streamer_id?: number | null
           team1_id?: number | null
           team1_label?: string | null

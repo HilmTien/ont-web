@@ -1,1 +1,0 @@
-alter table "public"."matches" add column "vod_link" text;
