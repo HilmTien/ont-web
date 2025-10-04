@@ -2,6 +2,7 @@ import { StageMatchesQueryData } from "@/lib/schedule/query";
 import Image from "next/image";
 import Link from "next/link";
 import { Link as LinkIcon } from "../icons/link";
+import VideoCameraIcon from "../icons/video-camera";
 
 interface MatchCardProps {
   match: StageMatchesQueryData["matches"][number];
@@ -74,17 +75,25 @@ export function MatchCard({ match }: MatchCardProps) {
           <p>{match.tournament_match_id}</p>
           <p>{`${date} ${month} (${day})`}</p>
           <p className="text-sm lg:text-2xl xl:text-4xl">{time}</p>
-          {match.mp_id ? (
-            <Link
-              target="_blank"
-              className="ml-auto"
-              href={`https://osu.ppy.sh/community/matches/${match.mp_id}`}
-            >
-              <LinkIcon className="size-6 min-w-6 stroke-white lg:hidden" />
-            </Link>
-          ) : (
-            <LinkIcon className="stroke-disabled ml-auto size-6 min-w-6 lg:hidden" />
-          )}
+          <div className="ml-auto flex gap-2">
+            {match.mp_id ? (
+              <Link
+                target="_blank"
+                href={`https://osu.ppy.sh/community/matches/${match.mp_id}`}
+              >
+                <LinkIcon className="size-6 min-w-6 stroke-white lg:hidden" />
+              </Link>
+            ) : (
+              <LinkIcon className="stroke-disabled size-6 min-w-6 lg:hidden" />
+            )}
+            {match.vod_link ? (
+              <Link target="_blank" href={match.vod_link}>
+                <VideoCameraIcon className="size-6 min-w-6 stroke-white lg:hidden" />
+              </Link>
+            ) : (
+              <VideoCameraIcon className="stroke-disabled size-6 min-w-6 lg:hidden"></VideoCameraIcon>
+            )}
+          </div>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center md:flex-1">
           <div className="flex flex-1 items-center justify-start gap-2 sm:gap-5">
@@ -155,6 +164,13 @@ export function MatchCard({ match }: MatchCardProps) {
           </Link>
         ) : (
           <LinkIcon className="stroke-disabled hidden size-6 min-w-6 lg:block" />
+        )}
+        {match.vod_link ? (
+          <Link target="_blank" className="" href={match.vod_link}>
+            <VideoCameraIcon className="hidden size-6 min-w-6 stroke-white lg:block" />
+          </Link>
+        ) : (
+          <VideoCameraIcon className="stroke-disabled hidden size-6 min-w-6 lg:block"></VideoCameraIcon>
         )}
       </div>
     </div>

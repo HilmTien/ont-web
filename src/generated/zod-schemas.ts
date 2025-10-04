@@ -7,6 +7,11 @@
 import { z } from "zod";
 import { type Json } from "./database.types";
 
+export const publicBracketTypesSchema = z.union([
+  z.literal("swiss"),
+  z.literal("singleelim"),
+]);
+
 export const publicStageTypesSchema = z.union([
   z.literal("qualifiers"),
   z.literal("pvp"),
@@ -18,7 +23,7 @@ export const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
       z.string(),
       z.number(),
       z.boolean(),
-      z.record(z.union([jsonSchema, z.undefined()])),
+      z.record(z.string(), z.union([jsonSchema, z.undefined()])),
       z.array(jsonSchema),
     ])
     .nullable(),
@@ -233,6 +238,7 @@ export const publicMatchesRowSchema = z.object({
   team2_score: z.number().nullable(),
   tournament_id: z.number(),
   tournament_match_id: z.string(),
+  vod_link: z.string().nullable(),
 });
 
 export const publicMatchesInsertSchema = z.object({
@@ -252,6 +258,7 @@ export const publicMatchesInsertSchema = z.object({
   team2_score: z.number().optional().nullable(),
   tournament_id: z.number(),
   tournament_match_id: z.string(),
+  vod_link: z.string().optional().nullable(),
 });
 
 export const publicMatchesUpdateSchema = z.object({
@@ -271,6 +278,7 @@ export const publicMatchesUpdateSchema = z.object({
   team2_score: z.number().optional().nullable(),
   tournament_id: z.number().optional(),
   tournament_match_id: z.string().optional(),
+  vod_link: z.string().optional().nullable(),
 });
 
 export const publicMatchesRelationshipsSchema = z.tuple([
@@ -656,6 +664,7 @@ export const publicTeamsRelationshipsSchema = z.tuple([
 
 export const publicTournamentStagesRowSchema = z.object({
   best_of: z.number().nullable(),
+  bracket_type: publicBracketTypesSchema.nullable(),
   id: z.number(),
   is_public: z.boolean(),
   stage_index: z.number(),
@@ -666,6 +675,7 @@ export const publicTournamentStagesRowSchema = z.object({
 
 export const publicTournamentStagesInsertSchema = z.object({
   best_of: z.number().optional().nullable(),
+  bracket_type: publicBracketTypesSchema.optional().nullable(),
   id: z.number().optional(),
   is_public: z.boolean().optional(),
   stage_index: z.number(),
@@ -676,6 +686,7 @@ export const publicTournamentStagesInsertSchema = z.object({
 
 export const publicTournamentStagesUpdateSchema = z.object({
   best_of: z.number().optional().nullable(),
+  bracket_type: publicBracketTypesSchema.optional().nullable(),
   id: z.number().optional(),
   is_public: z.boolean().optional(),
   stage_index: z.number().optional(),
