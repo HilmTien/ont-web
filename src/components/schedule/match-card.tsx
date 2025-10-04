@@ -114,7 +114,17 @@ export function MatchCard({ match }: MatchCardProps) {
           </div>
           <div className="mx-3 flex items-center justify-center text-2xl font-bold xl:text-3xl 2xl:text-5xl">
             <p>
-              {match.team1_score || 0} - {match.team2_score || 0}
+              {match.team1_score
+                ? match.team1_score === -1
+                  ? "FF"
+                  : match.team1_score
+                : 0}{" "}
+              -{" "}
+              {match.team2_score
+                ? match.team2_score === -1
+                  ? "FF"
+                  : match.team2_score
+                : 0}
             </p>
           </div>
           <div className="flex flex-1 items-center justify-end gap-2 sm:gap-5">
