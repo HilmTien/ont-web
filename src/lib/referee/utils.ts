@@ -1,3 +1,5 @@
+import { countValues } from "../utils";
+
 export function getSelector(
   index: number,
   firstPicker: "red" | "blue",
@@ -36,3 +38,13 @@ export const getModCommand = (mods: string | null) => {
         ? "NF HD HR"
         : `NF ${mods}`;
 };
+
+export function getPoints(mapWinners: Record<number, "red" | "blue" | "tie">) {
+  const values = countValues(mapWinners);
+
+  return {
+    red: (values.red ?? 0) + (values.tie ?? 0),
+    blue: (values.blue ?? 0) + (values.tie ?? 0),
+    ties: values.tie ?? 0,
+  };
+}

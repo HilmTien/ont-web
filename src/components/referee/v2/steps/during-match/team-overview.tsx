@@ -1,5 +1,4 @@
-import { getSelector, getSelectType } from "@/lib/referee/utils";
-import { countValues } from "@/lib/utils";
+import { getPoints, getSelector, getSelectType } from "@/lib/referee/utils";
 import Image from "next/image";
 import React from "react";
 import {
@@ -21,7 +20,7 @@ export function TeamOverview() {
   const team2Name =
     state.selectedMatch.team2?.name ?? state.selectedMatch.team2_label ?? "";
 
-  const teamPoints = countValues(state.mapWinners);
+  const teamPoints = getPoints(state.mapWinners);
   const totalPoints = (teamPoints.red ?? 0) + (teamPoints.blue ?? 0);
 
   const arePicksFinished =
@@ -42,7 +41,7 @@ export function TeamOverview() {
   const isMatchFinished = team1Won || team2Won;
 
   const isPointPickMismatched =
-    totalPoints !==
+    totalPoints - teamPoints.ties !==
     (state.selections.length > 4
       ? Math.max(state.selections.length - 2, 4)
       : state.selections.length);
@@ -124,7 +123,8 @@ export function TeamOverview() {
               state.selectedStage?.best_of ?? undefined,
             ) === team &&
               !isMatchFinished &&
-              !isPointPickMismatched && (
+              !isPointPickMismatched &&
+              !arePicksFinished && (
                 <div
                   className={`${team === "red" ? "bg-red" : "bg-blue"} flex w-16 items-center justify-center justify-self-end rounded-md px-2 py-1 text-lg font-semibold text-white select-none`}
                 >
@@ -137,7 +137,7 @@ export function TeamOverview() {
       {isPointPickMismatched && !arePicksFinished && (
         <div className="pointer-events-none absolute top-0 left-0 flex h-full w-full items-center justify-center">
           <span className="rounded-md bg-black px-2 py-1 text-lg font-semibold select-none">
-            Points ({totalPoints}) ≠ Picks (
+            Results ({totalPoints - teamPoints.ties}) ≠ Picks (
             {state.selections.length > 4
               ? Math.max(state.selections.length - 2, 4)
               : state.selections.length}

@@ -1,8 +1,12 @@
 import { CommandWithCopy } from "@/components/ui/command-with-copy";
 import { Separator } from "@/components/ui/separator";
 import { PublicStagesData } from "@/lib/referee/query";
-import { getModCommand, getSelector, getSelectType } from "@/lib/referee/utils";
-import { countValues } from "@/lib/utils";
+import {
+  getModCommand,
+  getPoints,
+  getSelector,
+  getSelectType,
+} from "@/lib/referee/utils";
 import React from "react";
 import { BackButton } from "../../back-button";
 import {
@@ -66,7 +70,7 @@ export function DuringMatchStep() {
     map.map_index.includes("TB"),
   );
 
-  const teamPoints = countValues(state.mapWinners);
+  const teamPoints = getPoints(state.mapWinners);
 
   const team1Won =
     teamPoints.red >=
@@ -74,14 +78,6 @@ export function DuringMatchStep() {
   const team2Won =
     teamPoints.blue >=
     Math.ceil((state.selectedStage.best_of ?? Number.POSITIVE_INFINITY) / 2);
-
-  const onMapSelect = (
-    map: PublicStagesData[number]["mappool_maps"][number],
-  ) => {
-    if (team1Won || team2Won) return;
-
-    dispatch({ type: "PUSH_SELECTION", selection: map });
-  };
 
   const currentPick =
     state.selections.length < 7
@@ -96,12 +92,8 @@ export function DuringMatchStep() {
     teamPoints.blue >=
       Math.floor((state.selectedStage.best_of ?? Number.POSITIVE_INFINITY) / 2);
 
-  const onWin = (winner: "red" | "blue", mapId: number) => {
-    dispatch({ type: "SET_MAP_WINNER", mapId: mapId, winner: winner });
-  };
-
   const isPointPickMismatched =
-    (teamPoints.red ?? 0) + (teamPoints.blue ?? 0) !==
+    (teamPoints.red ?? 0) + (teamPoints.blue ?? 0) - teamPoints.ties !==
     (state.selections.length > 4
       ? Math.max(state.selections.length - 2, 4)
       : state.selections.length);
@@ -113,8 +105,21 @@ export function DuringMatchStep() {
         `${state.selectedStage.best_of ? `Best of ${state.selectedStage.best_of}, ` : ""}` +
         `${team1Won ? `${team1Name} vant!` : team2Won ? `${team2Name} vant!` : arePicksFinished ? `tiebreakeren blir spilt!` : `${getSelector(state.selections.length, state.firstPick) === "red" ? team1Name : team2Name} du har 90 sekunder på å ${getSelectType(state.selections.length) === "pick" ? "picke" : "banne"} et map!`}`;
 
+  const onWin = (winner: "red" | "blue" | "tie", mapId: number) => {
+    dispatch({ type: "SET_MAP_WINNER", mapId: mapId, winner: winner });
+  };
+
+  const onMapSelect = (
+    map: PublicStagesData[number]["mappool_maps"][number],
+  ) => {
+    if (team1Won || team2Won || isPointPickMismatched || arePicksFinished)
+      return;
+
+    dispatch({ type: "PUSH_SELECTION", selection: map });
+  };
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex max-w-4xl min-w-4xl flex-col gap-4">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">Referee Helper</h2>
         <div className="flex gap-4">

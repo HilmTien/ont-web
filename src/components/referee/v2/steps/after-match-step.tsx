@@ -1,9 +1,7 @@
 import { updateResult } from "@/actions/referee";
 import { CommandWithCopy } from "@/components/ui/command-with-copy";
 import { isActionError } from "@/lib/error";
-import { getSelector, getSelectType } from "@/lib/referee/utils";
-import { countValues } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { getPoints, getSelector, getSelectType } from "@/lib/referee/utils";
 import React from "react";
 import { BackButton } from "../back-button";
 import {
@@ -16,7 +14,6 @@ export function AfterMatchStep() {
   const dispatch = React.useContext(RefereeHelperDispatchContext);
 
   const [isFinished, setIsFinished] = React.useState(false);
-  const router = useRouter();
 
   if (
     !state.matchState ||
@@ -33,16 +30,14 @@ export function AfterMatchStep() {
   const team2Name =
     state.selectedMatch.team2?.name ?? state.selectedMatch.team2_label ?? "";
 
-  const teamPoints = countValues(state.mapWinners);
+  const teamPoints = getPoints(state.mapWinners);
+  const bestOf = state.selectedStage.best_of ?? Number.POSITIVE_INFINITY;
 
-  const team1Won =
-    teamPoints.red >=
-    Math.ceil((state.selectedStage.best_of ?? Number.POSITIVE_INFINITY) / 2);
-  const team2Won =
-    teamPoints.blue >=
-    Math.ceil((state.selectedStage.best_of ?? Number.POSITIVE_INFINITY) / 2);
+  const team1Won = teamPoints.red >= Math.ceil(bestOf / 2);
+  const team2Won = teamPoints.blue >= Math.ceil(bestOf / 2);
 
-  const discordResultText = `**${state.selectedStage.stage_name}:** Match ${state.selectedMatch.tournament_match_id}
+  const discordResultText =
+    `**${state.selectedStage.stage_name}:** Match ${state.selectedMatch.tournament_match_id}
 ${team1Won ? "**:first_place: " : ""}:red_square: ${team1Name} | ${teamPoints.red ?? 0}${team1Won ? "**" : ""} - ${team2Won ? "**" : ""}${teamPoints.blue ?? 0} | ${team2Name} :blue_square:${team2Won ? "** :first_place:" : ""}
 MP Link: <https://osu.ppy.sh/community/matches/${state.mpId}>
 
@@ -50,14 +45,27 @@ MP Link: <https://osu.ppy.sh/community/matches/${state.mpId}>
 ${state.selections
   .map((selection, i) => {
     const selectType = getSelectType(i);
-
-    return `${i === 4 ? "\n" : i === 6 ? "\n" : ""}:${getSelector(i, state.firstPick)}_square: ${selectType === "pick" ? "picket" : "bannet"} **[${selection.map_index}](<https://osu.ppy.sh/b/${selection.beatmaps.osu_id}>)** (${selection.mods})${selectType === "pick" ? `, :${state.mapWinners[selection.id]}_square: vant!` : ""}`;
+    const mapWinner =
+      state.mapWinners[selection.id] === "tie"
+        ? "white_large"
+        : state.mapWinners[selection.id];
+    const result =
+      state.mapWinners[selection.id] === "tie" ? "uavgjort" : "vant";
+    return `${i === 4 ? "\n" : i === 6 ? "\n" : ""}:${getSelector(i, state.firstPick)}_square: ${selectType === "pick" ? "picket" : "bannet"} **[${selection.map_index}](<https://osu.ppy.sh/b/${selection.beatmaps.osu_id}>)** (${selection.mods})${selectType === "pick" ? `, :${mapWinner}_square: ${result}!` : ""}`;
   })
   .join("\n")}
-`;
+
+${
+  Math.abs(teamPoints.red - teamPoints.blue) === 1 &&
+  state.tiebreaker &&
+  state.mapWinners[state.tiebreaker.id]
+    ? `**[TB](<https://osu.ppy.sh/b/${state.tiebreaker.beatmaps.osu_id}>)** (${state.tiebreaker.mods}), :${state.mapWinners[state.tiebreaker.id]}_square: vant!`
+    : ""
+}
+`.trim();
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-auto flex-col gap-4">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">Match results</h2>
         <BackButton />
@@ -106,7 +114,6 @@ ${state.selections
             className="disabled:bg-disabled bg-accent rounded p-2 text-white hover:cursor-pointer disabled:cursor-default"
             onClick={() => {
               dispatch({ type: "RESET" });
-              router.refresh();
             }}
           >
             Reset referee helper
