@@ -1,6 +1,6 @@
 import { signIn } from "@/auth";
 import { createServerClient } from "@/lib/server";
-import { formatSecondsToHHMM } from "@/lib/utils";
+import { formatSecondsToTime } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import Discord from "../icons/discord";
@@ -57,15 +57,14 @@ export default async function LandingPageApp() {
     ?.filter(
       (match) =>
         new Date(match.match_time).getTime() - new Date().getTime() > 0 &&
-        new Date(match.match_time).getTime() - new Date().getTime() <
-          43200000 &&
         !match.team1_score &&
         !match.team2_score,
     )
     .sort(
       (a, b) =>
         new Date(a.match_time).getTime() - new Date(b.match_time).getTime(),
-    );
+    )
+    .slice(0, 4);
 
   // let canRegister: boolean;
 
@@ -124,7 +123,7 @@ export default async function LandingPageApp() {
               {ongoingMatches.map((match) => (
                 <div
                   key={match.tournament_match_id}
-                  className="bg-navbar flex flex-col justify-between gap-1 rounded-md p-2 sm:min-w-96"
+                  className="bg-table flex flex-col justify-between gap-1 rounded-md p-2 sm:min-w-96"
                 >
                   <div className="flex flex-col">
                     <div className="flex gap-2">
@@ -154,11 +153,11 @@ export default async function LandingPageApp() {
                     </div>
                   </div>
                   <div className="flex flex-col justify-between sm:flex-row">
-                    {match.team1 ? (
+                    {
                       <div className="flex items-center justify-center gap-1">
                         <Image
                           src={
-                            match.team1.team_players[0]
+                            match.team1
                               ? `https://a.ppy.sh/${match.team1.team_players[0].users.osu_id}`
                               : "/profile-pics/avatar-guest.png"
                           }
@@ -168,17 +167,19 @@ export default async function LandingPageApp() {
                           unoptimized
                           className="w-10 rounded-md"
                         />
-                        <p className="font-semibold">{match.team1.name}</p>
+                        <p className="font-semibold">
+                          {match.team1?.name || match.team1_label}
+                        </p>
                       </div>
-                    ) : (
-                      ""
-                    )}
-                    {match.team2 ? (
+                    }
+                    {
                       <div className="flex items-center justify-center gap-1">
-                        <p className="font-semibold">{match.team2.name}</p>
+                        <p className="font-semibold">
+                          {match.team2?.name || match.team2_label}
+                        </p>
                         <Image
                           src={
-                            match.team2.team_players[0]
+                            match.team2
                               ? `https://a.ppy.sh/${match.team2.team_players[0].users.osu_id}`
                               : "/profile-pics/avatar-guest.png"
                           }
@@ -189,23 +190,21 @@ export default async function LandingPageApp() {
                           className="w-10 rounded-md"
                         />
                       </div>
-                    ) : (
-                      ""
-                    )}
+                    }
                   </div>
                 </div>
               ))}
             </div>
           </div>
         ) : (
-          <div className="border-accent mt-6 aspect-video w-full max-w-full flex-1 overflow-hidden rounded-md border-4 xl:mt-0 xl:max-w-[44%]">
-            <iframe
-              src="https://www.youtube.com/embed/MSeZTBKf5cI?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0"
-              title="YouTube video player"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-              className="h-full w-full"
-            ></iframe>
+          <div className="border-accent mt-6 aspect-video w-full max-w-full flex-1 overflow-hidden rounded-md border-2 xl:mt-0 xl:max-w-[44%]">
+            <Image
+              src={"/landing-page/swiss1bracket.png"}
+              alt="Swiss 1 Bracket"
+              width={1920}
+              height={1080}
+              className=""
+            />
           </div>
         )}
       </section>
@@ -275,9 +274,9 @@ export default async function LandingPageApp() {
                       key={match.tournament_match_id}
                       className="flex w-full justify-between gap-2"
                     >
-                      <div className="flex flex-col text-nowrap sm:flex-row sm:gap-2">
+                      <div className="flex flex-col items-start text-nowrap sm:flex-row sm:gap-2">
                         <p>{match.tournament_match_id}</p>{" "}
-                        <p>
+                        <p className="hidden sm:flex">
                           {new Date(match.match_time).toLocaleTimeString(
                             "no-NO",
                             {
@@ -288,9 +287,16 @@ export default async function LandingPageApp() {
                             },
                           )}
                         </p>
+                        <p className="flex items-center sm:hidden">
+                          {formatSecondsToTime(
+                            (new Date(match.match_time).getTime() -
+                              new Date().getTime()) /
+                              1000,
+                          )}
+                        </p>
                       </div>
                       <div className="flex gap-5">
-                        <div className="flex flex-col items-center gap-2 sm:min-w-80 sm:flex-row sm:justify-between">
+                        <div className="flex flex-col items-end gap-2 sm:min-w-80 sm:flex-row sm:justify-between">
                           {
                             <div className="flex items-center justify-center gap-1">
                               <Image
@@ -305,14 +311,14 @@ export default async function LandingPageApp() {
                                 unoptimized
                                 className="w-5 rounded-md sm:w-8"
                               />
-                              <p className="text-sm font-semibold sm:text-base">
+                              <p className="truncate text-sm font-semibold sm:text-base">
                                 {match.team1?.name || match.team1_label}
                               </p>
                             </div>
                           }{" "}
                           {
                             <div className="flex items-center justify-center gap-1">
-                              <p className="text-sm font-semibold sm:text-base">
+                              <p className="truncate text-sm font-semibold sm:text-base">
                                 {match.team2?.name || match.team2_label}
                               </p>
                               <Image
@@ -330,8 +336,8 @@ export default async function LandingPageApp() {
                             </div>
                           }
                         </div>
-                        <p className="flex items-center">
-                          {formatSecondsToHHMM(
+                        <p className="hidden w-16 items-center justify-center sm:flex">
+                          {formatSecondsToTime(
                             (new Date(match.match_time).getTime() -
                               new Date().getTime()) /
                               1000,
