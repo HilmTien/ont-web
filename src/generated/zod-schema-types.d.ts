@@ -6,9 +6,6 @@
 
 import { z } from "zod";
 import * as generated from "./zod-schemas";
-export type PublicBracketTypes = z.infer<
-  typeof generated.publicBracketTypesSchema
->;
 export type PublicStageTypes = z.infer<typeof generated.publicStageTypesSchema>;
 export type Json = z.infer<typeof generated.jsonSchema>;
 export type PublicAdminsRow = z.infer<typeof generated.publicAdminsRowSchema>;

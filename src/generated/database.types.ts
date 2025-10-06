@@ -624,7 +624,6 @@ export type Database = {
       tournament_stages: {
         Row: {
           best_of: number | null
-          bracket_type: Database["public"]["Enums"]["bracket_types"] | null
           id: number
           is_public: boolean
           stage_index: number
@@ -634,7 +633,6 @@ export type Database = {
         }
         Insert: {
           best_of?: number | null
-          bracket_type?: Database["public"]["Enums"]["bracket_types"] | null
           id?: number
           is_public?: boolean
           stage_index: number
@@ -644,7 +642,6 @@ export type Database = {
         }
         Update: {
           best_of?: number | null
-          bracket_type?: Database["public"]["Enums"]["bracket_types"] | null
           id?: number
           is_public?: boolean
           stage_index?: number
@@ -739,7 +736,6 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      bracket_types: "swiss" | "singleelim"
       stage_types: "qualifiers" | "pvp"
     }
     CompositeTypes: {
@@ -868,7 +864,6 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      bracket_types: ["swiss", "singleelim"],
       stage_types: ["qualifiers", "pvp"],
     },
   },

@@ -7,11 +7,6 @@
 import { z } from "zod";
 import { type Json } from "./database.types";
 
-export const publicBracketTypesSchema = z.union([
-  z.literal("swiss"),
-  z.literal("singleelim"),
-]);
-
 export const publicStageTypesSchema = z.union([
   z.literal("qualifiers"),
   z.literal("pvp"),
@@ -667,7 +662,6 @@ export const publicTeamsRelationshipsSchema = z.tuple([
 
 export const publicTournamentStagesRowSchema = z.object({
   best_of: z.number().nullable(),
-  bracket_type: publicBracketTypesSchema.nullable(),
   id: z.number(),
   is_public: z.boolean(),
   stage_index: z.number(),
@@ -678,7 +672,6 @@ export const publicTournamentStagesRowSchema = z.object({
 
 export const publicTournamentStagesInsertSchema = z.object({
   best_of: z.number().optional().nullable(),
-  bracket_type: publicBracketTypesSchema.optional().nullable(),
   id: z.number().optional(),
   is_public: z.boolean().optional(),
   stage_index: z.number(),
@@ -689,7 +682,6 @@ export const publicTournamentStagesInsertSchema = z.object({
 
 export const publicTournamentStagesUpdateSchema = z.object({
   best_of: z.number().optional().nullable(),
-  bracket_type: publicBracketTypesSchema.optional().nullable(),
   id: z.number().optional(),
   is_public: z.boolean().optional(),
   stage_index: z.number().optional(),
