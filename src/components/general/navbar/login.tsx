@@ -129,7 +129,7 @@ export default function LogIn({ navBg, isMobile }: LogInProps) {
               </button>
             }
           >
-            <p className="p-2">Klikk for å logge inn</p>
+            <p>Klikk for å logge inn</p>
           </ToolTip>
         )
       ) : (

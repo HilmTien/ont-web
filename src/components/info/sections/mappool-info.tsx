@@ -88,8 +88,8 @@ export function MappoolInfo() {
           <strong>3 NM / 1 HD / 1 HR / 1 DT / 1 EZ / 1 FM</strong>
         </li>
         <li>
-          Gruppespillet er BO7, Runoff rundene og Swiss (uavgjørende) er BO9,
-          Swiss (avgjørende) er BO11, og Sluttspillet er BO13.
+          Gruppespillet er BO7, Runoff rundene og Swiss uke 1 er BO9, Swiss uke
+          2 og 3 er BO11, og Sluttspillet er BO13.
         </li>
         <li>
           Star Rating for de forskjellige ukene tilpasses etter spillerene som
@@ -99,12 +99,12 @@ export function MappoolInfo() {
           Foreløpige tallverdier for SR til A1 er følgende:{" "}
           <ul className="list-disc pl-4">
             <li>Gruppespill: 6.0*</li>
-            <li>Runoff runde 1: 6.3*</li>
-            <li>Runoff runde 2: 6.6*</li>
-            <li>Swiss Uke 1: 6.9*</li>
-            <li>Swiss Uke 2: 7.2*</li>
-            <li>Swiss Uke 3: 7.4*</li>
-            <li>Sluttspill: 7.6*</li>
+            <li>Runoff runde 1: 6.33*</li>
+            <li>Runoff runde 2: 6.67*</li>
+            <li>Swiss Uke 1: 7*</li>
+            <li>Swiss Uke 2: 7.33*</li>
+            <li>Swiss Uke 3: 7.67*</li>
+            <li>Sluttspill: 8*</li>
           </ul>
         </li>
       </ul>
