@@ -11,7 +11,7 @@ export default function ToolTip({ trigger, children }: DropdownProps) {
       <Tooltip.Trigger asChild>{trigger}</Tooltip.Trigger>
       <Tooltip.Portal>
         <Tooltip.Content
-          className="bg-content shadow-container z-50 rounded-md px-2"
+          className="bg-content shadow-container z-50 rounded-md px-3 py-2"
           sideOffset={5}
           side="bottom"
         >

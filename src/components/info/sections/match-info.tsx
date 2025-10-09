@@ -99,14 +99,14 @@ export function MatchInfo() {
           ,{" "}
           <strong>
             <span className="text-accent">
-              5 kart i runoff-bracketsa og swiss
+              5 kart i runoff-bracketsa og swiss uke 1
             </span>
           </strong>
           , eller{" "}
           <strong>
-            <span className="text-accent">6 kart i swiss</span>
+            <span className="text-accent">6 kart i swiss uke 2 og 3</span>
           </strong>{" "}
-          dersom kampen er en avgjørende kamp (dvs. 2-x / x-2 kamper) og{" "}
+          og{" "}
           <strong>
             <span className="text-accent">7 kart i sluttspillet</span>
           </strong>
