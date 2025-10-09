@@ -142,10 +142,11 @@ export default async function LandingPageApp() {
                       {match.stream_link ? (
                         <Link
                           href={match.stream_link}
-                          className="ml-auto hover:font-semibold"
+                          className="hover:text-acc ml-auto flex w-20 items-center gap-1 font-semibold hover:font-bold"
                           target="_blank"
                         >
-                          Se direkte
+                          <div className="bg-red h-2.5 w-2.5 rounded-4xl" />
+                          DIREKTE
                         </Link>
                       ) : (
                         ""
@@ -267,12 +268,12 @@ export default async function LandingPageApp() {
             <p className="border-accent mb-2 border-b-2 pb-2 text-xl font-semibold sm:text-2xl">
               KOMMENDE MATCHES
             </p>
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-2">
               {scheduledMatches
                 ? scheduledMatches.map((match) => (
                     <div
                       key={match.tournament_match_id}
-                      className="flex w-full justify-between gap-2"
+                      className="bg-table flex w-full justify-between gap-2 rounded-md p-1.5"
                     >
                       <div className="flex flex-col items-start text-nowrap sm:flex-row sm:gap-2">
                         <p>{match.tournament_match_id}</p>{" "}
