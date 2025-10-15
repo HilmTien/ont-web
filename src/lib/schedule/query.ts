@@ -98,6 +98,8 @@ export async function getStageMatches(
         team1_label,
         team2_label,
         mp_id,
+        vod_link,
+        stream_link,
         tournament_match_id,
 
         team1:teams!team1_id(

@@ -204,6 +204,7 @@ export type Database = {
           mp_id: number | null
           referee_id: number | null
           stage_id: number
+          stream_link: string | null
           streamer_id: number | null
           team1_id: number | null
           team1_label: string | null
@@ -213,6 +214,7 @@ export type Database = {
           team2_score: number | null
           tournament_id: number
           tournament_match_id: string
+          vod_link: string | null
         }
         Insert: {
           commentator1_id?: number | null
@@ -222,6 +224,7 @@ export type Database = {
           mp_id?: number | null
           referee_id?: number | null
           stage_id: number
+          stream_link?: string | null
           streamer_id?: number | null
           team1_id?: number | null
           team1_label?: string | null
@@ -231,6 +234,7 @@ export type Database = {
           team2_score?: number | null
           tournament_id: number
           tournament_match_id: string
+          vod_link?: string | null
         }
         Update: {
           commentator1_id?: number | null
@@ -240,6 +244,7 @@ export type Database = {
           mp_id?: number | null
           referee_id?: number | null
           stage_id?: number
+          stream_link?: string | null
           streamer_id?: number | null
           team1_id?: number | null
           team1_label?: string | null
@@ -249,6 +254,7 @@ export type Database = {
           team2_score?: number | null
           tournament_id?: number
           tournament_match_id?: string
+          vod_link?: string | null
         }
         Relationships: [
           {
