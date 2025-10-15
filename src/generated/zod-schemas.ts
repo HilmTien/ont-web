@@ -18,7 +18,7 @@ export const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
       z.string(),
       z.number(),
       z.boolean(),
-      z.record(z.union([jsonSchema, z.undefined()])),
+      z.record(z.string(), z.union([jsonSchema, z.undefined()])),
       z.array(jsonSchema),
     ])
     .nullable(),
@@ -224,6 +224,7 @@ export const publicMatchesRowSchema = z.object({
   mp_id: z.number().nullable(),
   referee_id: z.number().nullable(),
   stage_id: z.number(),
+  stream_link: z.string().nullable(),
   streamer_id: z.number().nullable(),
   team1_id: z.number().nullable(),
   team1_label: z.string().nullable(),
@@ -233,6 +234,7 @@ export const publicMatchesRowSchema = z.object({
   team2_score: z.number().nullable(),
   tournament_id: z.number(),
   tournament_match_id: z.string(),
+  vod_link: z.string().nullable(),
 });
 
 export const publicMatchesInsertSchema = z.object({
@@ -243,6 +245,7 @@ export const publicMatchesInsertSchema = z.object({
   mp_id: z.number().optional().nullable(),
   referee_id: z.number().optional().nullable(),
   stage_id: z.number(),
+  stream_link: z.string().optional().nullable(),
   streamer_id: z.number().optional().nullable(),
   team1_id: z.number().optional().nullable(),
   team1_label: z.string().optional().nullable(),
@@ -252,6 +255,7 @@ export const publicMatchesInsertSchema = z.object({
   team2_score: z.number().optional().nullable(),
   tournament_id: z.number(),
   tournament_match_id: z.string(),
+  vod_link: z.string().optional().nullable(),
 });
 
 export const publicMatchesUpdateSchema = z.object({
@@ -262,6 +266,7 @@ export const publicMatchesUpdateSchema = z.object({
   mp_id: z.number().optional().nullable(),
   referee_id: z.number().optional().nullable(),
   stage_id: z.number().optional(),
+  stream_link: z.string().optional().nullable(),
   streamer_id: z.number().optional().nullable(),
   team1_id: z.number().optional().nullable(),
   team1_label: z.string().optional().nullable(),
@@ -271,6 +276,7 @@ export const publicMatchesUpdateSchema = z.object({
   team2_score: z.number().optional().nullable(),
   tournament_id: z.number().optional(),
   tournament_match_id: z.string().optional(),
+  vod_link: z.string().optional().nullable(),
 });
 
 export const publicMatchesRelationshipsSchema = z.tuple([

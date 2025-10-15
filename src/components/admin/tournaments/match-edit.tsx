@@ -144,6 +144,8 @@ export function EditMatchForm({ staff, teams, stages, match }: MatchFormProps) {
           setValueAs: (v) => (v === "" ? null : parseInt(v)),
         })}
       />
+      <input {...form.register("vod_link")} />
+      <input {...form.register("stream_link")} />
       <input type="submit" />
     </form>
   );

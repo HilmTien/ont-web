@@ -29,6 +29,24 @@ export function formatSecondsToMMSS(totalSeconds: number) {
   return `${formattedMinutes}:${formattedSeconds}`;
 }
 
+export function formatSecondsToTime(totalSeconds: number) {
+  const days = Math.floor(totalSeconds / (3600 * 24));
+
+  if (days > 0) {
+    const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+    return `${days}d ${hours}h`;
+  }
+
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  }
+
+  return `${minutes}m`;
+}
+
 export function batchArray<T>(arr: T[], size: number): T[][] {
   const result: T[][] = [];
   for (let i = 0; i < arr.length; i += size) {
