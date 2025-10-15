@@ -200,11 +200,10 @@ export default async function LandingPageApp() {
         ) : (
           <div className="border-accent mt-6 aspect-video w-full max-w-full flex-1 overflow-hidden rounded-md border-2 xl:mt-0 xl:max-w-[44%]">
             <Image
-              src={"/landing-page/swiss1bracket.png"}
-              alt="Swiss 1 Bracket"
+              src={"/landing-page/bracket.png"}
+              alt="Bracket"
               width={1920}
               height={1080}
-              className=""
             />
           </div>
         )}
