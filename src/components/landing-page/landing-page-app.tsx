@@ -1,70 +1,21 @@
 import { signIn } from "@/auth";
+import { getLandingPageMatches } from "@/lib/landing-page/query";
 import { createServerClient } from "@/lib/server";
-import { formatSecondsToTime } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import Discord from "../icons/discord";
 import Osu from "../icons/osu";
 import Twitch from "../icons/twitch";
 import Youtube from "../icons/youtube";
+import OngoingMatches from "./ongoing-matches";
+import ScheduledMatches from "./scheduled-matches";
 
 export default async function LandingPageApp() {
   // const session = await auth();
 
   const supabase = await createServerClient();
 
-  const { data: matches } = await supabase.from("matches").select(
-    `
-      tournament_match_id,
-      match_time,
-      stream_link,
-      team1_score,
-      team2_score,
-      team1_label,
-      team2_label,
-      team1:teams!team1_id(
-        name,
-        team_players(
-          users(
-            osu_id
-          )
-        )
-      ),
-      team2:teams!team2_id(
-        name,
-        team_players(
-          users(
-            osu_id
-          )
-        )
-      )
-    `,
-  );
-
-  const ongoingMatches = matches
-    ?.filter(
-      (match) =>
-        new Date(match.match_time).getTime() - new Date().getTime() < 0 &&
-        !match.team1_score &&
-        !match.team2_score,
-    )
-    .sort(
-      (a, b) =>
-        new Date(a.match_time).getTime() - new Date(b.match_time).getTime(),
-    );
-
-  const scheduledMatches = matches
-    ?.filter(
-      (match) =>
-        new Date(match.match_time).getTime() - new Date().getTime() > 0 &&
-        !match.team1_score &&
-        !match.team2_score,
-    )
-    .sort(
-      (a, b) =>
-        new Date(a.match_time).getTime() - new Date(b.match_time).getTime(),
-    )
-    .slice(0, 4);
+  const { data: matches } = await getLandingPageMatches(supabase);
 
   // let canRegister: boolean;
 
@@ -116,97 +67,7 @@ export default async function LandingPageApp() {
             produksjon.
           </p>
         </div>
-        {ongoingMatches && ongoingMatches.length !== 0 ? (
-          <div className="mx-auto mt-10 mr-auto flex flex-col gap-5">
-            <h1 className="text-2xl font-bold">Pågående matches</h1>
-            <div className="flex flex-col gap-2">
-              {ongoingMatches.map((match) => (
-                <div
-                  key={match.tournament_match_id}
-                  className="bg-table flex flex-col justify-between gap-1 rounded-md p-2 sm:min-w-96"
-                >
-                  <div className="flex flex-col">
-                    <div className="flex gap-2">
-                      <p>{match.tournament_match_id}</p>
-                      <p>
-                        {new Date(match.match_time).toLocaleTimeString(
-                          "no-NO",
-                          {
-                            hour12: false,
-                            hour: "numeric",
-                            minute: "numeric",
-                            timeZone: "Europe/Oslo",
-                          },
-                        )}
-                      </p>
-                      {match.stream_link ? (
-                        <Link
-                          href={match.stream_link}
-                          className="hover:text-acc ml-auto flex w-20 items-center gap-1 font-semibold hover:font-bold"
-                          target="_blank"
-                        >
-                          <div className="bg-red h-2.5 w-2.5 rounded-4xl" />
-                          DIREKTE
-                        </Link>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex flex-col justify-between sm:flex-row">
-                    {
-                      <div className="flex items-center justify-center gap-1">
-                        <Image
-                          src={
-                            match.team1
-                              ? `https://a.ppy.sh/${match.team1.team_players[0].users.osu_id}`
-                              : "/profile-pics/avatar-guest.png"
-                          }
-                          alt="Team 1 Logo"
-                          width={256}
-                          height={256}
-                          unoptimized
-                          className="w-10 rounded-md"
-                        />
-                        <p className="font-semibold">
-                          {match.team1?.name || match.team1_label}
-                        </p>
-                      </div>
-                    }
-                    {
-                      <div className="flex items-center justify-center gap-1">
-                        <p className="font-semibold">
-                          {match.team2?.name || match.team2_label}
-                        </p>
-                        <Image
-                          src={
-                            match.team2
-                              ? `https://a.ppy.sh/${match.team2.team_players[0].users.osu_id}`
-                              : "/profile-pics/avatar-guest.png"
-                          }
-                          alt="Team 1 Logo"
-                          width={256}
-                          height={256}
-                          unoptimized
-                          className="w-10 rounded-md"
-                        />
-                      </div>
-                    }
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="border-accent mt-6 aspect-video w-full max-w-full flex-1 overflow-hidden rounded-md border-2 xl:mt-0 xl:max-w-[44%]">
-            <Image
-              src={"/landing-page/bracket.png"}
-              alt="Bracket"
-              width={1920}
-              height={1080}
-            />
-          </div>
-        )}
+        <OngoingMatches matches={matches ? matches : []} />
       </section>
 
       <section className="flex flex-col gap-10 xl:flex-row">
@@ -257,129 +118,41 @@ export default async function LandingPageApp() {
             </li>
           </ul>
         </div>
-
         <div className="flex w-full min-w-[50%] flex-col gap-10 pb-10 xl:pb-0">
-          <div
-            className={
-              scheduledMatches && scheduledMatches.length !== 0 ? "" : "hidden"
-            }
-          >
-            <p className="border-accent mb-2 border-b-2 pb-2 text-xl font-semibold sm:text-2xl">
-              KOMMENDE MATCHES
-            </p>
-            <div className="flex flex-col gap-2">
-              {scheduledMatches
-                ? scheduledMatches.map((match) => (
-                    <div
-                      key={match.tournament_match_id}
-                      className="bg-table flex w-full justify-between gap-2 rounded-md p-1.5"
-                    >
-                      <div className="flex flex-col items-start text-nowrap sm:flex-row sm:gap-2">
-                        <p>{match.tournament_match_id}</p>{" "}
-                        <p className="hidden sm:flex">
-                          {new Date(match.match_time).toLocaleTimeString(
-                            "no-NO",
-                            {
-                              hour12: false,
-                              hour: "numeric",
-                              minute: "numeric",
-                              timeZone: "Europe/Oslo",
-                            },
-                          )}
-                        </p>
-                        <p className="flex items-center sm:hidden">
-                          {formatSecondsToTime(
-                            (new Date(match.match_time).getTime() -
-                              new Date().getTime()) /
-                              1000,
-                          )}
-                        </p>
-                      </div>
-                      <div className="flex gap-5">
-                        <div className="flex flex-col items-end gap-2 sm:min-w-80 sm:flex-row sm:justify-between">
-                          {
-                            <div className="flex items-center justify-center gap-1">
-                              <Image
-                                src={
-                                  match.team1
-                                    ? `https://a.ppy.sh/${match.team1.team_players[0].users.osu_id}`
-                                    : "/profile-pics/avatar-guest.png"
-                                }
-                                alt="Team 1 Logo"
-                                width={256}
-                                height={256}
-                                unoptimized
-                                className="w-5 rounded-md sm:w-8"
-                              />
-                              <p className="truncate text-sm font-semibold sm:text-base">
-                                {match.team1?.name || match.team1_label}
-                              </p>
-                            </div>
-                          }{" "}
-                          {
-                            <div className="flex items-center justify-center gap-1">
-                              <p className="truncate text-sm font-semibold sm:text-base">
-                                {match.team2?.name || match.team2_label}
-                              </p>
-                              <Image
-                                src={
-                                  match.team2
-                                    ? `https://a.ppy.sh/${match.team2.team_players[0].users.osu_id}`
-                                    : "/profile-pics/avatar-guest.png"
-                                }
-                                alt="Team 1 Logo"
-                                width={256}
-                                height={256}
-                                unoptimized
-                                className="w-5 rounded-md sm:w-8"
-                              />
-                            </div>
-                          }
-                        </div>
-                        <p className="hidden w-16 items-center justify-center sm:flex">
-                          {formatSecondsToTime(
-                            (new Date(match.match_time).getTime() -
-                              new Date().getTime()) /
-                              1000,
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                  ))
-                : ""}
+          <ScheduledMatches matches={matches ? matches : []} />
+          <div className="flex w-full min-w-[50%] flex-col gap-10 pb-10 xl:pb-0">
+            <div className="mt-6 flex items-center justify-center gap-5 sm:gap-20">
+              <Link
+                href="https://discord.com/invite/zY5dwFEbSx/"
+                target="_blank"
+                className=""
+              >
+                <Discord className="size-7 sm:size-14" />
+              </Link>
+              <Link
+                href="https://twitch.tv/osunorge"
+                target="_blank"
+                className=""
+              >
+                <Twitch className="size-7 sm:size-14" />
+              </Link>
+
+              <Link
+                href="https://youtube.com/@osunorge"
+                target="_blank"
+                className=""
+              >
+                <Youtube className="size-7 sm:size-14" />
+              </Link>
+
+              <Link
+                href="https://osu.ppy.sh/community/forums/topics/2125135"
+                target="_blank"
+                className=""
+              >
+                <Osu className="size-7 sm:size-14" />
+              </Link>
             </div>
-          </div>
-          <div className="mt-6 flex items-center justify-center gap-5 sm:gap-20">
-            <Link
-              href="https://discord.com/invite/zY5dwFEbSx/"
-              target="_blank"
-              className=""
-            >
-              <Discord className="size-7 sm:size-14" />
-            </Link>
-            <Link
-              href="https://twitch.tv/osunorge"
-              target="_blank"
-              className=""
-            >
-              <Twitch className="size-7 sm:size-14" />
-            </Link>
-
-            <Link
-              href="https://youtube.com/@osunorge"
-              target="_blank"
-              className=""
-            >
-              <Youtube className="size-7 sm:size-14" />
-            </Link>
-
-            <Link
-              href="https://osu.ppy.sh/community/forums/topics/2125135"
-              target="_blank"
-              className=""
-            >
-              <Osu className="size-7 sm:size-14" />
-            </Link>
           </div>
 
           {/* <div className="flex justify-center gap-4">
