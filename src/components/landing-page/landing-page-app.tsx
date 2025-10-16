@@ -1,6 +1,7 @@
 import { signIn } from "@/auth";
 import { getLandingPageMatches } from "@/lib/landing-page/query";
 import { createServerClient } from "@/lib/server";
+import { formatSecondsToTime } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import Discord from "../icons/discord";
