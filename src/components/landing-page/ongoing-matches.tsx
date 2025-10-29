@@ -102,12 +102,13 @@ export default async function OngoingMatches({ matches }: OngoingMatchesProps) {
     </div>
   ) : (
     <div className="border-accent mt-6 aspect-video w-full max-w-full flex-1 overflow-hidden rounded-md border-2 xl:mt-0 xl:max-w-[44%]">
-      <Image
-        src={"/landing-page/bracket.png"}
-        alt="Bracket"
-        width={1920}
-        height={1080}
-      />
+      <iframe
+        src="https://challonge.com/98g55kur/module"
+        width="150%"
+        height="175%"
+        className="origin-top-left scale-70"
+        allowTransparency={true}
+      ></iframe>
     </div>
   );
 }
