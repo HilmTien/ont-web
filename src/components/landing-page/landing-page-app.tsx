@@ -109,11 +109,11 @@ export default async function LandingPageApp() {
               <span>20. Oktober - 26. Oktober</span>
             </li>
             <li className="flex justify-between">
-              <span className="font-medium">Sluttspill (QF)</span>
+              <span className="font-medium">Sluttspill (QF + SF)</span>
               <span>27. Oktober - 2. November</span>
             </li>
             <li className="flex justify-between">
-              <span className="font-medium">Sluttspill (SF + Finaler)</span>
+              <span className="font-medium">Sluttspill (Finaler)</span>
               <span>3. November - 9. November</span>
             </li>
           </ul>
